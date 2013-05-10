@@ -19,11 +19,6 @@
 	</classpathentry>
 	<classpathentry kind="src" path="resources"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="lib/argo-3.2-src.jar"/>
-	<classpathentry kind="lib" path="lib/asm-debug-all-4.1.jar"/>
-	<classpathentry kind="lib" path="lib/bcprov-debug-jdk15on-148.jar"/>
-	<classpathentry kind="lib" path="lib/guava-14.0-rc3.jar"/>
-	<classpathentry kind="lib" path="lib/scala-library.jar"/>
 	<classpathentry kind="lib" path="jars/bin/jinput.jar"/>
 	<classpathentry kind="lib" path="jars/bin/lwjgl_util.jar"/>
 	<classpathentry kind="lib" path="jars/bin/lwjgl.jar">
@@ -32,5 +27,9 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="jars/bin/minecraft.jar"/>
+	<classpathentry kind="lib" path="lib/argo-2.25.jar"/>
+	<classpathentry kind="lib" path="lib/asm-all-4.0.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-jdk15on-147.jar"/>
+	<classpathentry kind="lib" path="lib/guava-12.0.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
