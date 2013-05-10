@@ -107,7 +107,7 @@
 		<echo>Removing old build directories and artifacts</echo>
 		<delete verbose="true" includeemptydirs="true">
 			<fileset dir="${build.root}" includes="build-*/**"/>
-			<fileset dir="${build.root}/dist"/>
+			<fileset dir="${build.root}" includes="dist/**"/>
 		</delete>
 	</target>
 
