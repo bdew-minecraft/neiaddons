@@ -122,7 +122,7 @@
 
 		<echo>Staging source in ${build.dir}/stage</echo>
 		<copy todir="${build.dir}/stage" overwrite="true">
-			<fileset dir="./" includes="src/, resources/"/>
+			<fileset dir="./" includes="src/, resources/" excludes="*.psd"/>
 		</copy>
 
 		<echo>Replacing tokens</echo>
