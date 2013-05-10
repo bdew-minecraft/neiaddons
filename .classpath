@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="src"/>
+	<classpathentry excluding="net/minecraft/client/gui/inventory/GuiContainer.java" kind="src" path="minecraft">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="forestry"/>
+	<classpathentry kind="src" path="ccc">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="nei">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="lib/argo-3.2-src.jar"/>
+	<classpathentry kind="lib" path="lib/asm-debug-all-4.1.jar"/>
+	<classpathentry kind="lib" path="lib/bcprov-debug-jdk15on-148.jar"/>
+	<classpathentry kind="lib" path="lib/guava-14.0-rc3.jar"/>
+	<classpathentry kind="lib" path="lib/scala-library.jar"/>
+	<classpathentry kind="lib" path="jars/bin/jinput.jar"/>
+	<classpathentry kind="lib" path="jars/bin/lwjgl_util.jar"/>
+	<classpathentry kind="lib" path="jars/bin/lwjgl.jar">
+		<attributes>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="neibees/jars/bin/natives"/>
+		</attributes>
+	</classpathentry>
+	<classpathentry kind="lib" path="jars/bin/minecraft.jar"/>
+	<classpathentry kind="output" path="bin"/>
+</classpath>

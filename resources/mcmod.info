@@ -1,0 +1,20 @@
+[
+{
+  "modid": "neibees",
+  "name": "NEI Bees Plugin",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neibees",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"",
+  "dependencies": [
+  ]
+}
+]

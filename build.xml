@@ -1,0 +1,151 @@
+<?xml version="1.0" ?>
+<project name="NEI Bees" default="build">
+	<property file="build.properties" prefix="build"/>
+
+	<property name="forge.url" value="http://files.minecraftforge.net/minecraftforge/minecraftforge-src-${build.mc.version}-${build.forge.version}.zip" />
+	<property name="forge.path" value="${build.root}/forge-${build.forge.version}-neiat" />
+	<property name="nei.src" value="${build.root}/nei-src" />
+	<property name="ccc.src" value="${build.root}/ccc-src" />
+	<property name="forestry.api.path" value="${build.root}/forestry-${build.forestry.api.version}" />
+
+	<property name="build.version" value="${build.version.major}.${build.version.minor}${build.version.suffix}" />
+
+	<target name="init">
+		<mkdir dir="${build.root}"/>
+		<echo>Build started in ${build.root}</echo>
+		<available property="forge.installed" file="${forge.path}/ok"/>
+		<available property="nei.exists" file="${nei.src}" type="dir"/>
+		<available property="ccc.exists" file="${ccc.src}" type="dir"/>
+		<available property="forestry.api.installed"  file="${forestry.api.path}" type="dir"/>
+	</target>
+
+	<target name="nei.clone" depends="init" unless="nei.exists">
+		<exec executable="hg" failonerror="true">
+			<arg line="clone https://bitbucket.org/ChickenBones/notenoughitems ${nei.src}"/>
+		</exec>
+	</target>
+
+	<target name="ccc.clone" depends="init" unless="ccc.exists">
+		<exec executable="hg" failonerror="true">
+			<arg line="clone https://bitbucket.org/ChickenBones/codechickencore ${ccc.src}"/>
+		</exec>
+	</target>
+
+	<target name="nei.update" depends="nei.clone">
+		<exec dir="${nei.src}" executable="hg" failonerror="true">
+			<arg line="pull"/>
+		</exec>
+		<exec dir="${nei.src}" executable="hg" failonerror="true">
+			<arg line="update -C"/>
+		</exec>
+	</target>
+
+	<target name="ccc.update" depends="ccc.clone">
+		<exec dir="${ccc.src}" executable="hg" failonerror="true">
+			<arg line="pull"/>
+		</exec>
+		<exec dir="${ccc.src}" executable="hg" failonerror="true">
+			<arg line="update -C"/>
+		</exec>
+	</target>
+
+	<target name="forge.install" depends="init,nei.update,ccc.update" unless="forge.installed">
+		<delete dir="${forge.path}" quiet="true" />
+
+		<echo>Downloading forge ${build.forge.version} for MC ${build.mc.version}</echo>
+		<get src="${forge.url}" dest="${build.root}/forge-${build.mc.version}-${build.forge.version}.zip" verbose="true" usetimestamp="true"/>
+		<unzip src="${build.root}/forge-${build.mc.version}-${build.forge.version}.zip" dest="${forge.path}">
+			<mapper>
+				<globmapper from="forge/*" to="*"/>
+			</mapper>
+		</unzip>
+
+		<echo>Adding access transformer configs</echo>
+
+		<copy file="${ccc.src}/codechickencore_at.cfg" todir="${forge.path}/accesstransformers"/>
+		<copy file="${nei.src}/nei_at.cfg" todir="${forge.path}/accesstransformers"/>
+
+		<echo>Setting up forge at ${forge.path}</echo>
+
+		<exec dir="${forge.path}" executable="cmd" osfamily="windows" failonerror="true">
+			<arg line="/c install.cmd" />
+		</exec>
+		<exec dir="${forge.path}" executable="bash" osfamily="unix" failonerror="true">
+			<arg line="install.sh" />
+		</exec>
+
+		<echo>Forge+MCP installed successfully at ${forge.path}</echo>
+
+		<touch file="${forge.path}/ok" /> 
+
+	</target>
+
+	<target name="forestry.api" depends="init" unless="forestry.api.installed">
+		<get src="${build.forestry.api.url}" dest="${forestry.api.path}.zip" verbose="true" usetimestamp="true" />
+		<unzip src="${forestry.api.path}.zip" dest="${forestry.api.path}" />
+	</target>
+
+	<target name="compile">
+		<exec dir="${build.dir}/mcp" executable="cmd" osfamily="windows" failonerror="true">
+			<arg line="/c recompile.bat --client" />
+		</exec>
+		<exec dir="${build.dir}/mcp" executable="bash" osfamily="unix" failonerror="true">
+			<arg line="recompile.sh --client" />
+		</exec>
+	</target>
+
+	<target name="reobfuscate">
+		<exec dir="${build.dir}/mcp" executable="cmd" osfamily="windows" failonerror="true">
+			<arg line="/c reobfuscate_srg.bat --client" />
+		</exec>
+		<exec dir="${build.dir}/mcp" executable="bash" osfamily="unix" failonerror="true">
+			<arg line="reobfuscate_srg.sh --client" />
+		</exec>
+	</target>
+
+	<target name="cleanup">
+		<echo>Removing old build directories and artifacts</echo>
+		<delete verbose="true" includeemptydirs="true">
+			<fileset dir="${build.root}" includes="build-*/**"/>
+			<fileset dir="${build.root}/dist"/>
+		</delete>
+	</target>
+
+	<target name="build" depends="init, cleanup, forge.install, forestry.api">
+		<tempfile property="build.dir" prefix="${build.root}/build-" />
+		<echo>Performing build in ${build.dir}</echo>
+
+		<echo>Using Forge+MCP installed at ${forge.path}</echo>
+		<copy todir="${build.dir}/mcp">
+			<fileset dir="${forge.path}/mcp"/>
+		</copy>
+
+		<echo>Staging source in ${build.dir}/stage</echo>
+		<copy todir="${build.dir}/stage" overwrite="true">
+			<fileset dir="./" includes="src/, resources/"/>
+		</copy>
+
+		<echo>Replacing tokens</echo>
+		<replace dir="${build.dir}/stage" token="@@VERSION@@" value="${build.version}"/>
+
+		<echo>Adding sources to MCP</echo>
+		<copy todir="${build.dir}/mcp/src/minecraft" overwrite="true">
+			<fileset dir="${build.dir}/stage/src"/>
+			<fileset dir="${forestry.api.path}"/>
+			<fileset dir="${nei.src}"/>
+			<fileset dir="${ccc.src}"/>
+		</copy>
+
+		<antcall target="compile" />	
+		<antcall target="reobfuscate" />	
+
+		<echo>Creating JAR</echo>
+		<jar destfile="${build.root}/dist/${build.modname}-${build.mc.version}-${build.version}.jar">
+			<fileset dir="${build.dir}/mcp/reobf/minecraft/" includes="net/bdew/, forestry/plugins/" />
+			<fileset dir="${build.dir}/stage/resources/"/>
+		</jar>
+
+		<echo>Removing temporary build directory</echo>
+		<delete dir="${build.dir}" quiet="true" />
+	</target>
+</project>
