@@ -60,17 +60,22 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
         @Override
         public ArrayList<PositionedStack> getOtherStacks() {
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
-            for (int i = 1; i < products.size(); i++) {
-                list.add(products.get(i));
+            if (products.size() > 1) {
+                for (int i = 1; i < products.size(); i++) {
+                    list.add(products.get(i));
+                }
             }
             return list;
         }
 
         @Override
         public PositionedStack getResult() {
-            return products.get(0);
+            if (products.size() > 0) {
+                return products.get(0);
+            } else {
+                return null;
+            }
         }
-
     }
 
     @Override

@@ -2,7 +2,7 @@
 
 [Downloads] (https://www.dropbox.com/sh/4rthtn5tv17udyi/cZkIrfUchb)
 
-[Minecraft Forums page] (http://www.minecraftforum.net/forum/51-minecraft-mods/)
+[Minecraft Forums thread] (http://www.minecraftforum.net/topic/1803460-151152-nei-bees-plugin-v10/)
 
 ![Bee Breeding window](http://i.imgur.com/ENCP9He.png)
 
