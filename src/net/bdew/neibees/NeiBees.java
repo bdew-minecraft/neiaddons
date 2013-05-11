@@ -12,7 +12,6 @@ package net.bdew.neibees;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
-import codechicken.nei.api.API;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -30,10 +29,9 @@ public class NeiBees {
     public static NeiBees instance;
 
     public static Logger log;
-    public boolean showSecret;
 
-    private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
-    private BeeProductsRecipeHandler beeProductsRecipeHandler;
+    public boolean showSecret;
+    public boolean addSearch;
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -42,6 +40,7 @@ public class NeiBees {
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 
         showSecret = config.get(Configuration.CATEGORY_GENERAL, "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
+        addSearch = config.get(Configuration.CATEGORY_GENERAL, "Add Bees to Search", true, "Set to true to add ALL bees to NEI search").getBoolean(true);
 
         config.save();
     }
@@ -54,18 +53,9 @@ public class NeiBees {
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
         if (FMLCommonHandler.instance().getSide().isClient()) {
-            beeBreedingRecipeHandler = new BeeBreedingRecipeHandler();
-            API.registerRecipeHandler(beeBreedingRecipeHandler);
-            API.registerUsageHandler(beeBreedingRecipeHandler);
-
-            beeProductsRecipeHandler = new BeeProductsRecipeHandler();
-            API.registerRecipeHandler(beeProductsRecipeHandler);
-            API.registerUsageHandler(beeProductsRecipeHandler);
-
             log.info("NEI Bees Plugin loaded");
         } else {
             log.warning("NEI Bees Plugin is client side only, do not install it on servers!");
         };
     }
-
 }
