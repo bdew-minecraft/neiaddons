@@ -9,11 +9,9 @@
 
 package net.bdew.neibees;
 
-import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
-import codechicken.nei.api.API;
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Init;
@@ -23,10 +21,6 @@ import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import forestry.api.apiculture.EnumBeeType;
-import forestry.api.apiculture.IAlleleBeeSpecies;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IAllele;
 
 @Mod(modid = "neibees", version = "@@VERSION@@", name = "NEI Bees Plugin", dependencies = "required-after:Forestry;required-after:NotEnoughItems")
 public class NeiBees {
@@ -37,10 +31,7 @@ public class NeiBees {
     public static Logger log;
 
     public boolean showSecret;
-    private boolean addSearch;
-
-    private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
-    private BeeProductsRecipeHandler beeProductsRecipeHandler;
+    public boolean addSearch;
 
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
@@ -62,27 +53,6 @@ public class NeiBees {
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
         if (FMLCommonHandler.instance().getSide().isClient()) {
-            beeBreedingRecipeHandler = new BeeBreedingRecipeHandler();
-            API.registerRecipeHandler(beeBreedingRecipeHandler);
-            API.registerUsageHandler(beeBreedingRecipeHandler);
-
-            beeProductsRecipeHandler = new BeeProductsRecipeHandler();
-            API.registerRecipeHandler(beeProductsRecipeHandler);
-            API.registerUsageHandler(beeProductsRecipeHandler);
-
-            if (addSearch) {
-                for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-                    if (entry.getValue() instanceof IAlleleBeeSpecies) {
-
-                        IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
-
-                        API.addNBTItem(Utils.stackFromAllele(species, EnumBeeType.QUEEN));
-                        API.addNBTItem(Utils.stackFromAllele(species, EnumBeeType.DRONE));
-                        API.addNBTItem(Utils.stackFromAllele(species, EnumBeeType.PRINCESS));
-                    }
-                }
-            }
-
             log.info("NEI Bees Plugin loaded");
         } else {
             log.warning("NEI Bees Plugin is client side only, do not install it on servers!");
