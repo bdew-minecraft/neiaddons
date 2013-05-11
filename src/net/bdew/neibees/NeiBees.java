@@ -9,6 +9,7 @@
 
 package net.bdew.neibees;
 
+import java.util.Map.Entry;
 import java.util.logging.Logger;
 
 import net.minecraftforge.common.Configuration;
@@ -22,6 +23,10 @@ import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import forestry.api.apiculture.EnumBeeType;
+import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.genetics.AlleleManager;
+import forestry.api.genetics.IAllele;
 
 @Mod(modid = "neibees", version = "@@VERSION@@", name = "NEI Bees Plugin", dependencies = "required-after:Forestry;required-after:NotEnoughItems")
 public class NeiBees {
@@ -30,7 +35,9 @@ public class NeiBees {
     public static NeiBees instance;
 
     public static Logger log;
+
     public boolean showSecret;
+    private boolean addSearch;
 
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
@@ -42,6 +49,7 @@ public class NeiBees {
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
 
         showSecret = config.get(Configuration.CATEGORY_GENERAL, "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
+        addSearch = config.get(Configuration.CATEGORY_GENERAL, "Add Bees to Search", true, "Set to true to add ALL bees to NEI search").getBoolean(true);
 
         config.save();
     }
@@ -62,10 +70,22 @@ public class NeiBees {
             API.registerRecipeHandler(beeProductsRecipeHandler);
             API.registerUsageHandler(beeProductsRecipeHandler);
 
+            if (addSearch) {
+                for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
+                    if (entry.getValue() instanceof IAlleleBeeSpecies) {
+
+                        IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
+
+                        API.addNBTItem(Utils.stackFromAllele(species, EnumBeeType.QUEEN));
+                        API.addNBTItem(Utils.stackFromAllele(species, EnumBeeType.DRONE));
+                        API.addNBTItem(Utils.stackFromAllele(species, EnumBeeType.PRINCESS));
+                    }
+                }
+            }
+
             log.info("NEI Bees Plugin loaded");
         } else {
             log.warning("NEI Bees Plugin is client side only, do not install it on servers!");
         };
     }
-
 }
