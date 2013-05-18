@@ -19,6 +19,7 @@ import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PostInit;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 
@@ -53,6 +54,8 @@ public class NeiBees {
     @PostInit
     public void postInit(FMLPostInitializationEvent event) {
         if (FMLCommonHandler.instance().getSide().isClient()) {
+            FMLInterModComms.sendRuntimeMessage(instance,"NEIPlugins","register-crafting-handler","Forestry Bees@Bee Products@beeproducts");
+            FMLInterModComms.sendRuntimeMessage(instance,"NEIPlugins","register-crafting-handler","Forestry Bees@Bee Breeding@beebreeding");
             log.info("NEI Bees Plugin loaded");
         } else {
             log.warning("NEI Bees Plugin is client side only, do not install it on servers!");

@@ -53,12 +53,12 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
-        if (outputId == "item") {
+        if (outputId.equals("item")) {
             loadCraftingRecipes((ItemStack) results[0]);
             return;
         }
 
-        if (outputId != "beebreeding") { return; }
+        if (!outputId.equals("beebreeding")) { return; }
 
         for (IBeeMutation mutation : BeeManager.breedingManager.getMutations(false)) {
             if (!mutation.isSecret() || NeiBees.instance.showSecret) {

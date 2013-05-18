@@ -84,12 +84,12 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
-        if (outputId == "item") {
+        if (outputId.equals("item")) {
             loadCraftingRecipes((ItemStack) results[0]);
             return;
         }
 
-        if (outputId != "beeproducts") { return; }
+        if (!outputId.equals("beeproducts")) { return; }
 
         for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
             if (!(entry.getValue() instanceof IAlleleBeeSpecies)) {
