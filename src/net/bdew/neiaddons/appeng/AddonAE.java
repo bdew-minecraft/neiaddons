@@ -63,14 +63,13 @@ public class AddonAE implements NEIAddon {
     public void init(Side side) throws ClassNotFoundException {
         if (side==Side.CLIENT) {
             GuiPatternEncoder = Utils.getAndCheckClass("appeng.me.gui.GuiPatternEncoder", GuiContainer.class);
+            invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
         };
         
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);
 
         NetworkRegistry.instance().registerChannel(new ServerHandler(), channel, Side.SERVER);
-        
-        invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
         
         active = true;
     }
