@@ -17,10 +17,16 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
+@Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:AppliedEnergistics")
+@NetworkMod(clientSideRequired = false, serverSideRequired = false)
 public class AddonAE implements NEIAddon {
     private Boolean active = false;
 
@@ -31,7 +37,7 @@ public class AddonAE implements NEIAddon {
     public static Class<? extends Slot> SlotFake;
 
     public static final String channel = "neiaddons.ae";
-
+    
     @Override
     public String getName() {
         return "Applied Energistics";
@@ -42,13 +48,19 @@ public class AddonAE implements NEIAddon {
         return active;
     }
 
-    @Override
-    public void init(Side side) throws ClassNotFoundException {
+    @PreInit
+    public void preInit(FMLPreInitializationEvent ev) {
         if (!Loader.isModLoaded("AppliedEnergistics")) {
-            NEIAddons.log.info("Applied Energistics not installed, skipping");
+            NEIAddons.log.info("Applied Energistics is not installed, skipping");
             return;
         }
-        
+
+        NEIAddons.register(this);
+    }
+    
+    
+    @Override
+    public void init(Side side) throws ClassNotFoundException {
         if (side==Side.CLIENT) {
             GuiPatternEncoder = Utils.getAndCheckClass("appeng.me.gui.GuiPatternEncoder", GuiContainer.class);
         };
