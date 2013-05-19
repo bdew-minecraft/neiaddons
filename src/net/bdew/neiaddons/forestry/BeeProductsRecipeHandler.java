@@ -148,6 +148,6 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/mods/neibees/textures/gui/products.png";
+        return "/mods/neiaddons/textures/gui/products.png";
     }
 }
