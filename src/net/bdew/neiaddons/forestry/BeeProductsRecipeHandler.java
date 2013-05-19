@@ -7,12 +7,14 @@
  * https://raw.github.com/bdew/neibees/master/MMPL-1.0.txt
  */
 
-package net.bdew.neibees;
+package net.bdew.neiaddons.forestry;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.PositionedStack;
@@ -33,7 +35,7 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
         public String beeName;
 
         public CachedBeeProductRecipe(IAlleleBeeSpecies species) {
-            bee = new LabeledPositionedStack(Utils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
+            bee = new LabeledPositionedStack(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
 
             products = new ArrayList<LabeledPositionedStack>();
 
@@ -50,7 +52,7 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
             }
             
             if (products.size()==0) {
-                NeiBees.log.warning(species.getUID()+" doesn't produce anthing?");
+                NEIAddons.log.warning(species.getUID()+" doesn't produce anthing?");
             }
         }
 
