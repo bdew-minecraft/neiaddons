@@ -6,6 +6,7 @@ import codechicken.nei.api.API;
 import codechicken.nei.api.IConfigureNEI;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 
@@ -14,8 +15,12 @@ public class NEIBeesConfig implements IConfigureNEI {
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
     
+    public static IBeeRoot beeRoot;
+    
     @Override
     public void loadConfig() {
+        beeRoot=(IBeeRoot)AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
+        
         beeBreedingRecipeHandler = new BeeBreedingRecipeHandler();
         API.registerRecipeHandler(beeBreedingRecipeHandler);
         API.registerUsageHandler(beeBreedingRecipeHandler);

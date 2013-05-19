@@ -16,7 +16,6 @@ import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IBee;
 import forestry.api.apiculture.IBeeMutation;
@@ -60,7 +59,7 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
         if (!outputId.equals("beebreeding")) { return; }
 
-        for (IBeeMutation mutation : BeeManager.breedingManager.getMutations(false)) {
+        for (IBeeMutation mutation : NEIBeesConfig.beeRoot.getMutations(false)) {
             if (!mutation.isSecret() || NeiBees.instance.showSecret) {
                 arecipes.add(new CachedBeeBreedingRecipe(mutation));
             }
@@ -69,11 +68,11 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        if (!BeeManager.beeInterface.isBee(result)) { return; }
-        IBee resultbee = BeeManager.beeInterface.getBee(result);
+        if (!NEIBeesConfig.beeRoot.isMember(result)) { return; }
+        IBee resultbee = NEIBeesConfig.beeRoot.getMember(result);
         IAlleleSpecies species = resultbee.getGenome().getPrimary();
 
-        for (IBeeMutation mutation : BeeManager.breedingManager.getMutations(false)) {
+        for (IBeeMutation mutation : NEIBeesConfig.beeRoot.getMutations(false)) {
             if ((IAlleleSpecies) mutation.getTemplate()[0] == species) {
                 if (!mutation.isSecret() || NeiBees.instance.showSecret) {
                     arecipes.add(new CachedBeeBreedingRecipe(mutation));
@@ -84,11 +83,11 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (!BeeManager.beeInterface.isBee(ingredient)) { return; }
-        IBee resultbee = BeeManager.beeInterface.getBee(ingredient);
+        if (!NEIBeesConfig.beeRoot.isMember(ingredient)) { return; }
+        IBee resultbee = NEIBeesConfig.beeRoot.getMember(ingredient);
         IAlleleSpecies species = resultbee.getGenome().getPrimary();
 
-        for (IBeeMutation mutation : BeeManager.breedingManager.getMutations(false)) {
+        for (IBeeMutation mutation : NEIBeesConfig.beeRoot.getMutations(false)) {
             if ((IAlleleSpecies) mutation.getAllele0() == species || (IAlleleSpecies) mutation.getAllele1() == species) {
                 if (!mutation.isSecret() || NeiBees.instance.showSecret) {
                     arecipes.add(new CachedBeeBreedingRecipe(mutation));

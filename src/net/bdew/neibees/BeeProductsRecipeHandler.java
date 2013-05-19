@@ -18,7 +18,6 @@ import codechicken.nei.NEIClientUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.AlleleManager;
@@ -119,8 +118,8 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (!BeeManager.beeInterface.isBee(ingredient)) { return; }
-        arecipes.add(new CachedBeeProductRecipe((IAlleleBeeSpecies) BeeManager.beeInterface.getBee(ingredient).getGenome().getPrimary()));
+        if (!NEIBeesConfig.beeRoot.isMember(ingredient)) { return; }
+        arecipes.add(new CachedBeeProductRecipe((IAlleleBeeSpecies) NEIBeesConfig.beeRoot.getMember(ingredient).getGenome().getPrimary()));
     }
 
     @Override

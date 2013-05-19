@@ -12,7 +12,6 @@ package net.bdew.neibees;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
-import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IBee;
 import forestry.api.apiculture.IBeeGenome;
@@ -27,10 +26,10 @@ public final class Utils {
     public static ItemStack stackFromAllele(IAllele allele, EnumBeeType type) {
         assert allele instanceof IAlleleSpecies;
         IAlleleSpecies species = (IAlleleSpecies) allele;
-        IAllele[] template = BeeManager.breedingManager.getBeeTemplate(species.getUID());
-        IBeeGenome genome = BeeManager.beeInterface.templateAsGenome(template);
-        IBee bee = BeeManager.beeInterface.getBee(Minecraft.getMinecraft().theWorld, genome);
+        IAllele[] template = NEIBeesConfig.beeRoot.getTemplate(species.getUID());
+        IBeeGenome genome = NEIBeesConfig.beeRoot.templateAsGenome(template);
+        IBee bee = NEIBeesConfig.beeRoot.getBee(Minecraft.getMinecraft().theWorld, genome);
         bee.analyze();
-        return BeeManager.beeInterface.getBeeStack(bee, type);
+        return NEIBeesConfig.beeRoot.getMemberStack(bee, type.ordinal());
     }
 }
