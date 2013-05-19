@@ -1,10 +1,10 @@
 [
 {
-  "modid": "neibees",
-  "name": "NEI Bees Plugin",
+  "modid": "NEIAddons",
+  "name": "NEI Addons",
   "description": "",
   "version": "@@VERSION@@",
-  "url": "bdew.net/mods/neibees",
+  "url": "bdew.net/mods/neiaddons",
   "updateUrl": "",
   "authorList": [
     "bdew"
@@ -15,6 +15,63 @@
   ],
   "parent":"",
   "dependencies": [
+  ]
+},
+{
+  "modid": "NEIAddons|Forestry",
+  "name": "NEI Addons: Forestry",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neiaddons",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
+  ]
+},
+{
+  "modid": "NEIAddons|EE3",
+  "name": "NEI Addons: Equivalent Exchange 3",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neiaddons",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
+  ]
+},
+{
+  "modid": "NEIAddons|AE",
+  "name": "NEI Addons: Applied Energistics",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neiaddons",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
   ]
 }
 ]

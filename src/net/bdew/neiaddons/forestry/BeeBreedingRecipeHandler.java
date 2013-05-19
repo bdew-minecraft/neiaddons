@@ -1,17 +1,19 @@
 /**
  * Copyright (c) bdew, 2013
- * https://github.com/bdew/neibees
+ * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/neibees/master/MMPL-1.0.txt
+ * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
-package net.bdew.neibees;
+package net.bdew.neiaddons.forestry;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 
+import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
@@ -30,9 +32,9 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
         public CachedBeeBreedingRecipe(IMutation mutation) {
 
-            bee1 = new LabeledPositionedStack(Utils.stackFromAllele(mutation.getAllele0(), EnumBeeType.PRINCESS), 22, 19, ((IAlleleSpecies) mutation.getAllele0()).getName(), 13);
-            bee2 = new LabeledPositionedStack(Utils.stackFromAllele(mutation.getAllele1(), EnumBeeType.DRONE), 75, 19, ((IAlleleSpecies) mutation.getAllele1()).getName(), 13);
-            result = new LabeledPositionedStack(Utils.stackFromAllele(mutation.getTemplate()[0], EnumBeeType.QUEEN), 129, 19, ((IAlleleSpecies) mutation.getTemplate()[0]).getName(), 13);
+            bee1 = new LabeledPositionedStack(BeeUtils.stackFromAllele(mutation.getAllele0(), EnumBeeType.PRINCESS), 22, 19, ((IAlleleSpecies) mutation.getAllele0()).getName(), 13);
+            bee2 = new LabeledPositionedStack(BeeUtils.stackFromAllele(mutation.getAllele1(), EnumBeeType.DRONE), 75, 19, ((IAlleleSpecies) mutation.getAllele1()).getName(), 13);
+            result = new LabeledPositionedStack(BeeUtils.stackFromAllele(mutation.getTemplate()[0], EnumBeeType.QUEEN), 129, 19, ((IAlleleSpecies) mutation.getTemplate()[0]).getName(), 13);
             chance = mutation.getBaseChance();
         }
 
@@ -59,8 +61,8 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
         if (!outputId.equals("beebreeding")) { return; }
 
-        for (IBeeMutation mutation : NEIBeesConfig.beeRoot.getMutations(false)) {
-            if (!mutation.isSecret() || NeiBees.instance.showSecret) {
+        for (IBeeMutation mutation : AddonForestry.beeRoot.getMutations(false)) {
+            if (!mutation.isSecret() || AddonForestry.showSecret) {
                 arecipes.add(new CachedBeeBreedingRecipe(mutation));
             }
         }
@@ -68,13 +70,13 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        if (!NEIBeesConfig.beeRoot.isMember(result)) { return; }
-        IBee resultbee = NEIBeesConfig.beeRoot.getMember(result);
+        if (!AddonForestry.beeRoot.isMember(result)) { return; }
+        IBee resultbee = AddonForestry.beeRoot.getMember(result);
         IAlleleSpecies species = resultbee.getGenome().getPrimary();
 
-        for (IBeeMutation mutation : NEIBeesConfig.beeRoot.getMutations(false)) {
+        for (IBeeMutation mutation : AddonForestry.beeRoot.getMutations(false)) {
             if ((IAlleleSpecies) mutation.getTemplate()[0] == species) {
-                if (!mutation.isSecret() || NeiBees.instance.showSecret) {
+                if (!mutation.isSecret() || AddonForestry.showSecret) {
                     arecipes.add(new CachedBeeBreedingRecipe(mutation));
                 }
             }
@@ -83,13 +85,13 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (!NEIBeesConfig.beeRoot.isMember(ingredient)) { return; }
-        IBee resultbee = NEIBeesConfig.beeRoot.getMember(ingredient);
+        if (!AddonForestry.beeRoot.isMember(ingredient)) { return; }
+        IBee resultbee = AddonForestry.beeRoot.getMember(ingredient);
         IAlleleSpecies species = resultbee.getGenome().getPrimary();
 
-        for (IBeeMutation mutation : NEIBeesConfig.beeRoot.getMutations(false)) {
+        for (IBeeMutation mutation : AddonForestry.beeRoot.getMutations(false)) {
             if ((IAlleleSpecies) mutation.getAllele0() == species || (IAlleleSpecies) mutation.getAllele1() == species) {
-                if (!mutation.isSecret() || NeiBees.instance.showSecret) {
+                if (!mutation.isSecret() || AddonForestry.showSecret) {
                     arecipes.add(new CachedBeeBreedingRecipe(mutation));
                 }
             }
@@ -118,6 +120,6 @@ public class BeeBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/mods/neibees/textures/gui/breeding.png";
+        return "/mods/neiaddons/textures/gui/breeding.png";
     }
 }
