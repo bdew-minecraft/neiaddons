@@ -66,7 +66,18 @@ public class NEIAddons {
                 log.info(addon.getName() + " Addon disabled - skipping");
             }
         }
+
         config.save();
+        
+        if (addons.size() > 0) {
+            String addonslist = "Loaded Addons:";
+            for (NEIAddon addon : addons) {
+                addonslist += "\n- " + addon.getName() + ": " + (addon.isActive() ? "Active" : "Inactive");
+            }
+            Loader.instance().activeModContainer().getMetadata().description = addonslist;
+        } else {
+            Loader.instance().activeModContainer().getMetadata().description = "No Addons loaded :(";
+        }
     }
 
 }
