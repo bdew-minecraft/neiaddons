@@ -29,8 +29,10 @@ public class PatternEncoderHandler implements IOverlayHandler {
     public void overlayRecipe(GuiContainer cont, IRecipeHandler recipe, int recipeIndex, boolean shift) {
         ArrayList<PositionedStack> ingr = recipe.getIngredientStacks(recipeIndex);
 
-        if (AddonAE.invertShift) shift=!shift;
-        
+        if (AddonAE.invertShift) {
+            shift = !shift;
+        }
+
         if (!shift) {
             IStackPositioner positioner = new OffsetPositioner(5, 17);
             IRecipeOverlayRenderer renderer = new DefaultOverlayRenderer(ingr, positioner);

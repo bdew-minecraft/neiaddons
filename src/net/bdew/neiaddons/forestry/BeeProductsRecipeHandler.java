@@ -50,9 +50,9 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 36, label, 10));
             }
-            
-            if (products.size()==0) {
-                NEIAddons.log.warning(species.getUID()+" doesn't produce anthing?");
+
+            if (products.size() == 0) {
+                NEIAddons.log.warning(species.getUID() + " doesn't produce anthing?");
             }
         }
 

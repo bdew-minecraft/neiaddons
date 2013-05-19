@@ -36,7 +36,7 @@ public class AddonEE3 implements NEIAddon {
     public Boolean isActive() {
         return active;
     }
-    
+
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
         if (!Loader.isModLoaded("EE3")) {
@@ -51,7 +51,7 @@ public class AddonEE3 implements NEIAddon {
 
         NEIAddons.register(this);
     }
-    
+
     @Override
     public void init(Side side) throws Exception {
         GuiPortableCrafting = Utils.getAndCheckClass("com.pahimar.ee3.client.gui.inventory.GuiPortableCrafting", GuiContainer.class);
@@ -59,7 +59,7 @@ public class AddonEE3 implements NEIAddon {
     }
 
     @Override
-    @SideOnly(value=Side.CLIENT)
+    @SideOnly(value = Side.CLIENT)
     public void loadClient() {
         API.registerGuiOverlay(GuiPortableCrafting, "crafting");
         API.registerGuiOverlayHandler(GuiPortableCrafting, new DefaultOverlayHandler(), "crafting");

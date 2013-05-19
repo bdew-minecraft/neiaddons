@@ -33,16 +33,15 @@ public class ServerHandler implements IPacketHandler {
 
             NBTTagCompound data = CompressedStreamTools.decompress(packet.data);
             String op = data.getString("op");
-            
-            
+
             if (op.equals("LoadRecipe")) {
                 handle_LoadRecipe(p, data.getTagList("stacks"));
             } else {
-                NEIAddons.log.severe(String.format("Uknown packet from client '%s': %s",p.username,op));
+                NEIAddons.log.severe(String.format("Uknown packet from client '%s': %s", p.username, op));
             }
 
         } catch (Throwable e) {
-            NEIAddons.log.severe(String.format("Error handling packet from client '%s'",p.username));
+            NEIAddons.log.severe(String.format("Error handling packet from client '%s'", p.username));
             e.printStackTrace();
         }
     }

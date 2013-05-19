@@ -13,17 +13,18 @@ import cpw.mods.fml.relauncher.Side;
 
 public interface NEIAddon {
     public String getName();
+
     public Boolean isActive();
-    
+
     /**
-     * Called from FMLPreInitializationEvent  
-     * @throws Exception 
+     * Called from FMLPreInitializationEvent
+     * 
+     * @throws Exception
      */
-    public void init(Side side) throws Exception; 
-    
-    
+    public void init(Side side) throws Exception;
+
     /**
      * Called from NEI loadConfig
      */
-    public void loadClient(); 
+    public void loadClient();
 }

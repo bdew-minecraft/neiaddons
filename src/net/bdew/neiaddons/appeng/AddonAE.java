@@ -37,7 +37,7 @@ public class AddonAE implements NEIAddon {
     public static Class<? extends Slot> SlotFake;
 
     public static final String channel = "neiaddons.ae";
-    
+
     @Override
     public String getName() {
         return "Applied Energistics";
@@ -57,25 +57,24 @@ public class AddonAE implements NEIAddon {
 
         NEIAddons.register(this);
     }
-    
-    
+
     @Override
     public void init(Side side) throws ClassNotFoundException {
-        if (side==Side.CLIENT) {
+        if (side == Side.CLIENT) {
             GuiPatternEncoder = Utils.getAndCheckClass("appeng.me.gui.GuiPatternEncoder", GuiContainer.class);
             invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
         };
-        
+
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);
 
         NetworkRegistry.instance().registerChannel(new ServerHandler(), channel, Side.SERVER);
-        
+
         active = true;
     }
 
     @Override
-    @SideOnly(value=Side.CLIENT)
+    @SideOnly(value = Side.CLIENT)
     public void loadClient() {
         API.registerGuiOverlayHandler(GuiPatternEncoder, new PatternEncoderHandler(), "crafting");
     }

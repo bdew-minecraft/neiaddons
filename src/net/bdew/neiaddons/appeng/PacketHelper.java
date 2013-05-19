@@ -24,14 +24,14 @@ public class PacketHelper {
 
         nbt.setString("op", "LoadRecipe");
         nbt.setTag("stacks", stacks);
-        
+
         try {
             Packet250CustomPayload pkt = new Packet250CustomPayload(AddonAE.channel, CompressedStreamTools.compress(nbt));
             PacketDispatcher.sendPacketToServer(pkt);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        
+
     }
 
 }
