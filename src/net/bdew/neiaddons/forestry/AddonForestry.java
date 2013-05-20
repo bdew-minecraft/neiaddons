@@ -9,10 +9,14 @@
 
 package net.bdew.neiaddons.forestry;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.Map.Entry;
 
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.api.NEIAddon;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
@@ -24,6 +28,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
+import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 
@@ -36,7 +41,8 @@ public class AddonForestry implements NEIAddon {
     public static IBeeRoot beeRoot;
 
     public static boolean showSecret;
-    public static boolean addSearch;
+    public static boolean addBees;
+    public static boolean addCombs;
 
     @Override
     public String getName() {
@@ -66,7 +72,8 @@ public class AddonForestry implements NEIAddon {
     @Override
     public void init(Side side) throws Exception {
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
-        addSearch = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add ALL bees to NEI search").getBoolean(true);
+        addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add ALL bees to NEI search, this will include secret, inactive, unfinished bees, etc.").getBoolean(false);
+        addCombs = NEIAddons.config.get(getName(), "Add Combs to Search", false, "Set to true to add all combs that are produced by bees to NEI search").getBoolean(false);
         active = true;
     }
 
@@ -83,18 +90,46 @@ public class AddonForestry implements NEIAddon {
         API.registerRecipeHandler(beeProductsRecipeHandler);
         API.registerUsageHandler(beeProductsRecipeHandler);
 
-        if (addSearch) {
+        Item comb = ItemInterface.getItem("beeComb").getItem();
+
+        if (addBees || addCombs) {
+            HashSet<Integer> seencombs = new HashSet<Integer>();
             for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
                 if (entry.getValue() instanceof IAlleleBeeSpecies) {
 
                     IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
-
-                    API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN));
-                    API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.DRONE));
-                    API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
+                    if (addBees) {
+                        API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN));
+                        API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.DRONE));
+                        API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
+                    }
+                    if (addCombs) {
+                        for (ItemStack prod : species.getProducts().keySet()) {
+                            if (prod.itemID == comb.itemID) {
+                                seencombs.add(prod.getItemDamage());
+                            }
+                        }
+                        for (ItemStack prod : species.getSpecialty().keySet()) {
+                            if (prod.itemID == comb.itemID) {
+                                seencombs.add(prod.getItemDamage());
+                            }
+                        }
+                    }
                 }
             }
+
+            if (addCombs) {
+                ArrayList<ItemStack> combs = new ArrayList<ItemStack>();
+                comb.getSubItems(comb.itemID, null, combs);
+
+                for (ItemStack item : combs) {
+                    seencombs.add(item.getItemDamage());
+                }
+
+                API.setItemDamageVariants(comb.itemID, seencombs);
+            }
         }
+
         FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Bees@Bee Products@beeproducts");
         FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Bees@Bee Breeding@beebreeding");
     }
