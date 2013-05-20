@@ -3,6 +3,8 @@ NEI Addons
 
 * [Forestry](http://www.minecraftforum.net/topic/700588-)
  * Bee breeding and products as recipes
+ * Option to register all bees with NEI search
+ * Option to register all combs with NEI search
 * [Applied Energistics](www.minecraftforum.net/topic/1625015-)
  * [?] button support for the Pattern Encoder
  * Ability to create patterns directly from recipes, even if you don't have the items on you
