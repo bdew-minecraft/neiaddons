@@ -1,18 +1,20 @@
 /**
  * Copyright (c) bdew, 2013
- * https://github.com/bdew/neibees
+ * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/neibees/master/MMPL-1.0.txt
+ * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
-package net.bdew.neibees;
+package net.bdew.neiaddons.forestry;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.PositionedStack;
@@ -33,7 +35,7 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
         public String beeName;
 
         public CachedBeeProductRecipe(IAlleleBeeSpecies species) {
-            bee = new LabeledPositionedStack(Utils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
+            bee = new LabeledPositionedStack(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
 
             products = new ArrayList<LabeledPositionedStack>();
 
@@ -48,9 +50,9 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 36, label, 10));
             }
-            
-            if (products.size()==0) {
-                NeiBees.log.warning(species.getUID()+" doesn't produce anthing?");
+
+            if (products.size() == 0) {
+                NEIAddons.log.warning(species.getUID() + " doesn't produce anthing?");
             }
         }
 
@@ -146,6 +148,6 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/mods/neibees/textures/gui/products.png";
+        return "/mods/neiaddons/textures/gui/products.png";
     }
 }

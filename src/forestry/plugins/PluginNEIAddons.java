@@ -1,20 +1,20 @@
 /**
  * Copyright (c) bdew, 2013
- * https://github.com/bdew/neibees
+ * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
  * License 1.0, or MMPL. Please check the contents of the license located in
- * https://raw.github.com/bdew/neibees/master/MMPL-1.0.txt
+ * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
 package forestry.plugins;
 
 import java.util.Random;
 
-import cpw.mods.fml.common.network.IGuiHandler;
-import net.bdew.neibees.NeiBees;
+import net.bdew.neiaddons.NEIAddons;
 import net.minecraft.command.ICommand;
 import net.minecraft.world.World;
+import cpw.mods.fml.common.network.IGuiHandler;
 import forestry.api.core.IOreDictionaryHandler;
 import forestry.api.core.IPacketHandler;
 import forestry.api.core.IPickupHandler;
@@ -23,8 +23,8 @@ import forestry.api.core.IResupplyHandler;
 import forestry.api.core.ISaveEventHandler;
 import forestry.api.core.PluginInfo;
 
-@PluginInfo(name = "NEI Bees Plugin", pluginID = "neibees", version = "@@VERSION@@")
-public class PluginNeiBees implements IPlugin {
+@PluginInfo(name = "NEI Addons Plugin", pluginID = "neiaddons", version = "@@VERSION@@")
+public class PluginNEIAddons implements IPlugin {
     public boolean isAvailable() {
         return true;
     }
@@ -33,7 +33,7 @@ public class PluginNeiBees implements IPlugin {
     }
 
     public void doInit() {
-        NeiBees.log.fine("NEI Bees Plugin Loaded!");
+        NEIAddons.log.fine("Forestry Plugin loaded");
     }
 
     public void postInit() {

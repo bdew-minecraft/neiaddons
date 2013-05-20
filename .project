@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <projectDescription>
-	<name>neibees</name>
+	<name>neiaddons</name>
 	<comment></comment>
 	<projects>
 	</projects>
@@ -48,7 +48,6 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1368206602074</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -57,7 +56,6 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1368049811113</id>
 			<name>ccc</name>
 			<type>10</type>
 			<matcher>
@@ -66,7 +64,6 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1368035015454</id>
 			<name>jars</name>
 			<type>5</type>
 			<matcher>
@@ -75,7 +72,6 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1368035042660</id>
 			<name>lib</name>
 			<type>5</type>
 			<matcher>
@@ -84,7 +80,6 @@
 			</matcher>
 		</filter>
 		<filter>
-			<id>1368049741001</id>
 			<name>nei</name>
 			<type>10</type>
 			<matcher>
