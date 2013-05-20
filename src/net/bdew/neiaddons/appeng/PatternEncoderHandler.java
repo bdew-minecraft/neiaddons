@@ -33,7 +33,7 @@ public class PatternEncoderHandler implements IOverlayHandler {
         }
 
         if (!shift) {
-            IStackPositioner positioner = new OffsetPositioner(5, 17);
+            IStackPositioner positioner = new OffsetPositioner(5, 11);
             IRecipeOverlayRenderer renderer = new DefaultOverlayRenderer((ArrayList<PositionedStack>)ingr, positioner);
             LayoutManager.overlayRenderer = renderer;
         } else {
