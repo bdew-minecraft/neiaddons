@@ -14,6 +14,7 @@ import java.util.HashSet;
 import java.util.Map.Entry;
 
 import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -23,6 +24,8 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.versioning.ArtifactVersion;
+import cpw.mods.fml.common.versioning.VersionParser;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.EnumBeeType;
@@ -37,6 +40,8 @@ public class AddonForestry implements NEIAddon {
     private Boolean active = false;
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
+
+    public static ArtifactVersion supportedForestryVersions = VersionParser.parseVersionReference("Forestry@[2.2.4.0,)");
 
     public static IBeeRoot beeRoot;
 
@@ -63,6 +68,17 @@ public class AddonForestry implements NEIAddon {
 
         if (ev.getSide() != Side.CLIENT) {
             NEIAddons.log.info("Forestry Addon is client-side only, skipping");
+            return;
+        }
+
+        ArtifactVersion forestryVersion = Utils.findModVersion("Forestry");
+
+        if (forestryVersion == null) {
+            NEIAddons.log.warning("Unable to determine forestry version, will try loading anyway...");
+        } else if (!supportedForestryVersions.containsVersion(forestryVersion)) {
+            NEIAddons.log.warning("Unsupported forestry version: " + forestryVersion.getVersionString());
+            NEIAddons.log.warning("This addon requires " + supportedForestryVersions.toString());
+            NEIAddons.log.warning("Not loading.");
             return;
         }
 

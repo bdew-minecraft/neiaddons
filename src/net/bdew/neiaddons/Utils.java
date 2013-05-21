@@ -9,6 +9,9 @@
 
 package net.bdew.neiaddons;
 
+import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.ModContainer;
+import cpw.mods.fml.common.versioning.ArtifactVersion;
 import net.minecraft.client.gui.FontRenderer;
 
 public class Utils {
@@ -29,4 +32,12 @@ public class Utils {
     public static void drawCenteredString(FontRenderer f, String s, int x, int y, int color) {
         f.drawString(s, x - f.getStringWidth(s) / 2, y, color);
     }
+
+    public static ArtifactVersion findModVersion(String modid) {
+        for (ModContainer cont : Loader.instance().getModList())
+            if (modid.equals(cont.getModId())) return cont.getProcessedVersion();
+
+        return null;
+    }
+
 }
