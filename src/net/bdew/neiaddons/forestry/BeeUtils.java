@@ -11,7 +11,6 @@ package net.bdew.neiaddons.forestry;
 
 import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
-import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IBee;
 import forestry.api.apiculture.IBeeGenome;
@@ -22,10 +21,10 @@ public class BeeUtils {
     public static ItemStack stackFromAllele(IAllele allele, EnumBeeType type) {
         assert allele instanceof IAlleleSpecies;
         IAlleleSpecies species = (IAlleleSpecies) allele;
-        IAllele[] template = BeeManager.breedingManager.getBeeTemplate(species.getUID());
-        IBeeGenome genome = BeeManager.beeInterface.templateAsGenome(template);
-        IBee bee = BeeManager.beeInterface.getBee(Minecraft.getMinecraft().theWorld, genome);
+        IAllele[] template = AddonForestry.beeRoot.getTemplate(species.getUID());
+        IBeeGenome genome = AddonForestry.beeRoot.templateAsGenome(template);
+        IBee bee = AddonForestry.beeRoot.getBee(Minecraft.getMinecraft().theWorld, genome);
         bee.analyze();
-        return BeeManager.beeInterface.getBeeStack(bee, type);
+        return AddonForestry.beeRoot.getMemberStack(bee, type.ordinal());
     }
 }

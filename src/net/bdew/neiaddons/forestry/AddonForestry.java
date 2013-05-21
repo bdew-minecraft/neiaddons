@@ -27,6 +27,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.apiculture.IBeeRoot;
 import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
@@ -36,6 +37,8 @@ public class AddonForestry implements NEIAddon {
     private Boolean active = false;
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
+
+    public static IBeeRoot beeRoot;
 
     public static boolean showSecret;
     public static boolean addBees;
@@ -77,6 +80,8 @@ public class AddonForestry implements NEIAddon {
     @Override
     @SideOnly(Side.CLIENT)
     public void loadClient() {
+        beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
+
         beeBreedingRecipeHandler = new BeeBreedingRecipeHandler();
         API.registerRecipeHandler(beeBreedingRecipeHandler);
         API.registerUsageHandler(beeBreedingRecipeHandler);
