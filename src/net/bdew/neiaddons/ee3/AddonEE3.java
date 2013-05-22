@@ -9,9 +9,9 @@
 
 package net.bdew.neiaddons.ee3;
 
+import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import codechicken.nei.api.API;
 import codechicken.nei.recipe.DefaultOverlayHandler;
@@ -23,18 +23,13 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|EE3", name = "NEI Addons: Equivalent Exchange 3", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:EE3")
-public class AddonEE3 implements NEIAddon {
-    private Boolean active = false;
+public class AddonEE3 extends BaseAddon {
+
     private Class<? extends GuiContainer> GuiPortableCrafting;
 
     @Override
     public String getName() {
         return "Equivalent Exchange 3";
-    }
-
-    @Override
-    public Boolean isActive() {
-        return active;
     }
 
     @PreInit

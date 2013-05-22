@@ -9,9 +9,9 @@
 
 package net.bdew.neiaddons.appeng;
 
+import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -27,8 +27,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
-public class AddonAE implements NEIAddon {
-    private Boolean active = false;
+public class AddonAE extends BaseAddon {
 
     public static boolean invertShift;
 
@@ -41,11 +40,6 @@ public class AddonAE implements NEIAddon {
     @Override
     public String getName() {
         return "Applied Energistics";
-    }
-
-    @Override
-    public Boolean isActive() {
-        return active;
     }
 
     @PreInit

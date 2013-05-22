@@ -13,8 +13,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
+import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
@@ -32,8 +32,7 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
-public class AddonForestry implements NEIAddon {
-    private Boolean active = false;
+public class AddonForestry extends BaseAddon {
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
 
@@ -44,11 +43,6 @@ public class AddonForestry implements NEIAddon {
     @Override
     public String getName() {
         return "Forestry";
-    }
-
-    @Override
-    public Boolean isActive() {
-        return active;
     }
 
     @PreInit
