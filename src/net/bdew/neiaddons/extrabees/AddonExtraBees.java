@@ -38,19 +38,19 @@ public class AddonExtraBees extends BaseAddon {
 
     @Override
     public void init(Side side) throws Exception {
-        Object tmp = Class.forName("binnie.extrabees.core.ExtraBeeItem").getField("serum").get(null);
-        if (tmp instanceof Item) {
-            itemSerum = (Item) tmp;
-        } else {
-            logWarning("Failed to get serum item, got %s instead", tmp.toString());
-            return;
-        }
-
         active = true;
     }
 
     @Override
     public void loadClient() {
+        try {
+            itemSerum = (Item)Class.forName("binnie.extrabees.core.ExtraBeeItem").getField("serum").get(null);
+        } catch (Throwable e) {
+            logWarning("Failed to get serum item:");
+            e.printStackTrace();
+            return;
+        }
+
         for (AlleleBeeChromosomePair pair : AlleleBeeChromosomePair.getAllPairs()) {
             ItemStack serum = new ItemStack(itemSerum);
             NBTTagCompound nbt = new NBTTagCompound();
