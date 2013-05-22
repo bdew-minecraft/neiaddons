@@ -15,7 +15,6 @@ import net.bdew.neiaddons.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import codechicken.nei.api.API;
 import codechicken.nei.recipe.DefaultOverlayHandler;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -36,15 +35,13 @@ public class AddonEE3 extends BaseAddon {
     public void preInit(FMLPreInitializationEvent ev) {
         super.preInit(ev);
 
-        if (!Loader.isModLoaded("EE3")) {
-            NEIAddons.log.info("Equivalent Exchange 3 is not installed, skipping");
-            return;
-        }
-
         if (ev.getSide() != Side.CLIENT) {
             NEIAddons.log.info("Equivalent Exchange 3 Addon is client-side only, skipping");
             return;
         }
+
+        if (!verifyModVersion("EE3"))
+            return;
 
         NEIAddons.register(this);
     }

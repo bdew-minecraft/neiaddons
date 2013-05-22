@@ -16,7 +16,6 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -45,11 +44,9 @@ public class AddonAE extends BaseAddon {
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
         super.preInit(ev);
-        
-        if (!Loader.isModLoaded("AppliedEnergistics")) {
-            NEIAddons.log.info("Applied Energistics is not installed, skipping");
+
+        if (!verifyModVersion("AppliedEnergistics"))
             return;
-        }
 
         NEIAddons.register(this);
     }
@@ -59,7 +56,7 @@ public class AddonAE extends BaseAddon {
         if (side == Side.CLIENT) {
             GuiPatternEncoder = Utils.getAndCheckClass("appeng.me.gui.GuiPatternEncoder", GuiContainer.class);
             invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
-        };
+        }
 
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);

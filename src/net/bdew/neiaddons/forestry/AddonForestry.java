@@ -18,7 +18,6 @@ import net.bdew.neiaddons.NEIAddons;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -50,15 +49,13 @@ public class AddonForestry extends BaseAddon {
     public void preInit(FMLPreInitializationEvent ev) {
         super.preInit(ev);
         
-        if (!Loader.isModLoaded("Forestry")) {
-            NEIAddons.log.info("Forestry is not installed, skipping");
+        if (ev.getSide() != Side.CLIENT) {
+            logInfo("Forestry Addon is client-side only, skipping");
             return;
         }
 
-        if (ev.getSide() != Side.CLIENT) {
-            NEIAddons.log.info("Forestry Addon is client-side only, skipping");
+        if (!verifyModVersion("Forestry@[2.2.0.0,2.2.3.0)"))
             return;
-        }
 
         NEIAddons.register(this);
     }
