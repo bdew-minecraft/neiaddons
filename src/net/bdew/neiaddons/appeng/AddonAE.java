@@ -9,14 +9,13 @@
 
 package net.bdew.neiaddons.appeng;
 
+import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -27,8 +26,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
-public class AddonAE implements NEIAddon {
-    private Boolean active = false;
+public class AddonAE extends BaseAddon {
 
     public static boolean invertShift;
 
@@ -43,17 +41,12 @@ public class AddonAE implements NEIAddon {
         return "Applied Energistics";
     }
 
-    @Override
-    public Boolean isActive() {
-        return active;
-    }
-
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
-        if (!Loader.isModLoaded("AppliedEnergistics")) {
-            NEIAddons.log.info("Applied Energistics is not installed, skipping");
+        super.preInit(ev);
+
+        if (!verifyModVersion("AppliedEnergistics"))
             return;
-        }
 
         NEIAddons.register(this);
     }
@@ -63,7 +56,7 @@ public class AddonAE implements NEIAddon {
         if (side == Side.CLIENT) {
             GuiPatternEncoder = Utils.getAndCheckClass("appeng.me.gui.GuiPatternEncoder", GuiContainer.class);
             invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
-        };
+        }
 
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);

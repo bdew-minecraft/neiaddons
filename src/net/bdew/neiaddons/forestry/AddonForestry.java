@@ -13,12 +13,11 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map.Entry;
 
+import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -33,8 +32,7 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
-public class AddonForestry implements NEIAddon {
-    private Boolean active = false;
+public class AddonForestry extends BaseAddon {
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
 
@@ -49,22 +47,18 @@ public class AddonForestry implements NEIAddon {
         return "Forestry";
     }
 
-    @Override
-    public Boolean isActive() {
-        return active;
-    }
-
     @PreInit
+    @Override
     public void preInit(FMLPreInitializationEvent ev) {
-        if (!Loader.isModLoaded("Forestry")) {
-            NEIAddons.log.info("Forestry is not installed, skipping");
+        super.preInit(ev);
+        
+        if (ev.getSide() != Side.CLIENT) {
+            logInfo("Forestry Addon is client-side only, skipping");
             return;
         }
 
-        if (ev.getSide() != Side.CLIENT) {
-            NEIAddons.log.info("Forestry Addon is client-side only, skipping");
+        if (!verifyModVersion("Forestry@[2.2.4.0,)"))
             return;
-        }
 
         NEIAddons.register(this);
     }

@@ -9,7 +9,7 @@
 
 package forestry.plugins;
 
-import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.forestry.AddonForestry;
 import forestry.api.core.IPlugin;
 import forestry.api.core.PluginInfo;
 
@@ -23,7 +23,7 @@ public class PluginNEIAddons implements IPlugin {
     }
 
     public void doInit() {
-        NEIAddons.log.fine("Forestry Plugin loaded");
+        AddonForestry.logInfo("Forestry Plugin loaded");
     }
 
     public void postInit() {
