@@ -36,7 +36,7 @@ public class AddonEE3 extends BaseAddon {
         super.preInit(ev);
 
         if (ev.getSide() != Side.CLIENT) {
-            NEIAddons.log.info("Equivalent Exchange 3 Addon is client-side only, skipping");
+            logInfo("Equivalent Exchange 3 Addon is client-side only, skipping");
             return;
         }
 

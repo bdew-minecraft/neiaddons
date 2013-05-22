@@ -21,11 +21,11 @@ public abstract class BaseAddon implements NEIAddon {
         return active;
     }
     
-    public final void logInfo(String message, Object... params) {
+    public final static void logInfo(String message, Object... params) {
         log.log(Level.INFO,message,params);
     }
 
-    public final void logWarning(String message, Object... params) {
+    public final static void logWarning(String message, Object... params) {
         log.log(Level.WARNING,message,params);
     }
     

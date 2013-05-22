@@ -25,7 +25,7 @@ import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "@@VERSION@@", dependencies = "after:NotEnoughItems")
 public class NEIAddons {
-    public static Logger log;
+    private static Logger log;
     public static final String modid = "NEIAddons";
 
     public static List<NEIAddon> addons;

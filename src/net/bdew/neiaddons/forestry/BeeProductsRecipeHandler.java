@@ -13,7 +13,6 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Map.Entry;
 
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
@@ -52,7 +51,7 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
             }
 
             if (products.size() == 0) {
-                NEIAddons.log.warning(species.getUID() + " doesn't produce anthing?");
+                AddonForestry.logWarning("%s doesn't produce anthing?",species.getUID());
             }
         }
 
