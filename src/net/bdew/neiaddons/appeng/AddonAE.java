@@ -41,16 +41,16 @@ public class AddonAE extends BaseAddon {
         return "Applied Energistics";
     }
 
-    @PreInit
-    public void preInit(FMLPreInitializationEvent ev) {
-        super.preInit(ev);
-
-        if (!verifyModVersion("AppliedEnergistics"))
-            return;
-
-        NEIAddons.register(this);
+    @Override
+    public String[] getDependencies() {
+        return new String[]{"AppliedEnergistics"};
     }
 
+    @PreInit
+    public void preInit(FMLPreInitializationEvent ev) {
+        doPreInit(ev);
+    }
+    
     @Override
     public void init(Side side) throws ClassNotFoundException {
         if (side == Side.CLIENT) {
