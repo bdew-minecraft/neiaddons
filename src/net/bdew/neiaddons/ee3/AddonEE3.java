@@ -34,6 +34,8 @@ public class AddonEE3 extends BaseAddon {
 
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
+        super.preInit(ev);
+
         if (!Loader.isModLoaded("EE3")) {
             NEIAddons.log.info("Equivalent Exchange 3 is not installed, skipping");
             return;

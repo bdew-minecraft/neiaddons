@@ -46,7 +46,10 @@ public class AddonForestry extends BaseAddon {
     }
 
     @PreInit
+    @Override
     public void preInit(FMLPreInitializationEvent ev) {
+        super.preInit(ev);
+        
         if (!Loader.isModLoaded("Forestry")) {
             NEIAddons.log.info("Forestry is not installed, skipping");
             return;

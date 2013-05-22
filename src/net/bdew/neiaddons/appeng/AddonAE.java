@@ -44,6 +44,8 @@ public class AddonAE extends BaseAddon {
 
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
+        super.preInit(ev);
+        
         if (!Loader.isModLoaded("AppliedEnergistics")) {
             NEIAddons.log.info("Applied Energistics is not installed, skipping");
             return;
