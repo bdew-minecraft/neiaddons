@@ -31,21 +31,21 @@ public class AddonEE3 extends BaseAddon {
         return "Equivalent Exchange 3";
     }
 
-    @PreInit
-    public void preInit(FMLPreInitializationEvent ev) {
-        super.preInit(ev);
-
-        if (ev.getSide() != Side.CLIENT) {
-            logInfo("Equivalent Exchange 3 Addon is client-side only, skipping");
-            return;
-        }
-
-        if (!verifyModVersion("EE3"))
-            return;
-
-        NEIAddons.register(this);
+    @Override
+    public String[] getDependencies() {
+        return new String[]{"EE3"};
+    }
+    
+    @Override
+    public boolean checkSide(Side side) {
+        return side.isClient();
     }
 
+    @PreInit
+    public void preInit(FMLPreInitializationEvent ev) {
+        doPreInit(ev);
+    }
+    
     @Override
     public void init(Side side) throws Exception {
         GuiPortableCrafting = Utils.getAndCheckClass("com.pahimar.ee3.client.gui.inventory.GuiPortableCrafting", GuiContainer.class);

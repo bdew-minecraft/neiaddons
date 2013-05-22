@@ -47,22 +47,21 @@ public class AddonForestry extends BaseAddon {
         return "Forestry";
     }
 
-    @PreInit
     @Override
-    public void preInit(FMLPreInitializationEvent ev) {
-        super.preInit(ev);
-        
-        if (ev.getSide() != Side.CLIENT) {
-            logInfo("Forestry Addon is client-side only, skipping");
-            return;
-        }
-
-        if (!verifyModVersion("Forestry@[2.2.4.0,)"))
-            return;
-
-        NEIAddons.register(this);
+    public boolean checkSide(Side side) {
+        return side.isClient();
+    }
+    
+    @Override
+    public String[] getDependencies() {
+        return new String[]{"Forestry@[2.4.0.0,)"};
     }
 
+    @PreInit
+    public void preInit(FMLPreInitializationEvent ev) {
+        doPreInit(ev);
+    }
+    
     @Override
     public void init(Side side) throws Exception {
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
