@@ -20,13 +20,13 @@ public abstract class BaseAddon implements NEIAddon {
     public final Boolean isActive() {
         return active;
     }
-    
+
     public final static void logInfo(String message, Object... params) {
-        log.log(Level.INFO,message,params);
+        log.log(Level.INFO, String.format(message, params));
     }
 
     public final static void logWarning(String message, Object... params) {
-        log.log(Level.WARNING,message,params);
+        log.log(Level.WARNING, String.format(message, params));
     }
     
     public void preInit(FMLPreInitializationEvent ev) {
@@ -61,5 +61,4 @@ public abstract class BaseAddon implements NEIAddon {
         return true;
     }
 
-    
 }
