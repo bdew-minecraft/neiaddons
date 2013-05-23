@@ -33,7 +33,7 @@ public class SerumUtils {
             int chromosome = nbt.getInteger("chromosome");
             String allele = nbt.getString("uid");
             if (chromosome >= EnumBeeChromosome.HUMIDITY.ordinal()) {
-                chromosome = chromosome - 1;
+                chromosome = chromosome + 1;
             }
             return new AlleleBeeChromosomePair(allele, chromosome);
         }

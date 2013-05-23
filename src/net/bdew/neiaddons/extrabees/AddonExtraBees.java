@@ -19,6 +19,7 @@ import net.bdew.neiaddons.forestry.BeeUtils;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import forestry.api.apiculture.BeeManager;
@@ -112,5 +113,8 @@ public class AddonExtraBees extends BaseAddon {
 
         allBeeSpecies = BeeUtils.getAllBeeSpecies(loadBlacklisted);
         registerSerums();
+        API.registerRecipeHandler(new IsolatorRecipeHandler());
+        
+        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Exta Bees@Isolator@isolator");
     }
 }

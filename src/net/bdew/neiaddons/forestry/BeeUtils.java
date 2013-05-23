@@ -36,7 +36,7 @@ public class BeeUtils {
     }
     
     public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
-        ArrayList<IAlleleBeeSpecies> list = new ArrayList<>();
+        ArrayList<IAlleleBeeSpecies> list = new ArrayList<IAlleleBeeSpecies>();
         for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
             if (entry.getValue() instanceof IAlleleBeeSpecies) {
                 if (includeBlacklisted || (!AlleleManager.alleleRegistry.isBlacklisted(entry.getValue().getUID()))) {
