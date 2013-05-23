@@ -21,6 +21,11 @@ public class AlleleBeeChromosomePair {
         this.chromosome = chromosome;
     }
 
+    public AlleleBeeChromosomePair(String allele, int chromosome) {
+        this.allele = allele;
+        this.chromosome = chromosome;
+    }
+    
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (!(obj instanceof AlleleBeeChromosomePair)) return false;
