@@ -17,6 +17,7 @@ import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -36,6 +37,9 @@ public class AddonAE extends BaseAddon {
 
     public static final String channel = "neiaddons.ae";
 
+    @Instance(NEIAddons.modid + "|AE")
+    public static AddonAE instance;
+    
     @Override
     public String getName() {
         return "Applied Energistics";

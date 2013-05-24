@@ -51,7 +51,7 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
             }
 
             if (products.size() == 0) {
-                AddonForestry.logWarning("%s doesn't produce anthing?",species.getUID());
+                AddonForestry.instance.logWarning("%s doesn't produce anthing?",species.getUID());
             }
         }
 

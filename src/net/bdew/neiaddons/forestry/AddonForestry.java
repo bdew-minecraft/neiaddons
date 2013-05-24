@@ -19,6 +19,7 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -39,6 +40,9 @@ public class AddonForestry extends BaseAddon {
     public static boolean addBees;
     public static boolean addCombs;
 
+    @Instance(NEIAddons.modid + "|Forestry")
+    public static AddonForestry instance;
+
     @Override
     public String getName() {
         return "Forestry";
@@ -48,17 +52,17 @@ public class AddonForestry extends BaseAddon {
     public boolean checkSide(Side side) {
         return side.isClient();
     }
-    
+
     @Override
     public String[] getDependencies() {
-        return new String[]{"Forestry@[2.2.0.0,2.2.3.0)"};
+        return new String[] { "Forestry@[2.2.0.0,2.2.3.0)" };
     }
 
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
         doPreInit(ev);
     }
-    
+
     @Override
     public void init(Side side) throws Exception {
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);

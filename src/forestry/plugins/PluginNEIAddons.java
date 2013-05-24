@@ -23,7 +23,7 @@ public class PluginNEIAddons implements IPlugin {
     }
 
     public void doInit() {
-        AddonForestry.logInfo("Forestry Plugin loaded");
+        AddonForestry.instance.logInfo("Forestry Plugin loaded");
     }
 
     public void postInit() {
