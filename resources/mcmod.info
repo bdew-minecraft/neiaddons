@@ -37,8 +37,8 @@
   ]
 },
 {
-  "modid": "NEIAddons|EE3",
-  "name": "NEI Addons: Equivalent Exchange 3",
+  "modid": "NEIAddons|CraftingTables",
+  "name": "NEI Addons: Crafting Tables",
   "description": "",
   "version": "@@VERSION@@",
   "url": "bdew.net/mods/neiaddons",

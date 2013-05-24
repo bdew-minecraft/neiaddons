@@ -36,11 +36,11 @@ public class ServerHandler implements IPacketHandler {
             if (op.equals("LoadRecipe")) {
                 handle_LoadRecipe(p, data.getTagList("stacks"));
             } else {
-                AddonAE.logWarning("Uknown packet from client '%s': %s", p.username, op);
+                AddonAE.instance.logWarning("Uknown packet from client '%s': %s", p.username, op);
             }
 
         } catch (Throwable e) {
-            AddonAE.logWarning("Error handling packet from client '%s'", p.username);
+            AddonAE.instance.logWarning("Error handling packet from client '%s'", p.username);
             e.printStackTrace();
         }
     }

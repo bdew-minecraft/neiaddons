@@ -24,18 +24,18 @@ import cpw.mods.fml.relauncher.Side;
 public abstract class BaseAddon implements NEIAddon {
 
     protected Boolean active = false;
-    protected static Logger log;
+    protected Logger log;
 
     @Override
     public final Boolean isActive() {
         return active;
     }
 
-    public final static void logInfo(String message, Object... params) {
+    public final void logInfo(String message, Object... params) {
         log.log(Level.INFO, String.format(message, params));
     }
 
-    public final static void logWarning(String message, Object... params) {
+    public final void logWarning(String message, Object... params) {
         log.log(Level.WARNING, String.format(message, params));
     }
 
