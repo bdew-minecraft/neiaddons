@@ -62,7 +62,7 @@ public class AddonExtraBees extends BaseAddon {
         active = true;
     }
 
-    public static void registerSerums() {
+    public void registerSerums() {
         Set<AlleleBeeChromosomePair> res = new HashSet<AlleleBeeChromosomePair>();
 
         for (IAlleleBeeSpecies species : allBeeSpecies) {
