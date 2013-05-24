@@ -22,8 +22,6 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IAllele;
 
 public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
@@ -92,22 +90,17 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
         if (!outputId.equals("beeproducts")) { return; }
 
-        for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-            if (!(entry.getValue() instanceof IAlleleBeeSpecies)) {
-                continue;
-            }
-            IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
+        for (IAlleleBeeSpecies species : AddonForestry.allBeeSpecies) {
             arecipes.add(new CachedBeeProductRecipe(species));
         }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-            if (!(entry.getValue() instanceof IAlleleBeeSpecies)) {
-                continue;
-            }
-            IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
+        if (!AddonForestry.productsCache.containsKey(result.itemID)) {
+            return;
+        }
+        for (IAlleleBeeSpecies species : AddonForestry.productsCache.get(result.itemID)) {
             CachedBeeProductRecipe recipe = new CachedBeeProductRecipe(species);
             for (LabeledPositionedStack stack : recipe.products) {
                 if (NEIClientUtils.areStacksSameTypeCrafting(stack.item, result)) {

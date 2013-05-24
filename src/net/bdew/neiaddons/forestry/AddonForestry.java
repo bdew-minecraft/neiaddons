@@ -10,8 +10,10 @@
 package net.bdew.neiaddons.forestry;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
-import java.util.Map.Entry;
+import java.util.Map;
 
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
@@ -28,17 +30,20 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.core.ItemInterface;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IAllele;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
     private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
 
+    public static Collection<IAlleleBeeSpecies> allBeeSpecies;
+    
     public static boolean showSecret;
     public static boolean addBees;
     public static boolean addCombs;
+    public static boolean loadBlacklisted;
+
+    public static Map<Integer, Collection<IAlleleBeeSpecies>> productsCache;
 
     @Instance(NEIAddons.modid + "|Forestry")
     public static AddonForestry instance;
@@ -66,9 +71,17 @@ public class AddonForestry extends BaseAddon {
     @Override
     public void init(Side side) throws Exception {
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
-        addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add ALL bees to NEI search, this will include secret, inactive, unfinished bees, etc.").getBoolean(false);
+        addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add all bees to NEI search").getBoolean(false);
         addCombs = NEIAddons.config.get(getName(), "Add Combs to Search", false, "Set to true to add all combs that are produced by bees to NEI search").getBoolean(false);
+        loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
         active = true;
+    }
+
+    private void addProductToCache(int id, IAlleleBeeSpecies species) {
+        if (!productsCache.containsKey(id)) {
+            productsCache.put(id, new ArrayList<IAlleleBeeSpecies>());
+        }
+        productsCache.get(id).add(species);
     }
 
     @Override
@@ -82,44 +95,42 @@ public class AddonForestry extends BaseAddon {
         API.registerRecipeHandler(beeProductsRecipeHandler);
         API.registerUsageHandler(beeProductsRecipeHandler);
 
+        allBeeSpecies = BeeUtils.getAllBeeSpecies(loadBlacklisted);
+        
         Item comb = ItemInterface.getItem("beeComb").getItem();
+        HashSet<Integer> seencombs = new HashSet<Integer>();
 
-        if (addBees || addCombs) {
-            HashSet<Integer> seencombs = new HashSet<Integer>();
-            for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-                if (entry.getValue() instanceof IAlleleBeeSpecies) {
+        productsCache = new HashMap<Integer, Collection<IAlleleBeeSpecies>>();
 
-                    IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
-                    if (addBees) {
-                        API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN));
-                        API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.DRONE));
-                        API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
-                    }
-                    if (addCombs) {
-                        for (ItemStack prod : species.getProducts().keySet()) {
-                            if (prod.itemID == comb.itemID) {
-                                seencombs.add(prod.getItemDamage());
-                            }
-                        }
-                        for (ItemStack prod : species.getSpecialty().keySet()) {
-                            if (prod.itemID == comb.itemID) {
-                                seencombs.add(prod.getItemDamage());
-                            }
-                        }
-                    }
+        for (IAlleleBeeSpecies species : allBeeSpecies) {
+            if (addBees) {
+                API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN));
+                API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.DRONE));
+                API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
+            }
+            for (ItemStack prod : species.getProducts().keySet()) {
+                addProductToCache(prod.itemID, species);
+                if (addCombs && (prod.itemID == comb.itemID)) {
+                    seencombs.add(prod.getItemDamage());
                 }
             }
-
-            if (addCombs) {
-                ArrayList<ItemStack> combs = new ArrayList<ItemStack>();
-                comb.getSubItems(comb.itemID, null, combs);
-
-                for (ItemStack item : combs) {
-                    seencombs.add(item.getItemDamage());
+            for (ItemStack prod : species.getSpecialty().keySet()) {
+                addProductToCache(prod.itemID, species);
+                if (addCombs && (prod.itemID == comb.itemID)) {
+                    seencombs.add(prod.getItemDamage());
                 }
-
-                API.setItemDamageVariants(comb.itemID, seencombs);
             }
+        }
+
+        if (addCombs) {
+            ArrayList<ItemStack> combs = new ArrayList<ItemStack>();
+            comb.getSubItems(comb.itemID, null, combs);
+
+            for (ItemStack item : combs) {
+                seencombs.add(item.getItemDamage());
+            }
+
+            API.setItemDamageVariants(comb.itemID, seencombs);
         }
 
         FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Bees@Bee Products@beeproducts");
