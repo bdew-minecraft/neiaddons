@@ -21,6 +21,7 @@ import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
 import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
+import forestry.api.arboriculture.ITree;
 import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
@@ -30,7 +31,7 @@ import forestry.api.genetics.ISpeciesRoot;
 
 public class GeneticsUtils {
     public enum RecipePosition {
-        Parent1, Parent2, Offspring;
+        Parent1, Parent2, Offspring, Producer;
     }
 
     public static Map<RecipePosition, Integer> beePositionToType;
@@ -41,11 +42,13 @@ public class GeneticsUtils {
         beePositionToType.put(RecipePosition.Parent1, EnumBeeType.PRINCESS.ordinal());
         beePositionToType.put(RecipePosition.Parent2, EnumBeeType.DRONE.ordinal());
         beePositionToType.put(RecipePosition.Offspring, EnumBeeType.QUEEN.ordinal());
+        beePositionToType.put(RecipePosition.Producer, EnumBeeType.QUEEN.ordinal());
 
         treePositionToType = new HashMap<RecipePosition, Integer>();
         treePositionToType.put(RecipePosition.Parent1, EnumGermlingType.SAPLING.ordinal());
         treePositionToType.put(RecipePosition.Parent2, EnumGermlingType.POLLEN.ordinal());
         treePositionToType.put(RecipePosition.Offspring, EnumGermlingType.SAPLING.ordinal());
+        treePositionToType.put(RecipePosition.Producer, EnumGermlingType.SAPLING.ordinal());
     }
 
     public static ItemStack stackFromSpecies(IAlleleSpecies species, RecipePosition position) {
@@ -93,4 +96,36 @@ public class GeneticsUtils {
         }
         return list;
     }
+
+    static public Map<ItemStack,Integer> getProduceFromSpecies(IAlleleSpecies species) {
+        if (species instanceof IAlleleSpecies) {
+            return ((IAlleleBeeSpecies)species).getProducts();
+        } else if (species instanceof IAlleleTreeSpecies) {
+            ITreeRoot root = (ITreeRoot) species.getRoot();
+            ITree tree = (ITree) root.templateAsIndividual(root.getTemplate(species.getUID()));
+            Map<ItemStack,Integer> result = new HashMap<ItemStack, Integer>();
+            for (ItemStack stack : tree.getProduceList()) {
+                result.put(stack, 100);
+            }
+            return result;
+        }
+        return null;
+    }
+    
+    static public Map<ItemStack,Integer> getSpecialtyFromSpecies(IAlleleSpecies species) {
+        if (species instanceof IAlleleSpecies) {
+            return ((IAlleleBeeSpecies)species).getSpecialty();
+        } else if (species instanceof IAlleleTreeSpecies) {
+            ITreeRoot root = (ITreeRoot) species.getRoot();
+            ITree tree = (ITree) root.templateAsIndividual(root.getTemplate(species.getUID()));
+            Map<ItemStack,Integer> result = new HashMap<ItemStack, Integer>();
+            for (ItemStack stack : tree.getSpecialtyList()) {
+                result.put(stack, 100);
+            }
+            return result;
+        }
+        return null;
+    };
+    
+
 }
