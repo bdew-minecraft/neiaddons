@@ -41,10 +41,10 @@ public class BeeUtils {
         beePositionToType.put(RecipePosition.Parent2, EnumBeeType.DRONE.ordinal());
         beePositionToType.put(RecipePosition.Offspring, EnumBeeType.QUEEN.ordinal());
 
-        beePositionToType = new HashMap<RecipePosition, Integer>();
-        beePositionToType.put(RecipePosition.Parent1, EnumGermlingType.POLLEN.ordinal());
-        beePositionToType.put(RecipePosition.Parent2, EnumGermlingType.GERMLING.ordinal());
-        beePositionToType.put(RecipePosition.Offspring, EnumGermlingType.SAPLING.ordinal());
+        treePositionToType = new HashMap<RecipePosition, Integer>();
+        treePositionToType.put(RecipePosition.Parent1, EnumGermlingType.POLLEN.ordinal());
+        treePositionToType.put(RecipePosition.Parent2, EnumGermlingType.GERMLING.ordinal());
+        treePositionToType.put(RecipePosition.Offspring, EnumGermlingType.SAPLING.ordinal());
     }
 
     public static ItemStack stackFromSecies(IAlleleSpecies species, RecipePosition position) {
@@ -53,7 +53,7 @@ public class BeeUtils {
         if (root instanceof IBeeRoot) {
             type = beePositionToType.get(position);
         } else if (root instanceof ITreeRoot) {
-            type = beePositionToType.get(position);
+            type = treePositionToType.get(position);
         }
         return stackFromSecies(species, type);
     }
