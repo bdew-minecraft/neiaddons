@@ -17,7 +17,6 @@ import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAllele;
@@ -56,7 +55,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         if (!outputId.equals("isolator")) { return; }
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
-            IAllele[] template = BeeManager.breedingManager.getBeeTemplate(species.getUID());
+            IAllele[] template = AddonExtraBees.beeRoot.getTemplate(species.getUID());
             for (int i = 0; i < template.length; i++) {
                 if (template[i] != null) {
                     if (SerumUtils.shouldMakeSerum(template[i].getUID(), i)) {
@@ -77,7 +76,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         if (pair == null) { return; }
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
-            IAllele[] template = BeeManager.breedingManager.getBeeTemplate(species.getUID());
+            IAllele[] template = AddonExtraBees.beeRoot.getTemplate(species.getUID());
             if (template[pair.chromosome] == null) continue;
             if (template[pair.chromosome].getUID().equals(pair.allele)) {
                 arecipes.add(new CachedSerumRecipe(species, result));

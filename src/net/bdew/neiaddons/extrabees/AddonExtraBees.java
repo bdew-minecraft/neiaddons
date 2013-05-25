@@ -22,9 +22,9 @@ import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
-import forestry.api.apiculture.BeeManager;
 import forestry.api.apiculture.EnumBeeChromosome;
 import forestry.api.apiculture.IAlleleBeeSpecies;
+import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
 
@@ -35,6 +35,8 @@ public class AddonExtraBees extends BaseAddon {
     public static boolean dumpSerums;
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
 
+    public static IBeeRoot beeRoot;
+    
     @Override
     public String getName() {
         return "Extra Bees";
@@ -42,7 +44,7 @@ public class AddonExtraBees extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[] { "ExtraBees", "Forestry@[2.2.0.0,2.2.3.0)" };
+        return new String[] { "ExtraBees", "Forestry@[2.2.4.0,)" };
     }
 
     @Override
@@ -65,8 +67,10 @@ public class AddonExtraBees extends BaseAddon {
     public void registerSerums() {
         Set<AlleleBeeChromosomePair> res = new HashSet<AlleleBeeChromosomePair>();
 
+        beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
+        
         for (IAlleleBeeSpecies species : allBeeSpecies) {
-            IAllele[] template = BeeManager.breedingManager.getBeeTemplate(species.getUID());
+            IAllele[] template = beeRoot.getTemplate(species.getUID());
             for (int i = 0; i < template.length; i++) {
                 if (template[i] != null) {
                     if ((!loadBlacklisted) && AlleleManager.alleleRegistry.isBlacklisted(template[i].getUID())) {
