@@ -73,5 +73,24 @@
   "dependencies": [
   	"NEIAddons"
   ]
+},
+{
+  "modid": "NEIAddons|ExtraBees",
+  "name": "NEI Addons: Extra Bees",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neiaddons",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
+  ]
 }
 ]
