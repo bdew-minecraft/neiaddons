@@ -55,12 +55,12 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 36, label, 10));
             }
-
-            if (products.size() == 0) {
-                AddonForestry.instance.logWarning("%s doesn't produce anthing?", species.getUID());
-            }
         }
 
+        public boolean isNoOutput() {
+            return products.size()==0;
+        }
+        
         @Override
         public ArrayList<PositionedStack> getIngredients() {
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
@@ -99,7 +99,10 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
         if (!outputId.equals(getRecipeIdent())) { return; }
 
         for (IAlleleSpecies species : getAllSpecies()) {
-            arecipes.add(new CachedProduceRecipe(species));
+            CachedProduceRecipe rec = new CachedProduceRecipe(species);
+            if (!rec.isNoOutput()) {
+                arecipes.add(rec);
+            }
         }
     }
 
