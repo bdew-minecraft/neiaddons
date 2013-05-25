@@ -98,7 +98,7 @@ public class GeneticsUtils {
     }
 
     static public Map<ItemStack, Integer> getProduceFromSpecies(IAlleleSpecies species) {
-        if (species instanceof IAlleleSpecies) {
+        if (species instanceof IAlleleBeeSpecies) {
             return ((IAlleleBeeSpecies) species).getProducts();
         } else if (species instanceof IAlleleTreeSpecies) {
             ITreeRoot root = (ITreeRoot) species.getRoot();
@@ -113,7 +113,7 @@ public class GeneticsUtils {
     }
 
     static public Map<ItemStack, Integer> getSpecialtyFromSpecies(IAlleleSpecies species) {
-        if (species instanceof IAlleleSpecies) {
+        if (species instanceof IAlleleBeeSpecies) {
             return ((IAlleleBeeSpecies) species).getSpecialty();
         } else if (species instanceof IAlleleTreeSpecies) {
             ITreeRoot root = (ITreeRoot) species.getRoot();

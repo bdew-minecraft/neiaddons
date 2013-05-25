@@ -119,7 +119,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (speciesRoot.isMember(ingredient)) { return; }
+        if (!speciesRoot.isMember(ingredient)) { return; }
         arecipes.add(new CachedProduceRecipe(speciesRoot.getMember(ingredient).getGenome().getPrimary()));
     }
 
