@@ -3,15 +3,14 @@ package net.bdew.neiaddons.forestry.bees;
 import java.util.Collection;
 import java.util.Map;
 
-import net.bdew.neiaddons.forestry.AddonForestry;
-import net.bdew.neiaddons.forestry.ProduceRecipeHandler;
+import net.bdew.neiaddons.forestry.BaseProduceRecipeHandler;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAlleleSpecies;
 
-public class BeeProduceHandler extends ProduceRecipeHandler {
+public class BeeProduceHandler extends BaseProduceRecipeHandler {
 
     public BeeProduceHandler() {
-        super(AddonForestry.beeRoot);
+        super(BeeHelper.root);
     }
 
     @Override
@@ -26,12 +25,12 @@ public class BeeProduceHandler extends ProduceRecipeHandler {
 
     @Override
     public Collection<IAlleleBeeSpecies> getAllSpecies() {
-        return AddonForestry.allBeeSpecies;
+        return BeeHelper.allSpecies;
     }
 
     @Override
     public Map<Integer, Collection<IAlleleSpecies>> getProduceCache() {
-        return AddonForestry.beeProductsCache;
+        return BeeHelper.productsCache;
     }
 
 }

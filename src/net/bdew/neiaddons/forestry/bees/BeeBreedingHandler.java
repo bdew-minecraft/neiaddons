@@ -1,10 +1,12 @@
-package net.bdew.neiaddons.forestry;
+package net.bdew.neiaddons.forestry.bees;
+
+import net.bdew.neiaddons.forestry.BaseBreedingRecipeHandler;
 
 
-public class BeeBreedingHandler extends BreedingRecipeHandler {
+public class BeeBreedingHandler extends BaseBreedingRecipeHandler {
 
     public BeeBreedingHandler() {
-        super(AddonForestry.beeRoot);
+        super(BeeHelper.root);
     }
 
     @Override

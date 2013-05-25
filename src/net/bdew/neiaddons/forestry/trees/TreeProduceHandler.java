@@ -3,15 +3,14 @@ package net.bdew.neiaddons.forestry.trees;
 import java.util.Collection;
 import java.util.Map;
 
-import net.bdew.neiaddons.forestry.AddonForestry;
-import net.bdew.neiaddons.forestry.ProduceRecipeHandler;
+import net.bdew.neiaddons.forestry.BaseProduceRecipeHandler;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.genetics.IAlleleSpecies;
 
-public class TreeProduceHandler extends ProduceRecipeHandler {
+public class TreeProduceHandler extends BaseProduceRecipeHandler {
 
     public TreeProduceHandler() {
-        super(AddonForestry.treeRoot);
+        super(TreeHelper.root);
     }
 
     @Override
@@ -26,12 +25,12 @@ public class TreeProduceHandler extends ProduceRecipeHandler {
 
     @Override
     public Collection<IAlleleTreeSpecies> getAllSpecies() {
-        return AddonForestry.allTreeSpecies;
+        return TreeHelper.allSpecies;
     }
 
     @Override
     public Map<Integer, Collection<IAlleleSpecies>> getProduceCache() {
-        return AddonForestry.treeProductsCache;
+        return TreeHelper.productsCache;
     }
 
 }

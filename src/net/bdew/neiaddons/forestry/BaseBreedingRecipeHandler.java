@@ -23,14 +23,14 @@ import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.IMutation;
 import forestry.api.genetics.ISpeciesRoot;
 
-public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
+public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
-    private ISpeciesRoot speciesRoot;
-    
-    public BreedingRecipeHandler(ISpeciesRoot root) {
+    private final ISpeciesRoot speciesRoot;
+
+    public BaseBreedingRecipeHandler(ISpeciesRoot root) {
         this.speciesRoot = root;
     }
-    
+
     public class CachedBreedingRecipe extends CachedRecipe {
         LabeledPositionedStack parrent1, parrent2, result;
         public float chance;
@@ -84,7 +84,7 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
         IAlleleSpecies species = resultIndividual.getGenome().getPrimary();
 
         for (IMutation mutation : speciesRoot.getMutations(false)) {
-            if ((mutation.getTemplate()[0].equals(species))) {
+            if (mutation.getTemplate()[0].equals(species)) {
                 if (!mutation.isSecret() || AddonForestry.showSecret) {
                     arecipes.add(new CachedBreedingRecipe(mutation));
                 }
@@ -97,7 +97,7 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
         if (!speciesRoot.isMember(ingredient)) { return; }
         IIndividual individual = speciesRoot.getMember(ingredient);
         IAlleleSpecies species = individual.getGenome().getPrimary();
-        
+
         for (IMutation mutation : speciesRoot.getMutations(false)) {
             if (mutation.getAllele0().equals(species) || mutation.getAllele1().equals(species)) {
                 if (!mutation.isSecret() || AddonForestry.showSecret) {
@@ -123,7 +123,7 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
     }
 
     public abstract String getRecipeIdent();
-    
+
     @Override
     public String getGuiTexture() {
         return "/mods/neiaddons/textures/gui/breeding.png";

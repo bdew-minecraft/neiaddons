@@ -83,13 +83,13 @@ public class GeneticsUtils {
     public static Collection<IAlleleTreeSpecies> getAllTreeSpecies(boolean includeBlacklisted) {
         return getAllTypedSpecies(IAlleleTreeSpecies.class, includeBlacklisted);
     }
-    
+
     @SuppressWarnings("unchecked")
     public static <T> Collection<T> getAllTypedSpecies(Class<? extends T> type, boolean includeBlacklisted) {
         ArrayList<T> list = new ArrayList<T>();
         for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
             if (type.isInstance(entry.getValue())) {
-                if (includeBlacklisted || (!AlleleManager.alleleRegistry.isBlacklisted(entry.getValue().getUID()))) {
+                if (includeBlacklisted || !AlleleManager.alleleRegistry.isBlacklisted(entry.getValue().getUID())) {
                     list.add((T) entry.getValue());
                 }
             }
@@ -97,13 +97,13 @@ public class GeneticsUtils {
         return list;
     }
 
-    static public Map<ItemStack,Integer> getProduceFromSpecies(IAlleleSpecies species) {
+    static public Map<ItemStack, Integer> getProduceFromSpecies(IAlleleSpecies species) {
         if (species instanceof IAlleleSpecies) {
-            return ((IAlleleBeeSpecies)species).getProducts();
+            return ((IAlleleBeeSpecies) species).getProducts();
         } else if (species instanceof IAlleleTreeSpecies) {
             ITreeRoot root = (ITreeRoot) species.getRoot();
             ITree tree = (ITree) root.templateAsIndividual(root.getTemplate(species.getUID()));
-            Map<ItemStack,Integer> result = new HashMap<ItemStack, Integer>();
+            Map<ItemStack, Integer> result = new HashMap<ItemStack, Integer>();
             for (ItemStack stack : tree.getProduceList()) {
                 result.put(stack, 100);
             }
@@ -111,14 +111,14 @@ public class GeneticsUtils {
         }
         return null;
     }
-    
-    static public Map<ItemStack,Integer> getSpecialtyFromSpecies(IAlleleSpecies species) {
+
+    static public Map<ItemStack, Integer> getSpecialtyFromSpecies(IAlleleSpecies species) {
         if (species instanceof IAlleleSpecies) {
-            return ((IAlleleBeeSpecies)species).getSpecialty();
+            return ((IAlleleBeeSpecies) species).getSpecialty();
         } else if (species instanceof IAlleleTreeSpecies) {
             ITreeRoot root = (ITreeRoot) species.getRoot();
             ITree tree = (ITree) root.templateAsIndividual(root.getTemplate(species.getUID()));
-            Map<ItemStack,Integer> result = new HashMap<ItemStack, Integer>();
+            Map<ItemStack, Integer> result = new HashMap<ItemStack, Integer>();
             for (ItemStack stack : tree.getSpecialtyList()) {
                 result.put(stack, 100);
             }
@@ -126,6 +126,5 @@ public class GeneticsUtils {
         }
         return null;
     };
-    
 
 }

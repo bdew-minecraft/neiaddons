@@ -24,16 +24,16 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.ISpeciesRoot;
 
-public abstract class ProduceRecipeHandler extends TemplateRecipeHandler {
+public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
-    private ISpeciesRoot speciesRoot;
-    private Map<Integer, Collection<IAlleleSpecies>> cache;
-    
-    public ProduceRecipeHandler(ISpeciesRoot root) {
+    private final ISpeciesRoot speciesRoot;
+    private final Map<Integer, Collection<IAlleleSpecies>> cache;
+
+    public BaseProduceRecipeHandler(ISpeciesRoot root) {
         this.speciesRoot = root;
         cache = getProduceCache();
     }
-    
+
     public class CachedProduceRecipe extends CachedRecipe {
         private final LabeledPositionedStack producer;
         private final ArrayList<LabeledPositionedStack> products;
@@ -88,7 +88,7 @@ public abstract class ProduceRecipeHandler extends TemplateRecipeHandler {
             }
         }
     }
-    
+
     @Override
     public void loadCraftingRecipes(String outputId, Object... results) {
         if (outputId.equals("item")) {
