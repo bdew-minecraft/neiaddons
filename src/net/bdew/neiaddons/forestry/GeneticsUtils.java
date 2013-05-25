@@ -20,6 +20,7 @@ import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
 import forestry.api.arboriculture.EnumGermlingType;
+import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
@@ -31,10 +32,10 @@ public class GeneticsUtils {
     public enum RecipePosition {
         Parent1, Parent2, Offspring;
     }
-    
-    public static Map<RecipePosition,Integer> beePositionToType;
-    public static Map<RecipePosition,Integer> treePositionToType;
-    
+
+    public static Map<RecipePosition, Integer> beePositionToType;
+    public static Map<RecipePosition, Integer> treePositionToType;
+
     static {
         beePositionToType = new HashMap<RecipePosition, Integer>();
         beePositionToType.put(RecipePosition.Parent1, EnumBeeType.PRINCESS.ordinal());
@@ -66,19 +67,27 @@ public class GeneticsUtils {
         return root.getMemberStack(individual, type);
     }
 
-    
     @Deprecated
     public static ItemStack stackFromAllele(IAllele allele, EnumBeeType type) {
         assert allele instanceof IAlleleSpecies;
-        return stackFromSpecies((IAlleleSpecies)allele, type.ordinal());
+        return stackFromSpecies((IAlleleSpecies) allele, type.ordinal());
+    }
+
+    public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
+        return getAllTypedSpecies(IAlleleBeeSpecies.class, includeBlacklisted);
+    }
+
+    public static Collection<IAlleleTreeSpecies> getAllTreeSpecies(boolean includeBlacklisted) {
+        return getAllTypedSpecies(IAlleleTreeSpecies.class, includeBlacklisted);
     }
     
-    public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
-        ArrayList<IAlleleBeeSpecies> list = new ArrayList<IAlleleBeeSpecies>();
+    @SuppressWarnings("unchecked")
+    public static <T> Collection<T> getAllTypedSpecies(Class<? extends T> type, boolean includeBlacklisted) {
+        ArrayList<T> list = new ArrayList<T>();
         for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-            if (entry.getValue() instanceof IAlleleBeeSpecies) {
+            if (type.isInstance(entry.getValue())) {
                 if (includeBlacklisted || (!AlleleManager.alleleRegistry.isBlacklisted(entry.getValue().getUID()))) {
-                    list.add((IAlleleBeeSpecies) entry.getValue());
+                    list.add((T) entry.getValue());
                 }
             }
         }

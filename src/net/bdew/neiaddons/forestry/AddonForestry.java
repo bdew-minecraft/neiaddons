@@ -30,6 +30,8 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
+import forestry.api.arboriculture.EnumGermlingType;
+import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
@@ -43,10 +45,13 @@ public class AddonForestry extends BaseAddon {
     public static ITreeRoot treeRoot;
 
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
+    public static Collection<IAlleleTreeSpecies> allTreeSpecies;
     
     public static boolean showSecret;
     public static boolean addBees;
     public static boolean addCombs;
+    public static boolean addSaplings;
+    public static boolean addPollen;
     public static boolean loadBlacklisted;
 
     public static Map<Integer, Collection<IAlleleBeeSpecies>> productsCache;
@@ -79,6 +84,8 @@ public class AddonForestry extends BaseAddon {
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
         addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add all bees to NEI search").getBoolean(false);
         addCombs = NEIAddons.config.get(getName(), "Add Combs to Search", false, "Set to true to add all combs that are produced by bees to NEI search").getBoolean(false);
+        addSaplings = NEIAddons.config.get(getName(), "Add Saplings to Search", true, "Set to true to add all saplings to NEI search").getBoolean(false);
+        addPollen = NEIAddons.config.get(getName(), "Add Pollen to Search", true, "Set to true to add all pollen types to NEI search").getBoolean(false);
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
         active = true;
     }
@@ -90,26 +97,18 @@ public class AddonForestry extends BaseAddon {
         productsCache.get(id).add(species);
     }
 
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void loadClient() {
+    public void setupBees() {
         beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
-        treeRoot = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
-
+        allBeeSpecies = GeneticsUtils.getAllBeeSpecies(loadBlacklisted);
+        
         beeBreedingRecipeHandler = new BeeBreedingHandler();
         API.registerRecipeHandler(beeBreedingRecipeHandler);
         API.registerUsageHandler(beeBreedingRecipeHandler);
 
-        treeBreedingRecipeHandler = new TreeBreedingHandler();
-        API.registerRecipeHandler(treeBreedingRecipeHandler);
-        API.registerUsageHandler(treeBreedingRecipeHandler);
-        
         beeProductsRecipeHandler = new BeeProductsRecipeHandler();
         API.registerRecipeHandler(beeProductsRecipeHandler);
         API.registerUsageHandler(beeProductsRecipeHandler);
 
-        allBeeSpecies = GeneticsUtils.getAllBeeSpecies(loadBlacklisted);
-        
         Item comb = ItemInterface.getItem("beeComb").getItem();
         HashSet<Integer> seencombs = new HashSet<Integer>();
 
@@ -117,9 +116,9 @@ public class AddonForestry extends BaseAddon {
 
         for (IAlleleBeeSpecies species : allBeeSpecies) {
             if (addBees) {
-                API.addNBTItem(GeneticsUtils.stackFromAllele(species, EnumBeeType.QUEEN));
-                API.addNBTItem(GeneticsUtils.stackFromAllele(species, EnumBeeType.DRONE));
-                API.addNBTItem(GeneticsUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
+                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.QUEEN.ordinal()));
+                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
+                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
             }
             for (ItemStack prod : species.getProducts().keySet()) {
                 addProductToCache(prod.itemID, species);
@@ -146,7 +145,34 @@ public class AddonForestry extends BaseAddon {
             API.setItemDamageVariants(comb.itemID, seencombs);
         }
 
-        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Bees@Bee Products@beeproducts");
-        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Bees@Bee Breeding@beebreeding");
+    }
+    
+    public void setupTrees() {
+        treeRoot = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
+        allTreeSpecies = GeneticsUtils.getAllTreeSpecies(loadBlacklisted);
+
+        treeBreedingRecipeHandler = new TreeBreedingHandler();
+        API.registerRecipeHandler(treeBreedingRecipeHandler);
+        API.registerUsageHandler(treeBreedingRecipeHandler);
+        
+        for (IAlleleTreeSpecies species : allTreeSpecies) {
+            if (addSaplings) {
+                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
+            }
+            if (addPollen) {
+                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
+            }
+        };
+        
+    }
+    
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void loadClient() {
+        setupBees();
+        setupTrees();
+        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Genetics@Bee Products@beeproducts");
+        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Genetics@Bee Breeding@beebreeding");
+        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Forestry Genetics@Tree Breeding@treebreeding");
     }
 }
