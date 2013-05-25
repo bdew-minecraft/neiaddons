@@ -30,15 +30,17 @@ import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
+import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
-    private BreedingRecipeHandler beeBreedingRecipeHandler;
+    private BreedingRecipeHandler beeBreedingRecipeHandler,treeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
 
     public static IBeeRoot beeRoot;
+    public static ITreeRoot treeRoot;
 
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
     
@@ -92,11 +94,16 @@ public class AddonForestry extends BaseAddon {
     @SideOnly(Side.CLIENT)
     public void loadClient() {
         beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
+        treeRoot = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
 
         beeBreedingRecipeHandler = new BeeBreedingHandler();
         API.registerRecipeHandler(beeBreedingRecipeHandler);
         API.registerUsageHandler(beeBreedingRecipeHandler);
 
+        treeBreedingRecipeHandler = new TreeBreedingHandler();
+        API.registerRecipeHandler(treeBreedingRecipeHandler);
+        API.registerUsageHandler(treeBreedingRecipeHandler);
+        
         beeProductsRecipeHandler = new BeeProductsRecipeHandler();
         API.registerRecipeHandler(beeProductsRecipeHandler);
         API.registerUsageHandler(beeProductsRecipeHandler);
