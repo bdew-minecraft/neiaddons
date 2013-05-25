@@ -18,7 +18,12 @@ public class NEIAddonsConfig implements IConfigureNEI {
     public void loadConfig() {
         for (NEIAddon addon : NEIAddons.addons) {
             if (addon.isActive()) {
-                addon.loadClient();
+                try {
+                    addon.loadClient();
+                } catch (Throwable e) {
+                    NEIAddons.log.warning(String.format("Addon %s failed client initialization: %s", addon.getName(), e.toString()));
+                    e.printStackTrace();
+                }
             }
         }
     }
