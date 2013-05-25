@@ -9,7 +9,9 @@
 
 package net.bdew.neiaddons;
 
+import codechicken.nei.api.API;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.ItemStack;
 
 public class Utils {
     @SuppressWarnings("unchecked")
@@ -29,4 +31,10 @@ public class Utils {
     public static void drawCenteredString(FontRenderer f, String s, int x, int y, int color) {
         f.drawString(s, x - f.getStringWidth(s) / 2, y, color);
     }
+    
+    public static void safeAddNBTItem(ItemStack item) {
+        if (item==null) return;
+        API.addNBTItem(item);
+    }
+    
 }

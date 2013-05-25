@@ -37,8 +37,8 @@
   ]
 },
 {
-  "modid": "NEIAddons|EE3",
-  "name": "NEI Addons: Equivalent Exchange 3",
+  "modid": "NEIAddons|CraftingTables",
+  "name": "NEI Addons: Crafting Tables",
   "description": "",
   "version": "@@VERSION@@",
   "url": "bdew.net/mods/neiaddons",
@@ -58,6 +58,25 @@
 {
   "modid": "NEIAddons|AE",
   "name": "NEI Addons: Applied Energistics",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neiaddons",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
+  ]
+},
+{
+  "modid": "NEIAddons|ExtraBees",
+  "name": "NEI Addons: Extra Bees",
   "description": "",
   "version": "@@VERSION@@",
   "url": "bdew.net/mods/neiaddons",

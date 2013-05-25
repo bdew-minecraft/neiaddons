@@ -11,55 +11,60 @@ package net.bdew.neiaddons.forestry;
 
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
 import java.util.Map.Entry;
 
-import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.forestry.fake.FakeSpeciesRoot;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import forestry.api.apiculture.BeeManager;
-import forestry.api.apiculture.EnumBeeType;
-import forestry.api.apiculture.IAlleleBeeSpecies;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IAllele;
+import forestry.api.genetics.IAlleleSpecies;
 
-public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
+public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
-    public class CachedBeeProductRecipe extends CachedRecipe {
-        private final LabeledPositionedStack bee;
+    private final FakeSpeciesRoot speciesRoot;
+    private final Map<Integer, Collection<IAlleleSpecies>> cache;
+
+    public BaseProduceRecipeHandler(FakeSpeciesRoot root) {
+        this.speciesRoot = root;
+        cache = getProduceCache();
+    }
+
+    public class CachedProduceRecipe extends CachedRecipe {
+        private final LabeledPositionedStack producer;
         private final ArrayList<LabeledPositionedStack> products;
 
-        public String beeName;
-
-        public CachedBeeProductRecipe(IAlleleBeeSpecies species) {
-            bee = new LabeledPositionedStack(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
+        public CachedProduceRecipe(IAlleleSpecies species) {
+            ItemStack producerStack = GeneticsUtils.stackFromSpecies(species, GeneticsUtils.RecipePosition.Producer);
+            producer = new LabeledPositionedStack(producerStack, 22, 19, species.getName(), 13);
 
             products = new ArrayList<LabeledPositionedStack>();
 
             int i = 0;
-            for (Entry<ItemStack, Integer> product : species.getProducts().entrySet()) {
+            for (Entry<ItemStack, Integer> product : GeneticsUtils.getProduceFromSpecies(species).entrySet()) {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 8, label, 10));
             }
 
             i = 0;
-            for (Entry<ItemStack, Integer> product : species.getSpecialty().entrySet()) {
+            for (Entry<ItemStack, Integer> product : GeneticsUtils.getSpecialtyFromSpecies(species).entrySet()) {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 36, label, 10));
             }
-
-            if (products.size() == 0) {
-                NEIAddons.log.warning(species.getUID() + " doesn't produce anthing?");
-            }
         }
 
+        public boolean isNoOutput() {
+            return products.size()==0;
+        }
+        
         @Override
         public ArrayList<PositionedStack> getIngredients() {
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
-            list.add(bee);
+            list.add(producer);
             return list;
         }
 
@@ -91,25 +96,21 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        if (!outputId.equals("beeproducts")) { return; }
+        if (!outputId.equals(getRecipeIdent())) { return; }
 
-        for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-            if (!(entry.getValue() instanceof IAlleleBeeSpecies)) {
-                continue;
+        for (IAlleleSpecies species : getAllSpecies()) {
+            CachedProduceRecipe rec = new CachedProduceRecipe(species);
+            if (!rec.isNoOutput()) {
+                arecipes.add(rec);
             }
-            IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
-            arecipes.add(new CachedBeeProductRecipe(species));
         }
     }
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        for (Entry<String, IAllele> entry : AlleleManager.alleleRegistry.getRegisteredAlleles().entrySet()) {
-            if (!(entry.getValue() instanceof IAlleleBeeSpecies)) {
-                continue;
-            }
-            IAlleleBeeSpecies species = (IAlleleBeeSpecies) entry.getValue();
-            CachedBeeProductRecipe recipe = new CachedBeeProductRecipe(species);
+        if (!cache.containsKey(result.itemID)) { return; }
+        for (IAlleleSpecies species : cache.get(result.itemID)) {
+            CachedProduceRecipe recipe = new CachedProduceRecipe(species);
             for (LabeledPositionedStack stack : recipe.products) {
                 if (NEIClientUtils.areStacksSameTypeCrafting(stack.item, result)) {
                     arecipes.add(recipe);
@@ -121,19 +122,19 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (!BeeManager.beeInterface.isBee(ingredient)) { return; }
-        arecipes.add(new CachedBeeProductRecipe((IAlleleBeeSpecies) BeeManager.beeInterface.getBee(ingredient).getGenome().getPrimary()));
+        if (!speciesRoot.isMember(ingredient)) { return; }
+        arecipes.add(new CachedProduceRecipe(speciesRoot.getMember(ingredient).getGenome().getPrimary()));
     }
 
     @Override
     public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(48, 22, 21, 15), "beeproducts"));
+        transferRects.add(new RecipeTransferRect(new Rectangle(48, 22, 21, 15), getRecipeIdent()));
     }
 
     @Override
     public void drawExtras(GuiContainerManager gui, int recipe) {
-        CachedBeeProductRecipe rec = (CachedBeeProductRecipe) arecipes.get(recipe);
-        rec.bee.drawLabel(gui.window.fontRenderer);
+        CachedProduceRecipe rec = (CachedProduceRecipe) arecipes.get(recipe);
+        rec.producer.drawLabel(gui.window.fontRenderer);
         for (LabeledPositionedStack stack : rec.products) {
             stack.drawLabel(gui.window.fontRenderer);
         }
@@ -141,10 +142,11 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
         gui.window.fontRenderer.drawString("Spec:", 65, 36 + 4, 0xFFF200);
     }
 
-    @Override
-    public String getRecipeName() {
-        return "Bee Products";
-    }
+    public abstract String getRecipeIdent();
+
+    public abstract Collection<? extends IAlleleSpecies> getAllSpecies();
+
+    public abstract Map<Integer, Collection<IAlleleSpecies>> getProduceCache();
 
     @Override
     public String getGuiTexture() {

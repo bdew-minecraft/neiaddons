@@ -11,7 +11,7 @@ package forestry.plugins;
 
 import java.util.Random;
 
-import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.forestry.AddonForestry;
 import net.minecraft.command.ICommand;
 import net.minecraft.world.World;
 import cpw.mods.fml.common.network.IGuiHandler;
@@ -33,7 +33,7 @@ public class PluginNEIAddons implements IPlugin {
     }
 
     public void doInit() {
-        NEIAddons.log.fine("Forestry Plugin loaded");
+        AddonForestry.instance.logInfo("Forestry Plugin loaded");
     }
 
     public void postInit() {

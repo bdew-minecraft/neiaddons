@@ -9,15 +9,14 @@
 
 package net.bdew.neiaddons.appeng;
 
+import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -27,8 +26,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:AppliedEnergistics")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
-public class AddonAE implements NEIAddon {
-    private Boolean active = false;
+public class AddonAE extends BaseAddon {
 
     public static boolean invertShift;
 
@@ -38,32 +36,30 @@ public class AddonAE implements NEIAddon {
 
     public static final String channel = "neiaddons.ae";
 
+    @Instance(NEIAddons.modid + "|AE")
+    public static AddonAE instance;
+    
     @Override
     public String getName() {
         return "Applied Energistics";
     }
 
     @Override
-    public Boolean isActive() {
-        return active;
+    public String[] getDependencies() {
+        return new String[]{"AppliedEnergistics"};
     }
 
     @PreInit
     public void preInit(FMLPreInitializationEvent ev) {
-        if (!Loader.isModLoaded("AppliedEnergistics")) {
-            NEIAddons.log.info("Applied Energistics is not installed, skipping");
-            return;
-        }
-
-        NEIAddons.register(this);
+        doPreInit(ev);
     }
-
+    
     @Override
     public void init(Side side) throws ClassNotFoundException {
         if (side == Side.CLIENT) {
             GuiPatternEncoder = Utils.getAndCheckClass("appeng.me.gui.GuiPatternEncoder", GuiContainer.class);
             invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
-        };
+        }
 
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);
@@ -74,9 +70,9 @@ public class AddonAE implements NEIAddon {
     }
 
     @Override
-    @SideOnly(value = Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public void loadClient() {
-        API.registerGuiOverlayHandler(GuiPatternEncoder, new PatternEncoderHandler(), "crafting");
+        AddonAEClient.load();
     }
 
 }
