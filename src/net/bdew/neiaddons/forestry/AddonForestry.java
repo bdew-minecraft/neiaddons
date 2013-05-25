@@ -35,7 +35,7 @@ import forestry.api.genetics.AlleleManager;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
-    private BeeBreedingRecipeHandler beeBreedingRecipeHandler;
+    private BreedingRecipeHandler beeBreedingRecipeHandler;
     private BeeProductsRecipeHandler beeProductsRecipeHandler;
 
     public static IBeeRoot beeRoot;
@@ -93,7 +93,7 @@ public class AddonForestry extends BaseAddon {
     public void loadClient() {
         beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
 
-        beeBreedingRecipeHandler = new BeeBreedingRecipeHandler();
+        beeBreedingRecipeHandler = new BeeBreedingHandler();
         API.registerRecipeHandler(beeBreedingRecipeHandler);
         API.registerUsageHandler(beeBreedingRecipeHandler);
 
