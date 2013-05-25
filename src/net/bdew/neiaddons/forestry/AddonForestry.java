@@ -108,7 +108,7 @@ public class AddonForestry extends BaseAddon {
         API.registerRecipeHandler(beeProductsRecipeHandler);
         API.registerUsageHandler(beeProductsRecipeHandler);
 
-        allBeeSpecies = BeeUtils.getAllBeeSpecies(loadBlacklisted);
+        allBeeSpecies = GeneticsUtils.getAllBeeSpecies(loadBlacklisted);
         
         Item comb = ItemInterface.getItem("beeComb").getItem();
         HashSet<Integer> seencombs = new HashSet<Integer>();
@@ -117,9 +117,9 @@ public class AddonForestry extends BaseAddon {
 
         for (IAlleleBeeSpecies species : allBeeSpecies) {
             if (addBees) {
-                API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN));
-                API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.DRONE));
-                API.addNBTItem(BeeUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
+                API.addNBTItem(GeneticsUtils.stackFromAllele(species, EnumBeeType.QUEEN));
+                API.addNBTItem(GeneticsUtils.stackFromAllele(species, EnumBeeType.DRONE));
+                API.addNBTItem(GeneticsUtils.stackFromAllele(species, EnumBeeType.PRINCESS));
             }
             for (ItemStack prod : species.getProducts().keySet()) {
                 addProductToCache(prod.itemID, species);

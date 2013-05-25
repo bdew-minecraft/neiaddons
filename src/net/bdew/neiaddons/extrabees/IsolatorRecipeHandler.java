@@ -11,13 +11,12 @@ package net.bdew.neiaddons.extrabees;
 
 import java.awt.Rectangle;
 
-import net.bdew.neiaddons.forestry.BeeUtils;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleSpecies;
@@ -29,8 +28,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         PositionedStack serum;
 
         public CachedSerumRecipe(IAlleleSpecies species, ItemStack serumStack) {
-
-            bee = new LabeledPositionedStack(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 21, species.getName(), 13);
+            bee = new LabeledPositionedStack(GeneticsUtils.stackFromSecies(species, GeneticsUtils.RecipePosition.Offspring), 22, 21, species.getName(), 13);
             serum = new PositionedStack(serumStack, 129, 25);
         }
 

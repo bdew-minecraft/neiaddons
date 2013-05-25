@@ -27,7 +27,7 @@ import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ISpeciesRoot;
 
-public class BeeUtils {
+public class GeneticsUtils {
     public enum RecipePosition {
         Parent1, Parent2, Offspring;
     }
@@ -42,8 +42,8 @@ public class BeeUtils {
         beePositionToType.put(RecipePosition.Offspring, EnumBeeType.QUEEN.ordinal());
 
         treePositionToType = new HashMap<RecipePosition, Integer>();
-        treePositionToType.put(RecipePosition.Parent1, EnumGermlingType.POLLEN.ordinal());
-        treePositionToType.put(RecipePosition.Parent2, EnumGermlingType.GERMLING.ordinal());
+        treePositionToType.put(RecipePosition.Parent1, EnumGermlingType.SAPLING.ordinal());
+        treePositionToType.put(RecipePosition.Parent2, EnumGermlingType.POLLEN.ordinal());
         treePositionToType.put(RecipePosition.Offspring, EnumGermlingType.SAPLING.ordinal());
     }
 

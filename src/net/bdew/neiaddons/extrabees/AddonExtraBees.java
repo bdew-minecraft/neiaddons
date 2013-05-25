@@ -15,7 +15,7 @@ import java.util.Set;
 
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.forestry.BeeUtils;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -115,7 +115,7 @@ public class AddonExtraBees extends BaseAddon {
             return;
         }        
 
-        allBeeSpecies = BeeUtils.getAllBeeSpecies(loadBlacklisted);
+        allBeeSpecies = GeneticsUtils.getAllBeeSpecies(loadBlacklisted);
         registerSerums();
         API.registerRecipeHandler(new IsolatorRecipeHandler());
         

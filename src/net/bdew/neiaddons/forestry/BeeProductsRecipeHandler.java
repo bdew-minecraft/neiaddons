@@ -31,7 +31,7 @@ public class BeeProductsRecipeHandler extends TemplateRecipeHandler {
         public String beeName;
 
         public CachedBeeProductRecipe(IAlleleBeeSpecies species) {
-            bee = new LabeledPositionedStack(BeeUtils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
+            bee = new LabeledPositionedStack(GeneticsUtils.stackFromAllele(species, EnumBeeType.QUEEN), 22, 19, species.getName(), 13);
 
             products = new ArrayList<LabeledPositionedStack>();
 
