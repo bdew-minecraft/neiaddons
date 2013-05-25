@@ -52,9 +52,15 @@ public class GeneticsUtils {
     }
 
     public static FakeSpeciesRoot getRoot(IAlleleSpecies species) {
+        if (species instanceof IAlleleBeeSpecies) {
+            return new FakeBeeRoot();
+        }
+        if (species instanceof IAlleleTreeSpecies) {
+            return new FakeTreeRoot();
+        }
         return null;
     }
-    
+
     public static ItemStack stackFromSpecies(IAlleleSpecies species, RecipePosition position) {
         FakeSpeciesRoot root = getRoot(species);
         int type = 0;
@@ -69,7 +75,7 @@ public class GeneticsUtils {
     public static ItemStack stackFromSpecies(IAlleleSpecies species, int type) {
         FakeSpeciesRoot root = getRoot(species);
         IAllele[] template = root.getTemplate(species.getUID());
-        if (template==null) {
+        if (template == null) {
             AddonForestry.instance.logWarning("Template for %s is null, wtf?", species.getUID());
             return null;
         }
