@@ -37,9 +37,9 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
 
         public CachedBreedingRecipe(IMutation mutation) {
 
-            ItemStack stackParent1 = GeneticsUtils.stackFromSecies((IAlleleSpecies) mutation.getAllele0(), GeneticsUtils.RecipePosition.Parent1);
-            ItemStack stackParent2 = GeneticsUtils.stackFromSecies((IAlleleSpecies) mutation.getAllele1(), GeneticsUtils.RecipePosition.Parent2);
-            ItemStack stackResult = GeneticsUtils.stackFromSecies((IAlleleSpecies) mutation.getTemplate()[0], GeneticsUtils.RecipePosition.Offspring);
+            ItemStack stackParent1 = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getAllele0(), GeneticsUtils.RecipePosition.Parent1);
+            ItemStack stackParent2 = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getAllele1(), GeneticsUtils.RecipePosition.Parent2);
+            ItemStack stackResult = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getTemplate()[0], GeneticsUtils.RecipePosition.Offspring);
 
             parrent1 = new LabeledPositionedStack(stackParent1, 22, 19, ((IAlleleSpecies) mutation.getAllele0()).getName(), 13);
             parrent2 = new LabeledPositionedStack(stackParent2, 75, 19, ((IAlleleSpecies) mutation.getAllele1()).getName(), 13);

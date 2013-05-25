@@ -28,7 +28,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         PositionedStack serum;
 
         public CachedSerumRecipe(IAlleleSpecies species, ItemStack serumStack) {
-            bee = new LabeledPositionedStack(GeneticsUtils.stackFromSecies(species, GeneticsUtils.RecipePosition.Offspring), 22, 21, species.getName(), 13);
+            bee = new LabeledPositionedStack(GeneticsUtils.stackFromSpecies(species, GeneticsUtils.RecipePosition.Offspring), 22, 21, species.getName(), 13);
             serum = new PositionedStack(serumStack, 129, 25);
         }
 

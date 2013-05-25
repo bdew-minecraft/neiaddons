@@ -47,7 +47,7 @@ public class GeneticsUtils {
         treePositionToType.put(RecipePosition.Offspring, EnumGermlingType.SAPLING.ordinal());
     }
 
-    public static ItemStack stackFromSecies(IAlleleSpecies species, RecipePosition position) {
+    public static ItemStack stackFromSpecies(IAlleleSpecies species, RecipePosition position) {
         ISpeciesRoot root = species.getRoot();
         int type = 0;
         if (root instanceof IBeeRoot) {
@@ -55,10 +55,10 @@ public class GeneticsUtils {
         } else if (root instanceof ITreeRoot) {
             type = treePositionToType.get(position);
         }
-        return stackFromSecies(species, type);
+        return stackFromSpecies(species, type);
     }
 
-    public static ItemStack stackFromSecies(IAlleleSpecies species, int type) {
+    public static ItemStack stackFromSpecies(IAlleleSpecies species, int type) {
         ISpeciesRoot root = species.getRoot();
         IAllele[] template = root.getTemplate(species.getUID());
         IIndividual individual = root.templateAsIndividual(template);
@@ -70,7 +70,7 @@ public class GeneticsUtils {
     @Deprecated
     public static ItemStack stackFromAllele(IAllele allele, EnumBeeType type) {
         assert allele instanceof IAlleleSpecies;
-        return stackFromSecies((IAlleleSpecies)allele, type.ordinal());
+        return stackFromSpecies((IAlleleSpecies)allele, type.ordinal());
     }
     
     public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
