@@ -17,6 +17,8 @@ import java.util.Map;
 
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.forestry.bees.BeeProduceHandler;
+import net.bdew.neiaddons.forestry.trees.TreeProduceHandler;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.api.API;
@@ -35,17 +37,21 @@ import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
+import forestry.api.genetics.IAlleleSpecies;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
     private BreedingRecipeHandler beeBreedingRecipeHandler,treeBreedingRecipeHandler;
-    private BeeProductsRecipeHandler beeProductsRecipeHandler;
+    private ProduceRecipeHandler beeProductsRecipeHandler,treeProduceRecipeHandler;
 
     public static IBeeRoot beeRoot;
     public static ITreeRoot treeRoot;
 
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
     public static Collection<IAlleleTreeSpecies> allTreeSpecies;
+
+    public static Map<Integer, Collection<IAlleleSpecies>> beeProductsCache;
+    public static Map<Integer, Collection<IAlleleSpecies>> treeProductsCache;
     
     public static boolean showSecret;
     public static boolean addBees;
@@ -53,8 +59,6 @@ public class AddonForestry extends BaseAddon {
     public static boolean addSaplings;
     public static boolean addPollen;
     public static boolean loadBlacklisted;
-
-    public static Map<Integer, Collection<IAlleleBeeSpecies>> productsCache;
 
     @Instance(NEIAddons.modid + "|Forestry")
     public static AddonForestry instance;
@@ -90,13 +94,20 @@ public class AddonForestry extends BaseAddon {
         active = true;
     }
 
-    private void addProductToCache(int id, IAlleleBeeSpecies species) {
-        if (!productsCache.containsKey(id)) {
-            productsCache.put(id, new ArrayList<IAlleleBeeSpecies>());
+    private void addProductToBeeCache(int id, IAlleleBeeSpecies species) {
+        if (!beeProductsCache.containsKey(id)) {
+            beeProductsCache.put(id, new ArrayList<IAlleleSpecies>());
         }
-        productsCache.get(id).add(species);
+        beeProductsCache.get(id).add(species);
     }
 
+    private void addProductToTreeCache(int id, IAlleleTreeSpecies species) {
+        if (!treeProductsCache.containsKey(id)) {
+            treeProductsCache.put(id, new ArrayList<IAlleleSpecies>());
+        }
+        treeProductsCache.get(id).add(species);
+    }
+    
     public void setupBees() {
         beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
         allBeeSpecies = GeneticsUtils.getAllBeeSpecies(loadBlacklisted);
@@ -105,14 +116,14 @@ public class AddonForestry extends BaseAddon {
         API.registerRecipeHandler(beeBreedingRecipeHandler);
         API.registerUsageHandler(beeBreedingRecipeHandler);
 
-        beeProductsRecipeHandler = new BeeProductsRecipeHandler();
+        beeProductsRecipeHandler = new BeeProduceHandler();
         API.registerRecipeHandler(beeProductsRecipeHandler);
         API.registerUsageHandler(beeProductsRecipeHandler);
 
         Item comb = ItemInterface.getItem("beeComb").getItem();
         HashSet<Integer> seencombs = new HashSet<Integer>();
 
-        productsCache = new HashMap<Integer, Collection<IAlleleBeeSpecies>>();
+        beeProductsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
         for (IAlleleBeeSpecies species : allBeeSpecies) {
             if (addBees) {
@@ -120,14 +131,14 @@ public class AddonForestry extends BaseAddon {
                 API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
                 API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
             }
-            for (ItemStack prod : species.getProducts().keySet()) {
-                addProductToCache(prod.itemID, species);
+            for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
+                addProductToBeeCache(prod.itemID, species);
                 if (addCombs && (prod.itemID == comb.itemID)) {
                     seencombs.add(prod.getItemDamage());
                 }
             }
-            for (ItemStack prod : species.getSpecialty().keySet()) {
-                addProductToCache(prod.itemID, species);
+            for (ItemStack prod : GeneticsUtils.getSpecialtyFromSpecies(species).keySet()) {
+                addProductToBeeCache(prod.itemID, species);
                 if (addCombs && (prod.itemID == comb.itemID)) {
                     seencombs.add(prod.getItemDamage());
                 }
@@ -154,13 +165,25 @@ public class AddonForestry extends BaseAddon {
         treeBreedingRecipeHandler = new TreeBreedingHandler();
         API.registerRecipeHandler(treeBreedingRecipeHandler);
         API.registerUsageHandler(treeBreedingRecipeHandler);
+
+        treeProduceRecipeHandler = new TreeProduceHandler();
+        API.registerRecipeHandler(treeProduceRecipeHandler);
+        API.registerUsageHandler(treeProduceRecipeHandler);
         
+        treeProductsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
+
         for (IAlleleTreeSpecies species : allTreeSpecies) {
             if (addSaplings) {
                 API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
             }
             if (addPollen) {
                 API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
+            }
+            for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
+                addProductToTreeCache(prod.itemID, species);
+            }
+            for (ItemStack prod : GeneticsUtils.getSpecialtyFromSpecies(species).keySet()) {
+                addProductToTreeCache(prod.itemID, species);
             }
         };
         
