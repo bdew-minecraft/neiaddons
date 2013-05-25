@@ -46,7 +46,7 @@ public class GeneticsUtils {
 
         treePositionToType = new HashMap<RecipePosition, Integer>();
         treePositionToType.put(RecipePosition.Parent1, EnumGermlingType.SAPLING.ordinal());
-        treePositionToType.put(RecipePosition.Parent2, EnumGermlingType.POLLEN.ordinal());
+        treePositionToType.put(RecipePosition.Parent2, EnumGermlingType.SAPLING.ordinal());
         treePositionToType.put(RecipePosition.Offspring, EnumGermlingType.SAPLING.ordinal());
         treePositionToType.put(RecipePosition.Producer, EnumGermlingType.SAPLING.ordinal());
     }
