@@ -65,6 +65,10 @@ public class GeneticsUtils {
     public static ItemStack stackFromSpecies(IAlleleSpecies species, int type) {
         ISpeciesRoot root = species.getRoot();
         IAllele[] template = root.getTemplate(species.getUID());
+        if (template==null) {
+            AddonForestry.instance.logWarning("Template for %s is null, wtf?", species.getUID());
+            return null;
+        }
         IIndividual individual = root.templateAsIndividual(template);
         individual.analyze();
         return root.getMemberStack(individual, type);

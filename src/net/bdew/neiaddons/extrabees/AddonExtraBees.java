@@ -18,6 +18,7 @@ import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -36,6 +37,9 @@ public class AddonExtraBees extends BaseAddon {
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
 
     public static IBeeRoot beeRoot;
+    
+    @Instance(NEIAddons.modid + "|ExtraBees")
+    public static AddonExtraBees instance;
     
     @Override
     public String getName() {
@@ -71,6 +75,10 @@ public class AddonExtraBees extends BaseAddon {
         
         for (IAlleleBeeSpecies species : allBeeSpecies) {
             IAllele[] template = beeRoot.getTemplate(species.getUID());
+            if (template==null) {
+                logWarning("Template for %s is null, wtf?", species.getUID());
+                continue;
+            }
             for (int i = 0; i < template.length; i++) {
                 if (template[i] != null) {
                     if ((!loadBlacklisted) && AlleleManager.alleleRegistry.isBlacklisted(template[i].getUID())) {

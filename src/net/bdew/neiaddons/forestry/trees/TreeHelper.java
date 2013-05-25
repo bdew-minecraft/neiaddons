@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.minecraft.item.ItemStack;
@@ -49,10 +50,10 @@ public class TreeHelper {
 
         for (IAlleleTreeSpecies species : allSpecies) {
             if (AddonForestry.addSaplings) {
-                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
             }
             if (AddonForestry.addPollen) {
-                API.addNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
             }
             for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
                 addProductToCache(prod.itemID, species);

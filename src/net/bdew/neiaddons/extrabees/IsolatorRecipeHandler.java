@@ -54,6 +54,10 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
             IAllele[] template = AddonExtraBees.beeRoot.getTemplate(species.getUID());
+            if (template==null) {
+                AddonExtraBees.instance.logWarning("Template for %s is null, wtf?", species.getUID());
+                continue;
+            }
             for (int i = 0; i < template.length; i++) {
                 if (template[i] != null) {
                     if (SerumUtils.shouldMakeSerum(template[i].getUID(), i)) {
@@ -75,6 +79,10 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
             IAllele[] template = AddonExtraBees.beeRoot.getTemplate(species.getUID());
+            if (template==null) {
+                AddonExtraBees.instance.logWarning("Template for %s is null, wtf?", species.getUID());
+                continue;
+            }
             if (template[pair.chromosome] == null) continue;
             if (template[pair.chromosome].getUID().equals(pair.allele)) {
                 arecipes.add(new CachedSerumRecipe(species, result));
