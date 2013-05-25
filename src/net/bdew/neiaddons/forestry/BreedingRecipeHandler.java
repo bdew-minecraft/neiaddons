@@ -26,13 +26,9 @@ import forestry.api.genetics.ISpeciesRoot;
 public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
 
     private ISpeciesRoot speciesRoot;
-    private String recipeName;
-    private String recipeIdent;
     
-    public BreedingRecipeHandler(ISpeciesRoot root, String recipeName, String recipeIdent) {
+    public BreedingRecipeHandler(ISpeciesRoot root) {
         this.speciesRoot = root;
-        this.recipeName = recipeName;
-        this.recipeIdent = recipeIdent;
     }
     
     public class CachedBreedingRecipe extends CachedRecipe {
@@ -72,7 +68,7 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        if (!outputId.equals(recipeIdent)) { return; }
+        if (!outputId.equals(getRecipeIdent())) { return; }
 
         for (IMutation mutation : speciesRoot.getMutations(false)) {
             if (!mutation.isSecret() || AddonForestry.showSecret) {
@@ -113,8 +109,8 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(49, 26, 15, 15), recipeIdent));
-        transferRects.add(new RecipeTransferRect(new Rectangle(98, 26, 21, 18), recipeIdent));
+        transferRects.add(new RecipeTransferRect(new Rectangle(49, 26, 15, 15), getRecipeIdent()));
+        transferRects.add(new RecipeTransferRect(new Rectangle(98, 26, 21, 18), getRecipeIdent()));
     }
 
     @Override
@@ -126,11 +122,8 @@ public abstract class BreedingRecipeHandler extends TemplateRecipeHandler {
         Utils.drawCenteredString(gui.window.fontRenderer, String.format("%.0f%%", rec.chance), 108, 15, 0xFFFFFF);
     }
 
-    @Override
-    public String getRecipeName() {
-        return recipeName;
-    }
-
+    public abstract String getRecipeIdent();
+    
     @Override
     public String getGuiTexture() {
         return "/mods/neiaddons/textures/gui/breeding.png";
