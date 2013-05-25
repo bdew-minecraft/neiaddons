@@ -16,8 +16,6 @@ import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
-import codechicken.nei.api.API;
-import codechicken.nei.recipe.DefaultOverlayHandler;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
@@ -27,7 +25,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 @Mod(modid = NEIAddons.modid + "|CraftingTables", name = "NEI Addons: Crafting Tables", version = "@@VERSION@@", dependencies = "after:NEIAddons")
 public class AddonCraftingTables extends BaseAddon {
 
-    private Collection<Class<? extends GuiContainer>> craftingTables;
+    public static Collection<Class<? extends GuiContainer>> craftingTables;
 
     @Override
     public String getName() {
@@ -74,11 +72,8 @@ public class AddonCraftingTables extends BaseAddon {
     }
 
     @Override
-    @SideOnly(value = Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public void loadClient() {
-        for (Class<? extends GuiContainer> tableClass : craftingTables) {
-            API.registerGuiOverlay(tableClass, "crafting");
-            API.registerGuiOverlayHandler(tableClass, new DefaultOverlayHandler(), "crafting");
-        }
+        AddonCraftingTablesClient.load();
     }
 }

@@ -15,7 +15,6 @@ import net.bdew.neiaddons.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
@@ -71,9 +70,9 @@ public class AddonAE extends BaseAddon {
     }
 
     @Override
-    @SideOnly(value = Side.CLIENT)
+    @SideOnly(Side.CLIENT)
     public void loadClient() {
-        API.registerGuiOverlayHandler(GuiPatternEncoder, new PatternEncoderHandler(), "crafting");
+        AddonAEClient.load();
     }
 
 }

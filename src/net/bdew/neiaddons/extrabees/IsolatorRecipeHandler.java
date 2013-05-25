@@ -53,7 +53,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         if (!outputId.equals("isolator")) { return; }
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
-            IAllele[] template = AddonExtraBees.beeRoot.getTemplate(species.getUID());
+            IAllele[] template = AddonExtraBeesClient.beeRoot.getTemplate(species.getUID());
             if (template==null) {
                 AddonExtraBees.instance.logWarning("Template for %s is null, wtf?", species.getUID());
                 continue;
@@ -78,7 +78,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         if (pair == null) { return; }
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
-            IAllele[] template = AddonExtraBees.beeRoot.getTemplate(species.getUID());
+            IAllele[] template = AddonExtraBeesClient.beeRoot.getTemplate(species.getUID());
             if (template==null) {
                 AddonExtraBees.instance.logWarning("Template for %s is null, wtf?", species.getUID());
                 continue;

@@ -10,24 +10,16 @@
 package net.bdew.neiaddons.extrabees;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.forestry.GeneticsUtils;
-import codechicken.nei.api.API;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
-import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
-import forestry.api.apiculture.EnumBeeChromosome;
+import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.IAlleleBeeSpecies;
-import forestry.api.apiculture.IBeeRoot;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IAllele;
 
 @Mod(modid = NEIAddons.modid + "|ExtraBees", name = "NEI Addons: Extra Bees", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:ExtraBees;after:Forestry")
 public class AddonExtraBees extends BaseAddon {
@@ -36,11 +28,9 @@ public class AddonExtraBees extends BaseAddon {
     public static boolean dumpSerums;
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
 
-    public static IBeeRoot beeRoot;
-    
     @Instance(NEIAddons.modid + "|ExtraBees")
     public static AddonExtraBees instance;
-    
+
     @Override
     public String getName() {
         return "Extra Bees";
@@ -68,65 +58,9 @@ public class AddonExtraBees extends BaseAddon {
         active = true;
     }
 
-    public void registerSerums() {
-        Set<AlleleBeeChromosomePair> res = new HashSet<AlleleBeeChromosomePair>();
-
-        beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
-        
-        for (IAlleleBeeSpecies species : allBeeSpecies) {
-            IAllele[] template = beeRoot.getTemplate(species.getUID());
-            if (template==null) {
-                logWarning("Template for %s is null, wtf?", species.getUID());
-                continue;
-            }
-            for (int i = 0; i < template.length; i++) {
-                if (template[i] != null) {
-                    if ((!loadBlacklisted) && AlleleManager.alleleRegistry.isBlacklisted(template[i].getUID())) {
-                        if (dumpSerums) {
-                            logInfo("Skipping blacklisted allele: %s", template[i].getUID());
-                        }
-                        continue;
-                    }
-                    if (SerumUtils.shouldMakeSerum(template[i].getUID(),i)) {
-                        res.add(new AlleleBeeChromosomePair(template[i], i));
-                    }
-                }
-            }
-        }
-
-        if (dumpSerums) {
-            logInfo("==== Serum dump ====");
-            for (EnumBeeChromosome chromosome : EnumBeeChromosome.values()) {
-                logInfo("%s:",chromosome.toString());
-                for (AlleleBeeChromosomePair pair : res) {
-                    if (pair.chromosome == chromosome.ordinal()) {
-                        AlleleManager.alleleRegistry.getAllele(pair.allele);
-                        logInfo(" * %s -> %s",pair.allele,SerumUtils.getSerum(pair).getDisplayName());
-                    }
-                }
-                logInfo("===================================");
-            }
-        }
-
-        for (AlleleBeeChromosomePair pair : res) {
-            API.addNBTItem(SerumUtils.getSerum(pair));
-        }
-    }
-
     @Override
+    @SideOnly(Side.CLIENT)
     public void loadClient() {
-        try {
-            SerumUtils.setup();
-        } catch (Throwable e) {
-            logWarning("Failed to get serum item:");
-            e.printStackTrace();
-            return;
-        }        
-
-        allBeeSpecies = GeneticsUtils.getAllBeeSpecies(loadBlacklisted);
-        registerSerums();
-        API.registerRecipeHandler(new IsolatorRecipeHandler());
-        
-        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", "Exta Bees@Isolator@isolator");
+        AddonExtraBeesClient.load();
     }
 }
