@@ -9,7 +9,7 @@ NEI Addons
 * [Extra Bees](http://www.minecraftforum.net/topic/1324321-)
  * Adds all serums to NEI search
  * Isolator recipes - shows what bees can be used to get any serum
-* [Applied Energistics](www.minecraftforum.net/topic/1625015-)
+* [Applied Energistics](http://www.minecraftforum.net/topic/1625015-)
  * [?] button support for the Pattern Encoder
  * Ability to create patterns directly from recipes, even if you don't have the items on you
 * Various crafting tables - adds [?] button support for alternate crafting tables from many mods
@@ -20,6 +20,9 @@ NEI Addons
 ***
 Changelog
 =========
+
+###v1.6.1 - Released 29/05/2013
+* Fixed various weird NPE crashes in Forestry Addon 
 
 ###v1.6 - Released 25/05/2013
 * Added module for Extra Bees
