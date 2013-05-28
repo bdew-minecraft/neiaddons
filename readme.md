@@ -21,6 +21,9 @@ NEI Addons
 Changelog
 =========
 
+###v1.6.1 - Released 29/05/2013
+* Fixed various weird NPE crashes in Forestry Addon 
+
 ###v1.6 - Released 25/05/2013
 * Added module for Extra Bees
  * Adds all serums to NEI search
