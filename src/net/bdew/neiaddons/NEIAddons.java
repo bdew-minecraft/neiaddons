@@ -11,6 +11,7 @@ package net.bdew.neiaddons;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import net.bdew.neiaddons.api.NEIAddon;
@@ -21,9 +22,11 @@ import cpw.mods.fml.common.Mod.Init;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "@@VERSION@@", dependencies = "after:NotEnoughItems")
+@NetworkMod(clientSideRequired = false, serverSideRequired = false)
 public class NEIAddons {
     public static Logger log;
     public static final String modid = "NEIAddons";
@@ -35,6 +38,19 @@ public class NEIAddons {
         addons.add(addon);
     }
 
+    public static void logInfo(String message, Object... params) {
+        log.log(Level.INFO, String.format(message, params));
+    }
+
+    public static void logWarning(String message, Object... params) {
+        log.log(Level.WARNING, String.format(message, params));
+    }    
+
+    public static void logSevere(String message, Object... params) {
+        log.log(Level.SEVERE, String.format(message, params));
+    }    
+    
+    
     @PreInit
     public void preInit(FMLPreInitializationEvent event) {
         log = event.getModLog();
@@ -43,27 +59,27 @@ public class NEIAddons {
         addons = new ArrayList<NEIAddon>();
 
         if (event.getSide() == Side.CLIENT && !Loader.isModLoaded("NotEnoughItems")) {
-            log.severe("NEI doesn't seem to be installed... NEI Addons require it to do anything useful client-side");
+            logSevere("NEI doesn't seem to be installed... NEI Addons require it to do anything useful client-side");
         };
     }
 
     @Init
     public void init(FMLInitializationEvent event) {
-        log.info("Loading NEI Addons");
+        logInfo("Loading NEI Addons");
         for (NEIAddon addon : addons) {
             if (config.get("Addons", addon.getName(), true).getBoolean(false)) {
-                log.info("Loading " + addon.getName() + " Addon...");
+                logInfo("Loading %s Addon...",addon.getName());
                 try {
                     addon.init(event.getSide());
                     if (addon.isActive()) {
-                        log.info(addon.getName() + " Addon successfully loadded");
+                        logInfo("%s Addon successfully loadded",addon.getName());
                     }
                 } catch (Exception e) {
-                    log.severe("Loading " + addon.getName() + " Addon - Failed:");
+                    logSevere("Loading %s Addon - Failed:",addon.getName());
                     e.printStackTrace();
                 }
             } else {
-                log.info(addon.getName() + " Addon disabled - skipping");
+                logInfo("%s Addon disabled - skipping",addon.getName());
             }
         }
 
