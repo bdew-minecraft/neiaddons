@@ -35,12 +35,16 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
     }
 
     public class CachedProduceRecipe extends CachedRecipe {
-        private final LabeledPositionedStack producer;
-        private final ArrayList<LabeledPositionedStack> products;
+        private LabeledPositionedStack producer;
+        private ArrayList<LabeledPositionedStack> products;
 
         public CachedProduceRecipe(IAlleleSpecies species) {
             ItemStack producerStack = GeneticsUtils.stackFromSpecies(species, GeneticsUtils.RecipePosition.Producer);
-            producer = new LabeledPositionedStack(producerStack, 22, 19, species.getName(), 13);
+            if (producerStack==null) {
+                AddonForestry.instance.logWarning("Producer is null... wtf? species = %s", species.getUID());
+            } else {
+                producer = new LabeledPositionedStack(producerStack, 22, 19, species.getName(), 13);
+            }
 
             products = new ArrayList<LabeledPositionedStack>();
 
