@@ -38,7 +38,7 @@ public class ServerHandler implements IPacketHandler {
         try {
 
             NBTTagCompound data = CompressedStreamTools.decompress(packet.data);
-            String cmd = data.getString("command");
+            String cmd = data.getString("cmd");
 
             if (handlers.containsKey(cmd)) {
                 handlers.get(cmd).handle(data.getCompoundTag("data"), p);

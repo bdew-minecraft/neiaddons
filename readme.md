@@ -12,6 +12,8 @@ NEI Addons
 * [Applied Energistics](http://www.minecraftforum.net/topic/1625015-)
  * [?] button support for the Pattern Encoder
  * Ability to create patterns directly from recipes, even if you don't have the items on you
+* [Misc Peripherals](http://www.computercraft.info/forums2/index.php?/topic/4587-)
+ * [?] button support for the Computer Controlled Crafter
 * Various crafting tables - adds [?] button support for alternate crafting tables from many mods
  * [BuildCraft](http://www.mod-buildcraft.com/) Autocrafting Table
  * [Equivalent Exchange 3](http://www.minecraftforum.net/topic/1540010-) Minium Stone
@@ -20,6 +22,10 @@ NEI Addons
 ***
 Changelog
 =========
+
+###v1.7 - Next version
+* Added module for Misc Peripherals
+ * Can change the recipe in a Computer Controlled Crafter directly from NEI
 
 ###v1.6 - Released 25/05/2013
 * Added module for Extra Bees

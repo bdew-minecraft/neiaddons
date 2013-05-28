@@ -1,0 +1,79 @@
+/**
+ * Copyright (c) bdew, 2013
+ * https://github.com/bdew/neiaddons
+ *
+ * This mod is distributed under the terms of the Minecraft Mod Public
+ * License 1.0, or MMPL. Please check the contents of the license located in
+ * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
+ */
+
+package net.bdew.neiaddons.miscperipherals;
+
+import net.bdew.neiaddons.BaseAddon;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.ServerHandler;
+import net.bdew.neiaddons.Utils;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+
+@Mod(modid = NEIAddons.modid + "|MiscPeripherals", name = "NEI Addons: Misc Peripherals", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:MiscPeripherals")
+@NetworkMod(clientSideRequired = false, serverSideRequired = false)
+public class AddonMiscPeripherals extends BaseAddon {
+
+    public static boolean invertShift;
+
+    public static Class<? extends GuiContainer> GuiCrafter;
+    public static Class<? extends Container> ContainerCrafter;
+    public static Class<? extends Slot> SlotRO;
+
+    public static final String channel = "neiaddons.mp";
+
+    @Instance(NEIAddons.modid + "|MiscPeripherals")
+    public static AddonMiscPeripherals instance;
+
+    @Override
+    public String getName() {
+        return "Misc Peripherals";
+    }
+
+    @Override
+    public String[] getDependencies() {
+        return new String[] { "MiscPeripherals" };
+    }
+
+    @Override
+    @PreInit
+    public void preInit(FMLPreInitializationEvent ev) {
+        doPreInit(ev);
+    }
+
+    @Override
+    public void init(Side side) throws ClassNotFoundException {
+        if (side == Side.CLIENT) {
+            GuiCrafter = Utils.getAndCheckClass("miscperipherals.gui.GuiCrafter", GuiContainer.class);
+            invertShift = NEIAddons.config.get(getName(), "Invert Shift", false, "If set to true will swap normal and shift click behavior").getBoolean(false);
+        }
+
+        ContainerCrafter = Utils.getAndCheckClass("miscperipherals.inventory.ContainerCrafter", Container.class);
+        SlotRO = Utils.getAndCheckClass("miscperipherals.inventory.SlotRO", Slot.class);
+        
+        ServerHandler.registerHandler(SetCrafterRecipe.command, new SetCrafterRecipe());
+
+        active = true;
+    }
+
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void loadClient() {
+        AddonMiscPeripheralsClient.load();
+    }
+
+}

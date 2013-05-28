@@ -92,5 +92,24 @@
   "dependencies": [
   	"NEIAddons"
   ]
+},
+{
+  "modid": "NEIAddons|MiscPeripherals",
+  "name": "NEI Addons: Misc Peripherals",
+  "description": "",
+  "version": "@@VERSION@@",
+  "url": "bdew.net/mods/neiaddons",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
+  ]
 }
 ]
