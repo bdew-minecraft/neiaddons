@@ -11,6 +11,7 @@ package net.bdew.neiaddons.appeng;
 
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.ServerHandler;
 import net.bdew.neiaddons.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
@@ -19,13 +20,10 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
 import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:AppliedEnergistics")
-@NetworkMod(clientSideRequired = false, serverSideRequired = false)
 public class AddonAE extends BaseAddon {
 
     public static boolean invertShift;
@@ -33,8 +31,6 @@ public class AddonAE extends BaseAddon {
     public static Class<? extends GuiContainer> GuiPatternEncoder;
     public static Class<? extends Container> ContainerPatternEncoder;
     public static Class<? extends Slot> SlotFake;
-
-    public static final String channel = "neiaddons.ae";
 
     @Instance(NEIAddons.modid + "|AE")
     public static AddonAE instance;
@@ -64,8 +60,8 @@ public class AddonAE extends BaseAddon {
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);
 
-        NetworkRegistry.instance().registerChannel(new ServerHandler(), channel, Side.SERVER);
-
+        ServerHandler.registerHandler(SetPatternEncoderRecipe.command, new SetPatternEncoderRecipe());
+        
         active = true;
     }
 

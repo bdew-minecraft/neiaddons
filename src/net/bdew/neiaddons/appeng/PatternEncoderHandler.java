@@ -11,6 +11,7 @@ package net.bdew.neiaddons.appeng;
 
 import java.util.ArrayList;
 
+import net.bdew.neiaddons.PacketHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -58,7 +59,11 @@ public class PatternEncoderHandler implements IOverlayHandler {
                 stacknbt.setInteger("slot", 9);
                 stacksnbt.appendTag(stacknbt);
             }
-            PacketHelper.SendLoadRecipePacket(stacksnbt);
+
+            NBTTagCompound data = new NBTTagCompound();
+            data.setTag("stacks", stacksnbt);
+
+            PacketHelper.send(SetPatternEncoderRecipe.command, data);
         }
     }
 }

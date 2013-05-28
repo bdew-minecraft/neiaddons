@@ -23,13 +23,16 @@ import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "@@VERSION@@", dependencies = "after:NotEnoughItems")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
 public class NEIAddons {
     public static Logger log;
+
     public static final String modid = "NEIAddons";
+    public static final String channel = "bdew.neiaddons";
 
     public static List<NEIAddon> addons;
     public static Configuration config;
@@ -84,6 +87,8 @@ public class NEIAddons {
         }
 
         config.save();
+        
+        NetworkRegistry.instance().registerChannel(new ServerHandler(), channel, Side.SERVER);
         
         if (addons.size() > 0) {
             String addonslist = "Loaded Addons:";

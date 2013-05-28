@@ -7,31 +7,28 @@
  * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
-package net.bdew.neiaddons.appeng;
+package net.bdew.neiaddons;
 
 import java.io.IOException;
 
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import net.minecraft.network.packet.Packet250CustomPayload;
 import cpw.mods.fml.common.network.PacketDispatcher;
 
 public class PacketHelper {
 
-    public static void SendLoadRecipePacket(NBTTagList stacks) {
+    public static void send(String cmd, NBTTagCompound data) {
         NBTTagCompound nbt = new NBTTagCompound();
 
-        nbt.setString("op", "LoadRecipe");
-        nbt.setTag("stacks", stacks);
+        nbt.setString("cmd", cmd);
+        nbt.setTag("data", data);
 
         try {
-            Packet250CustomPayload pkt = new Packet250CustomPayload(AddonAE.channel, CompressedStreamTools.compress(nbt));
+            Packet250CustomPayload pkt = new Packet250CustomPayload(NEIAddons.channel, CompressedStreamTools.compress(nbt));
             PacketDispatcher.sendPacketToServer(pkt);
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
 }

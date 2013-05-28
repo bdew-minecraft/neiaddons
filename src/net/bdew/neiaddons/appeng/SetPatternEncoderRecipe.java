@@ -11,42 +11,21 @@ package net.bdew.neiaddons.appeng;
 
 import java.util.HashMap;
 
+import net.bdew.neiaddons.api.SubPacketHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
 
-public class ServerHandler implements IPacketHandler {
+public class SetPatternEncoderRecipe implements SubPacketHandler {
+    static public final String command="SetPatternEncoderRecipe"; 
+    
     @Override
-    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-        EntityPlayerMP p = (EntityPlayerMP) player;
-
-        try {
-
-            NBTTagCompound data = CompressedStreamTools.decompress(packet.data);
-            String op = data.getString("op");
-
-            if (op.equals("LoadRecipe")) {
-                handle_LoadRecipe(p, data.getTagList("stacks"));
-            } else {
-                AddonAE.instance.logWarning("Uknown packet from client '%s': %s", p.username, op);
-            }
-
-        } catch (Throwable e) {
-            AddonAE.instance.logWarning("Error handling packet from client '%s'", p.username);
-            e.printStackTrace();
-        }
-    }
-
-    private void handle_LoadRecipe(EntityPlayerMP p, NBTTagList stacks) {
-        Container cont = p.openContainer;
+    public void handle(NBTTagCompound data, EntityPlayerMP player) {
+        NBTTagList stacks = data.getTagList("stacks");
+        Container cont = player.openContainer;
         if (AddonAE.ContainerPatternEncoder.isInstance(cont)) {
             HashMap<Integer, ItemStack> stmap = new HashMap<Integer, ItemStack>();
             for (Object tag : stacks.tagList) {
@@ -67,6 +46,5 @@ public class ServerHandler implements IPacketHandler {
                 }
             }
         }
-
     }
 }
