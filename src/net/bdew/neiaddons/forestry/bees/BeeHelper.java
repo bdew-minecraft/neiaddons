@@ -20,7 +20,10 @@ import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import codechicken.nei.ItemRange;
+import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
+import cpw.mods.fml.common.Loader;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
@@ -44,10 +47,7 @@ public class BeeHelper {
         productsCache.get(id).add(species);
     }
 
-    public static void setup() {
-        root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
-        allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
-
+    private static void addHandlers() {
         breedingRecipeHandler = new BeeBreedingHandler();
         API.registerRecipeHandler(breedingRecipeHandler);
         API.registerUsageHandler(breedingRecipeHandler);
@@ -57,6 +57,13 @@ public class BeeHelper {
         API.registerRecipeHandler(productsRecipeHandler);
         API.registerUsageHandler(productsRecipeHandler);
         AddonForestry.instance.registerWithNEIPlugins(productsRecipeHandler.getRecipeName(), productsRecipeHandler.getRecipeIdent());
+    }
+
+    public static void setup() {
+        root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
+        allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
+
+        addHandlers();
 
         Item comb = ItemInterface.getItem("beeComb").getItem();
         HashSet<Integer> seencombs = new HashSet<Integer>();
@@ -92,6 +99,57 @@ public class BeeHelper {
             }
 
             API.setItemDamageVariants(comb.itemID, seencombs);
+        }
+
+        if (!Loader.isModLoaded("NEIPlugins")) {
+            MultiItemRange queenRange = new MultiItemRange();
+            queenRange.add(ItemInterface.getItem("beeQueenGE"));
+            API.addSetRange("Forestry.Bees.Queens", queenRange);
+
+            MultiItemRange princessRange = new MultiItemRange();
+            princessRange.add(ItemInterface.getItem("beePrincessGE"));
+            API.addSetRange("Forestry.Bees.Princesses", princessRange);
+
+            MultiItemRange droneRange = new MultiItemRange();
+            droneRange.add(ItemInterface.getItem("beeDroneGE"));
+            API.addSetRange("Forestry.Bees.Drones", droneRange);
+
+            MultiItemRange combRange = new MultiItemRange();
+            combRange.add(new ItemRange(comb.itemID));
+            addModCombs(combRange);
+            API.addSetRange("Forestry.Bees.Combs", combRange);
+        };
+    }
+
+    private static void addModCombs(MultiItemRange combs) {
+        if (Loader.isModLoaded("ExtraBees")) {
+            try {
+                Class<?> ebItems = Class.forName("binnie.extrabees.core.ExtraBeeItem");
+                Object ebComb = ebItems.getField("comb").get(null);
+                AddonForestry.instance.logInfo("Loaded EB comb item: %s", ebComb.toString());
+                if (ebComb instanceof Item) {
+                    ItemRange range = new ItemRange(((Item) ebComb).itemID);
+                    AddonForestry.instance.logInfo("Registered EB combs: %s", range.toString());
+                    combs.add(range);
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
+        }
+
+        if (Loader.isModLoaded("ThaumicBees")) {
+            try {
+                Class<?> ebItems = Class.forName("thaumicbees.main.Config");
+                Object tbComb = ebItems.getField("combs").get(null);
+                AddonForestry.instance.logInfo("Loaded TB comb item: %s", tbComb.toString());
+                if (tbComb instanceof Item) {
+                    ItemRange range = new ItemRange(((Item) tbComb).itemID);
+                    AddonForestry.instance.logInfo("Registered TB combs: %s", range.toString());
+                    combs.add(range);
+                }
+            } catch (Throwable e) {
+                e.printStackTrace();
+            }
         }
     }
 }

@@ -18,10 +18,13 @@ import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.minecraft.item.ItemStack;
+import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
+import cpw.mods.fml.common.Loader;
 import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;
+import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 
@@ -54,7 +57,7 @@ public class TreeHelper {
         API.registerRecipeHandler(produceRecipeHandler);
         API.registerUsageHandler(produceRecipeHandler);
         AddonForestry.instance.registerWithNEIPlugins(produceRecipeHandler.getRecipeName(), produceRecipeHandler.getRecipeIdent());
-        
+
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
         for (IAlleleTreeSpecies species : allSpecies) {
@@ -71,5 +74,15 @@ public class TreeHelper {
                 addProductToCache(prod.itemID, species);
             }
         };
-        
-    }}
+
+        if (!Loader.isModLoaded("NEIPlugins")) {
+            MultiItemRange saplingRange = new MultiItemRange();
+            saplingRange.add(ItemInterface.getItem("sapling"));
+            API.addSetRange("Forestry.Trees.Saplings", saplingRange);
+        }
+
+        MultiItemRange pollenRange = new MultiItemRange();
+        pollenRange.add(ItemInterface.getItem("pollenFertile"));
+        API.addSetRange("Forestry.Trees.Pollen", pollenRange);
+    }
+}

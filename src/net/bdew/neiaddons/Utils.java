@@ -9,9 +9,13 @@
 
 package net.bdew.neiaddons;
 
-import codechicken.nei.api.API;
+import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import codechicken.nei.ItemRange;
+import codechicken.nei.MultiItemRange;
+import codechicken.nei.api.API;
 
 public class Utils {
     @SuppressWarnings("unchecked")
@@ -31,10 +35,46 @@ public class Utils {
     public static void drawCenteredString(FontRenderer f, String s, int x, int y, int color) {
         f.drawString(s, x - f.getStringWidth(s) / 2, y, color);
     }
-    
+
     public static void safeAddNBTItem(ItemStack item) {
-        if (item==null) return;
+        if (item == null) return;
         API.addNBTItem(item);
     }
-    
+
+    public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName, int shift) {
+        MultiItemRange multi = new MultiItemRange();
+        for (String field : fields) {
+            try {
+                Object item = cls.getField(field).get(null);
+                ItemRange range;
+                if (item instanceof Item) {
+                    range = new ItemRange(((Item) item).itemID);
+                } else if (item instanceof Block) {
+                    range = new ItemRange(((Block) item).blockID);
+                } else if (item instanceof Integer) {
+                    range = new ItemRange((Integer) item + shift);
+                } else {
+                    NEIAddons.logWarning("%s.%s (%s) type unknown - %s", cls.getName(), field, item.toString(), item.getClass().getName());
+                    continue;
+                }
+                multi.add(range);
+                NEIAddons.logInfo("Registered subset %s: %s", rangeName, range.toString());
+            } catch (Throwable e) {
+                NEIAddons.logWarning("Failed to get %s.%s", cls.getName(), field);
+                e.printStackTrace();
+            }
+        }
+        if (multi.ranges.size() > 0) {
+            API.addSetRange(rangeName, multi);
+        };
+    }
+
+    public static void addSubsetForItem(Class<?> cls, String field, String rangeName) {
+        addSubsetForItems(cls, new String[] { field }, rangeName, 0);
+    }
+
+    public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName) {
+        addSubsetForItems(cls, fields, rangeName, 0);
+    }
+
 }
