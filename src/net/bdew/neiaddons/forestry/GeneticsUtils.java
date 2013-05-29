@@ -65,13 +65,17 @@ public class GeneticsUtils {
     public static ItemStack stackFromSpecies(IAlleleSpecies species, int type) {
         ISpeciesRoot root = species.getRoot();
         IAllele[] template = root.getTemplate(species.getUID());
-        if (template==null) {
+        if (template == null) {
             AddonForestry.instance.logWarning("Template for %s is null, wtf?", species.getUID());
             return null;
         }
         IIndividual individual = root.templateAsIndividual(template);
         individual.analyze();
-        return root.getMemberStack(individual, type);
+        ItemStack stack = root.getMemberStack(individual, type);
+        if (stack == null) {
+            AddonForestry.instance.logWarning("Got null from getMemberStack, wtf? (%s)", species.getUID());
+        }
+        return stack;
     }
 
     @Deprecated
@@ -105,10 +109,19 @@ public class GeneticsUtils {
         if (species instanceof IAlleleBeeSpecies) {
             return ((IAlleleBeeSpecies) species).getProducts();
         } else if (species instanceof IAlleleTreeSpecies) {
-            ITreeRoot root = (ITreeRoot) species.getRoot();
-            ITree tree = (ITree) root.templateAsIndividual(root.getTemplate(species.getUID()));
             Map<ItemStack, Integer> result = new HashMap<ItemStack, Integer>();
+            ITreeRoot root = (ITreeRoot) species.getRoot();
+            IAllele[] template = root.getTemplate(species.getUID());
+            if (template == null) {
+                AddonForestry.instance.logWarning("Template for %s is null, wtf?", species.getUID());
+                return result;
+            }
+            ITree tree = (ITree) root.templateAsIndividual(template);
             for (ItemStack stack : tree.getProduceList()) {
+                if (stack == null) {
+                    AddonForestry.instance.logWarning("%s returned null in produce list", species.toString());
+                    continue;
+                }
                 result.put(stack, 100);
             }
             return result;
@@ -120,10 +133,19 @@ public class GeneticsUtils {
         if (species instanceof IAlleleBeeSpecies) {
             return ((IAlleleBeeSpecies) species).getSpecialty();
         } else if (species instanceof IAlleleTreeSpecies) {
-            ITreeRoot root = (ITreeRoot) species.getRoot();
-            ITree tree = (ITree) root.templateAsIndividual(root.getTemplate(species.getUID()));
             Map<ItemStack, Integer> result = new HashMap<ItemStack, Integer>();
+            ITreeRoot root = (ITreeRoot) species.getRoot();
+            IAllele[] template = root.getTemplate(species.getUID());
+            if (template == null) {
+                AddonForestry.instance.logWarning("Template for %s is null, wtf?", species.getUID());
+                return result;
+            }
+            ITree tree = (ITree) root.templateAsIndividual(template);
             for (ItemStack stack : tree.getSpecialtyList()) {
+                if (stack == null) {
+                    AddonForestry.instance.logWarning("%s returned null in specialty list", species.toString());
+                    continue;
+                }
                 result.put(stack, 100);
             }
             return result;
