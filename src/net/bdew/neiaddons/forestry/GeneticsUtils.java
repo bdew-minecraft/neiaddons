@@ -28,6 +28,7 @@ import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ISpeciesRoot;
+import forestry.api.lepidopterology.IAlleleButterflySpecies;
 
 public class GeneticsUtils {
     public enum RecipePosition {
@@ -88,6 +89,10 @@ public class GeneticsUtils {
         return getAllTypedSpecies(IAlleleBeeSpecies.class, includeBlacklisted);
     }
 
+    public static Collection<IAlleleButterflySpecies> getAllButterflySpecies(boolean includeBlacklisted) {
+        return getAllTypedSpecies(IAlleleButterflySpecies.class, includeBlacklisted);
+    }
+    
     public static Collection<IAlleleTreeSpecies> getAllTreeSpecies(boolean includeBlacklisted) {
         return getAllTypedSpecies(IAlleleTreeSpecies.class, includeBlacklisted);
     }
