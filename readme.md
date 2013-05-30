@@ -6,8 +6,10 @@ NEI Addons
  * Tree breeding and products
  * Supports bees added by other mods (Thaumic Bees, Extra Bees, etc.)
  * Adds all bees, combs, saplings and pollen types to NEI search
+ * Adds item subsets for NEI menu for bees, saplings, combs, pollen, etc. if NEIPlugins is not installed
 * [Extra Bees](http://www.minecraftforum.net/topic/1324321-)
  * Adds all serums to NEI search
+ * Adds item subsets for NEI menu for all items
  * Isolator recipes - shows what bees can be used to get any serum
 * [Applied Energistics](http://www.minecraftforum.net/topic/1625015-)
  * [?] button support for the Pattern Encoder
@@ -25,11 +27,13 @@ NEI Addons
 Changelog
 =========
 
-###v1.7 - Next version
+###v1.7 - Released 30/05/2013
 * Updated for Forestry 2.2.6.0, will not work with earlier versions
 * Added module for Misc Peripherals
  * Can change the recipe in a Computer Controlled Crafter directly from NEI
-* Added [?] button support for Backpacks mod Workbench Backpacks 
+* Added [?] button support for Backpacks mod Workbench Backpacks
+* Added item subsets for Extra Bees (everything)
+* Added item subsets for Forestry bees, saplings, etc. - only if NEIPlugins is not installed
 
 ###v1.6.1 - Released 29/05/2013
 * Fixed various weird NPE crashes in Forestry Addon
