@@ -104,7 +104,7 @@
 		</variable>
 		<variable>
 			<name>FORESTRY_LOC</name>
-			<value>$%7BBUILD_LOC%7D/forestry-2.2.5.7</value>
+			<value>$%7BBUILD_LOC%7D/forestry-2.2.6.0</value>
 		</variable>
 		<variable>
 			<name>MCP_LOC</name>
