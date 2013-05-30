@@ -12,7 +12,6 @@ package net.bdew.neiaddons.forestry;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.forestry.bees.BeeHelper;
-import net.bdew.neiaddons.forestry.butterflies.ButterflyHelper;
 import net.bdew.neiaddons.forestry.trees.TreeHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.Instance;
@@ -75,6 +74,5 @@ public class AddonForestry extends BaseAddon {
     public void loadClient() {
         BeeHelper.setup();
         TreeHelper.setup();
-        ButterflyHelper.setup();
     }
 }
