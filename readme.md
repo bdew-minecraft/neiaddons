@@ -1,7 +1,7 @@
 NEI Addons
 ==========
 
-* [Forestry](http://www.minecraftforum.net/topic/700588-) (2.2.4.0+)
+* [Forestry](http://www.minecraftforum.net/topic/700588-) (2.2.6.0+)
  * Bee breeding and products as recipes (optionally includes secret mutations too)
  * Tree breeding and products
  * Supports bees added by other mods (Thaumic Bees, Extra Bees, etc.)
@@ -14,21 +14,26 @@ NEI Addons
  * Ability to create patterns directly from recipes, even if you don't have the items on you
 * [Misc Peripherals](http://www.computercraft.info/forums2/index.php?/topic/4587-)
  * [?] button support for the Computer Controlled Crafter
+ * Can set the recipe even if you don't have the items on you
 * Various crafting tables - adds [?] button support for alternate crafting tables from many mods
  * [BuildCraft](http://www.mod-buildcraft.com/) Autocrafting Table
  * [Equivalent Exchange 3](http://www.minecraftforum.net/topic/1540010-) Minium Stone
  * [Andrew2448's addon for MachineMuse's Modular Powersuits](https://github.com/Andrew2448/Andrew2448PowersuitAddons/) In-Place Assembler
+ * [Backpacks mod](http://www.minecraftforum.net/topic/1492661-) Workbench Backpacks
 
 ***
 Changelog
 =========
 
 ###v1.7 - Next version
+* Updated for Forestry 2.2.6.0, will not work with earlier versions
 * Added module for Misc Peripherals
  * Can change the recipe in a Computer Controlled Crafter directly from NEI
+* Added [?] button support for Backpacks mod Workbench Backpacks 
 
 ###v1.6.1 - Released 29/05/2013
-* Fixed various weird NPE crashes in Forestry Addon 
+* Fixed various weird NPE crashes in Forestry Addon
+ 
 ###v1.6 - Released 25/05/2013
 * Added module for Extra Bees
  * Adds all serums to NEI search
