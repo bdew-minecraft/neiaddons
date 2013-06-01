@@ -8,7 +8,7 @@
 	<property name="ccc.src" value="${build.root}/ccc-src" />
 	<property name="forestry.api.path" value="${build.root}/forestry-${build.forestry.api.version}" />
 
-	<property name="build.version" value="${build.version.major}.${build.version.minor}${build.version.suffix}" />
+	<property name="build.version" value="${build.version.major}.${build.version.minor}.${build.version.patch}${build.version.suffix}" />
 
 	<target name="init">
 		<mkdir dir="${build.root}"/>
