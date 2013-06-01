@@ -27,6 +27,10 @@ NEI Addons
 Changelog
 =========
 
+###v1.7.1 - Released 01/06/2013
+* Fixed Extra Bees addon incorrectly trying to work with older versions of forestry (2.2.6.0+ required)
+* Fixed Extra Bees addon not loading if errors happen when dumping serums list
+
 ###v1.7 - Released 30/05/2013
 * Updated for Forestry 2.2.6.0, will not work with earlier versions
 * Added module for Misc Peripherals
