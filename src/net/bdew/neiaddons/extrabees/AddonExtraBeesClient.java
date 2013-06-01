@@ -58,8 +58,12 @@ public class AddonExtraBeesClient {
                 AddonExtraBees.instance.logInfo("%s:", chromosome.toString());
                 for (AlleleBeeChromosomePair pair : res) {
                     if (pair.chromosome == chromosome.ordinal()) {
-                        AlleleManager.alleleRegistry.getAllele(pair.allele);
-                        AddonExtraBees.instance.logInfo(" * %s -> %s", pair.allele, SerumUtils.getSerum(pair).getDisplayName());
+                        try {
+                            AddonExtraBees.instance.logInfo(" * %s -> %s", pair.allele, SerumUtils.getSerum(pair).getDisplayName());
+                        } catch (Throwable e) {
+                            AddonExtraBees.instance.logInfo(" * %s -> BORKED! %s", pair.allele, e.toString());
+                            e.printStackTrace();
+                        }
                     }
                 }
                 AddonExtraBees.instance.logInfo("===================================");
