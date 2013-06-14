@@ -27,6 +27,10 @@ NEI Addons
 Changelog
 =========
 
+###v1.7.2 - Released 14/06/2013
+* Fixed MagicBees class names / modid (forestry combs subset)
+* Build against forge 7.8.0.727 (required by changes in NEI)  
+
 ###v1.7.1 - Released 01/06/2013
 * Fixed Extra Bees addon incorrectly trying to work with older versions of forestry (2.2.6.0+ required)
 * Fixed Extra Bees addon not loading if errors happen when dumping serums list
