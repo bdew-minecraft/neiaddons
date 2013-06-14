@@ -137,9 +137,9 @@ public class BeeHelper {
             }
         }
 
-        if (Loader.isModLoaded("ThaumicBees")) {
+        if (Loader.isModLoaded("MagicBees")) {
             try {
-                Class<?> ebItems = Class.forName("thaumicbees.main.Config");
+                Class<?> ebItems = Class.forName("magicbees.main.Config");
                 Object tbComb = ebItems.getField("combs").get(null);
                 AddonForestry.instance.logInfo("Loaded TB comb item: %s", tbComb.toString());
                 if (tbComb instanceof Item) {
