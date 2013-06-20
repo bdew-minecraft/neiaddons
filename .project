@@ -104,11 +104,11 @@
 		</variable>
 		<variable>
 			<name>FORESTRY_LOC</name>
-			<value>$%7BBUILD_LOC%7D/forestry-2.2.6.0</value>
+			<value>$%7BBUILD_LOC%7D/forestry-2.2.8.1</value>
 		</variable>
 		<variable>
 			<name>MCP_LOC</name>
-			<value>$%7BBUILD_LOC%7D/forge-7.8.0.688-neiat/mcp</value>
+			<value>$%7BBUILD_LOC%7D/forge-7.8.0.727-neiat/mcp</value>
 		</variable>
 		<variable>
 			<name>NEI_LOC</name>
