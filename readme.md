@@ -27,6 +27,12 @@ NEI Addons
 Changelog
 =========
 
+###v1.8.0 - Released 20/06/2013
+* Updated to Forestry API 2.2.8.x (should still work with 2.2.6.x)  
+* Updated to Extra Bees 1.6-pre15 (incompatible with earlier versions)
+* Hidden combs from Extra/Magic Bees will be registered in NEI if "Add Combs to Search"
+* Added Butterfly preliminary mutations display 
+
 ###v1.7.2 - Released 14/06/2013
 * Fixed MagicBees class names / modid (forestry combs subset)
 * Build against forge 7.8.0.727 (required by changes in NEI)  
