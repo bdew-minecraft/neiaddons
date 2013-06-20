@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 
 import net.bdew.neiaddons.Utils;
@@ -20,7 +21,6 @@ import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import codechicken.nei.ItemRange;
 import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Loader;
@@ -65,8 +65,12 @@ public class BeeHelper {
 
         addHandlers();
 
-        Item comb = ItemInterface.getItem("beeComb").getItem();
-        HashSet<Integer> seencombs = new HashSet<Integer>();
+        HashMap<Integer, HashSet<Integer>> seencombs = new HashMap<Integer, HashSet<Integer>>();
+
+        List<Item> modCombs = getMobCombs();
+        for (Item combItem : modCombs) {
+            seencombs.put(combItem.itemID, new HashSet<Integer>());
+        }
 
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
@@ -78,27 +82,34 @@ public class BeeHelper {
             }
             for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
                 addProductToCache(prod.itemID, species);
-                if (AddonForestry.addCombs && (prod.itemID == comb.itemID)) {
-                    seencombs.add(prod.getItemDamage());
+                if (AddonForestry.addCombs && seencombs.containsKey(prod.itemID)) {
+                    seencombs.get(prod.itemID).add(prod.getItemDamage());
                 }
             }
             for (ItemStack prod : GeneticsUtils.getSpecialtyFromSpecies(species).keySet()) {
                 addProductToCache(prod.itemID, species);
-                if (AddonForestry.addCombs && (prod.itemID == comb.itemID)) {
-                    seencombs.add(prod.getItemDamage());
+                if (AddonForestry.addCombs && seencombs.containsKey(prod.itemID)) {
+                    seencombs.get(prod.itemID).add(prod.getItemDamage());
                 }
             }
         }
 
         if (AddonForestry.addCombs) {
-            ArrayList<ItemStack> combs = new ArrayList<ItemStack>();
-            comb.getSubItems(comb.itemID, null, combs);
+            for (Item combItem : modCombs) {
+                HashSet<Integer> subitems = seencombs.get(combItem.itemID);
 
-            for (ItemStack item : combs) {
-                seencombs.add(item.getItemDamage());
+                ArrayList<ItemStack> combs = new ArrayList<ItemStack>();
+                combItem.getSubItems(combItem.itemID, null, combs);
+
+                for (ItemStack item : combs) {
+                    subitems.add(item.getItemDamage());
+                }
+
+                AddonForestry.instance.logInfo("Registering variants for %s: %s", combItem.getClass().getName(), subitems.toString());
+
+                API.setItemDamageVariants(combItem.itemID, subitems);
+
             }
-
-            API.setItemDamageVariants(comb.itemID, seencombs);
         }
 
         if (!Loader.isModLoaded("NEIPlugins")) {
@@ -115,22 +126,29 @@ public class BeeHelper {
             API.addSetRange("Forestry.Bees.Drones", droneRange);
 
             MultiItemRange combRange = new MultiItemRange();
-            combRange.add(new ItemRange(comb.itemID));
-            addModCombs(combRange);
+            for (Item i : modCombs) {
+                combRange.add(i.itemID);
+            }
+            ;
             API.addSetRange("Forestry.Bees.Combs", combRange);
-        };
+        }
+        ;
     }
 
-    private static void addModCombs(MultiItemRange combs) {
+    private static List<Item> getMobCombs() {
+        List<Item> res = new ArrayList<Item>();
+
+        res.add(ItemInterface.getItem("beeComb").getItem());
+
         if (Loader.isModLoaded("ExtraBees")) {
             try {
                 Class<?> ebItems = Class.forName("binnie.extrabees.ExtraBees");
                 Object ebComb = ebItems.getField("comb").get(null);
-                AddonForestry.instance.logInfo("Loaded EB comb item: %s", ebComb.toString());
                 if (ebComb instanceof Item) {
-                    ItemRange range = new ItemRange(((Item) ebComb).itemID);
-                    AddonForestry.instance.logInfo("Registered EB combs: %s", range.toString());
-                    combs.add(range);
+                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%d)", ebComb.toString(), ((Item) ebComb).itemID);
+                    res.add((Item) ebComb);
+                } else {
+                    AddonForestry.instance.logWarning("Extra Bees comb is not Item subclass!");
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
@@ -139,17 +157,20 @@ public class BeeHelper {
 
         if (Loader.isModLoaded("MagicBees")) {
             try {
-                Class<?> ebItems = Class.forName("magicbees.main.Config");
-                Object tbComb = ebItems.getField("combs").get(null);
-                AddonForestry.instance.logInfo("Loaded TB comb item: %s", tbComb.toString());
-                if (tbComb instanceof Item) {
-                    ItemRange range = new ItemRange(((Item) tbComb).itemID);
-                    AddonForestry.instance.logInfo("Registered TB combs: %s", range.toString());
-                    combs.add(range);
+                Class<?> mbConfig = Class.forName("magicbees.main.Config");
+                Object mbComb = mbConfig.getField("combs").get(null);
+                AddonForestry.instance.logInfo("Loaded TB comb item: %s", mbComb.toString());
+                if (mbComb instanceof Item) {
+                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%d)", mbComb.toString(), ((Item) mbComb).itemID);
+                    res.add((Item) mbComb);
+                } else {
+                    AddonForestry.instance.logWarning("Magic Bees comb is not Item subclass!");
                 }
             } catch (Throwable e) {
                 e.printStackTrace();
             }
         }
+
+        return res;
     }
 }
