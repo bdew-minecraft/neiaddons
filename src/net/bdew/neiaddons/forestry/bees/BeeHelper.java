@@ -124,7 +124,7 @@ public class BeeHelper {
     private static void addModCombs(MultiItemRange combs) {
         if (Loader.isModLoaded("ExtraBees")) {
             try {
-                Class<?> ebItems = Class.forName("binnie.extrabees.core.ExtraBeeItem");
+                Class<?> ebItems = Class.forName("binnie.extrabees.ExtraBees");
                 Object ebComb = ebItems.getField("comb").get(null);
                 AddonForestry.instance.logInfo("Loaded EB comb item: %s", ebComb.toString());
                 if (ebComb instanceof Item) {

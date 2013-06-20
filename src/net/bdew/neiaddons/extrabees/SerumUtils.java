@@ -22,7 +22,7 @@ public class SerumUtils {
     }
 
     public static void setup() throws IllegalArgumentException, IllegalAccessException, NoSuchFieldException, SecurityException, ClassNotFoundException {
-        itemSerum = (Item) Class.forName("binnie.extrabees.core.ExtraBeeItem").getField("serum").get(null);
+        itemSerum = (Item) Class.forName("binnie.extrabees.ExtraBees").getField("serum").get(null);
     }
 
     public static boolean isSerum(ItemStack stack) {

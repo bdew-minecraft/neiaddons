@@ -76,28 +76,27 @@ public class AddonExtraBeesClient {
     }
 
     private static void addSubsets() {
-        Class<?> ebItems;
-        Class<?> ebBlocks;
+        Class<?> ebMain;
         Class<?> ebConfig;
         try {
-            ebItems = Class.forName("binnie.extrabees.core.ExtraBeeItem");
-            ebBlocks = Class.forName("binnie.extrabees.core.ExtraBeeBlock");
+            ebMain = Class.forName("binnie.extrabees.ExtraBees");
             ebConfig = Class.forName("binnie.extrabees.config.ConfigurationMain");
         } catch (Throwable e) {
             AddonExtraBees.instance.logWarning("Failed to get Extra Bees items and blocks");
             e.printStackTrace();
             return;
         }
-        Utils.addSubsetForItem(ebItems, "template", "Extra Bees.Templates");
-        Utils.addSubsetForItem(ebItems, "serum", "Extra Bees.Serums");
-        Utils.addSubsetForItem(ebItems, "liquidContainer", "Extra Bees.Containers");
-        Utils.addSubsetForItem(ebBlocks, "apiaristMachine", "Extra Bees.Machines.Apiarist");
-        Utils.addSubsetForItem(ebBlocks, "geneticMachine", "Extra Bees.Machines.Genetic");
-        Utils.addSubsetForItem(ebBlocks, "advGeneticMachine", "Extra Bees.Machines.Advanced");
-        Utils.addSubsetForItem(ebBlocks, "hive", "Extra Bees.Hives");
-        Utils.addSubsetForItems(ebItems, new String[] { "templateBlank", "dictionary", "serumEmpty" }, "Extra Bees.Misc");
+        Utils.addSubsetForItem(ebMain, "template", "Extra Bees.Templates");
+        Utils.addSubsetForItem(ebMain, "serum", "Extra Bees.Serums");
+        Utils.addSubsetForItem(ebMain, "liquidContainer", "Extra Bees.Containers");
+        Utils.addSubsetForItem(ebMain, "apiaristMachine", "Extra Bees.Machines.Apiarist");
+        Utils.addSubsetForItem(ebMain, "geneticMachine", "Extra Bees.Machines.Genetic");
+        Utils.addSubsetForItem(ebMain, "advGeneticMachine", "Extra Bees.Machines.Advanced");
+        Utils.addSubsetForItem(ebMain, "hive", "Extra Bees.Hives");
+        Utils.addSubsetForItems(ebMain, new String[] { "templateBlank", "dictionary", "serumEmpty", "itemMisc" }, "Extra Bees.Misc");
         Utils.addSubsetForItems(ebConfig, new String[] { "hiveFrameID", "hiveFrame2ID", "hiveFrame3ID", "hiveFrame4ID", "hiveFrame5ID" }, "Extra Bees.Frames", 256);
         Utils.addSubsetForItem(ebConfig, "alvearyID", "Extra Bees.Machines.Alveary");
+        
     }
 
     public static void load() {
