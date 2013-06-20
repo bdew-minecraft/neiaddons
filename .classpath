@@ -6,7 +6,11 @@
 			<attribute name="ignore_optional_problems" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="src" path="forestry"/>
+	<classpathentry kind="src" path="forestry">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="src" path="ccc">
 		<attributes>
 			<attribute name="ignore_optional_problems" value="true"/>
