@@ -81,6 +81,18 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     public void loadCraftingRecipes(ItemStack result) {
         if (!speciesRoot.isMember(result)) { return; }
         IIndividual resultIndividual = speciesRoot.getMember(result);
+        if (resultIndividual==null) {
+            AddonForestry.instance.logWarning("IIndividual is null searching recipe for %s",result.toString());
+            return;
+        }
+        if (resultIndividual.getGenome()==null) {
+            AddonForestry.instance.logWarning("Genome is null when searching recipe for %s",result.toString());
+            return;
+        }
+        if (resultIndividual.getGenome().getPrimary()==null) {
+            AddonForestry.instance.logWarning("Species is null when searching recipe for %s",result.toString());
+            return;
+        }
         IAlleleSpecies species = resultIndividual.getGenome().getPrimary();
 
         for (IMutation mutation : speciesRoot.getMutations(false)) {
@@ -96,6 +108,18 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     public void loadUsageRecipes(ItemStack ingredient) {
         if (!speciesRoot.isMember(ingredient)) { return; }
         IIndividual individual = speciesRoot.getMember(ingredient);
+        if (individual==null) {
+            AddonForestry.instance.logWarning("IIndividual is null searching recipe for %s",ingredient.toString());
+            return;
+        }
+        if (individual.getGenome()==null) {
+            AddonForestry.instance.logWarning("Genome is null when searching recipe for %s",ingredient.toString());
+            return;
+        }
+        if (individual.getGenome().getPrimary()==null) {
+            AddonForestry.instance.logWarning("Species is null when searching recipe for %s",ingredient.toString());
+            return;
+        }
         IAlleleSpecies species = individual.getGenome().getPrimary();
 
         for (IMutation mutation : speciesRoot.getMutations(false)) {
