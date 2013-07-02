@@ -16,6 +16,7 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -28,7 +29,8 @@ public class SetPatternEncoderRecipe implements SubPacketHandler {
         Container cont = player.openContainer;
         if (AddonAE.ContainerPatternEncoder.isInstance(cont)) {
             HashMap<Integer, ItemStack> stmap = new HashMap<Integer, ItemStack>();
-            for (Object tag : stacks.tagList) {
+            for(int i = 0; i < stacks.tagCount(); i++) {
+                NBTBase tag = stacks.tagAt(i);
                 if (tag instanceof NBTTagCompound) {
                     NBTTagCompound itemdata = (NBTTagCompound) tag;
                     stmap.put(itemdata.getInteger("slot"), ItemStack.loadItemStackFromNBT(itemdata));
