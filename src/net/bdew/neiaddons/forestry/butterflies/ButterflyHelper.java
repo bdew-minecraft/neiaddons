@@ -38,10 +38,12 @@ public class ButterflyHelper {
         root = (IButterflyRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootButterflies");
         allSpecies = GeneticsUtils.getAllButterflySpecies(AddonForestry.loadBlacklisted);
 
-        breedingRecipeHandler = new ButterflyBreedingHandler();
-        API.registerRecipeHandler(breedingRecipeHandler);
-        API.registerUsageHandler(breedingRecipeHandler);
-        AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+        if (AddonForestry.showButterflyMutations) {
+            breedingRecipeHandler = new ButterflyBreedingHandler();
+            API.registerRecipeHandler(breedingRecipeHandler);
+            API.registerUsageHandler(breedingRecipeHandler);
+            AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+        }
 
 //        productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 

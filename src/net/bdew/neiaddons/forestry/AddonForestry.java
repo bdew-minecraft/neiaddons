@@ -30,6 +30,12 @@ public class AddonForestry extends BaseAddon {
     public static boolean addSaplings;
     public static boolean addPollen;
     public static boolean loadBlacklisted;
+    public static boolean showBeeMutations;
+    public static boolean showBeeProducts;
+    public static boolean showTreeMutations;
+    public static boolean showTreeProducts;
+    public static boolean showButterflyMutations;
+    public static boolean showButterflyProducts;
 
     @Instance(NEIAddons.modid + "|Forestry")
     public static AddonForestry instance;
@@ -57,12 +63,24 @@ public class AddonForestry extends BaseAddon {
 
     @Override
     public void init(Side side) throws Exception {
+        showBeeMutations= NEIAddons.config.get(getName(), "Show Bee Mutations", true, "Set to false to disable bee mutations browsing").getBoolean(false);
+        showBeeProducts = NEIAddons.config.get(getName(), "Show Bee Products", true, "Set to false to disable bee products browsing").getBoolean(false);
+
+        showTreeMutations= NEIAddons.config.get(getName(), "Show Tree Mutations", true, "Set to false to disable tree mutations browsing").getBoolean(false);
+        showTreeProducts = NEIAddons.config.get(getName(), "Show Tree Products", true, "Set to false to disable tree products browsing").getBoolean(false);
+
+        showButterflyMutations= NEIAddons.config.get(getName(), "Show Butterfly Mutations", true, "Set to false to disable butterfly mutations browsing").getBoolean(false);
+        //showButterflyProducts = NEIAddons.config.get(getName(), "Show Butterfly Products", true, "Set to false to disable butterfly products browsing").getBoolean(false);
+        
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
+        
         addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add all bees to NEI search").getBoolean(false);
         addCombs = NEIAddons.config.get(getName(), "Add Combs to Search", false, "Set to true to add all combs that are produced by bees to NEI search").getBoolean(false);
         addSaplings = NEIAddons.config.get(getName(), "Add Saplings to Search", true, "Set to true to add all saplings to NEI search").getBoolean(false);
         addPollen = NEIAddons.config.get(getName(), "Add Pollen to Search", true, "Set to true to add all pollen types to NEI search").getBoolean(false);
+        
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
+        
         active = true;
     }
 

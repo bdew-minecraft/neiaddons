@@ -48,15 +48,19 @@ public class TreeHelper {
         root = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
         allSpecies = GeneticsUtils.getAllTreeSpecies(AddonForestry.loadBlacklisted);
 
-        breedingRecipeHandler = new TreeBreedingHandler();
-        API.registerRecipeHandler(breedingRecipeHandler);
-        API.registerUsageHandler(breedingRecipeHandler);
-        AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+        if (AddonForestry.showTreeMutations) {
+            breedingRecipeHandler = new TreeBreedingHandler();
+            API.registerRecipeHandler(breedingRecipeHandler);
+            API.registerUsageHandler(breedingRecipeHandler);
+            AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+        }
 
-        produceRecipeHandler = new TreeProduceHandler();
-        API.registerRecipeHandler(produceRecipeHandler);
-        API.registerUsageHandler(produceRecipeHandler);
-        AddonForestry.instance.registerWithNEIPlugins(produceRecipeHandler.getRecipeName(), produceRecipeHandler.getRecipeIdent());
+        if (AddonForestry.showTreeProducts) {
+            produceRecipeHandler = new TreeProduceHandler();
+            API.registerRecipeHandler(produceRecipeHandler);
+            API.registerUsageHandler(produceRecipeHandler);
+            AddonForestry.instance.registerWithNEIPlugins(produceRecipeHandler.getRecipeName(), produceRecipeHandler.getRecipeIdent());
+        }
 
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 

@@ -48,15 +48,19 @@ public class BeeHelper {
     }
 
     private static void addHandlers() {
-        breedingRecipeHandler = new BeeBreedingHandler();
-        API.registerRecipeHandler(breedingRecipeHandler);
-        API.registerUsageHandler(breedingRecipeHandler);
-        AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+        if (AddonForestry.showBeeMutations) {
+            breedingRecipeHandler = new BeeBreedingHandler();
+            API.registerRecipeHandler(breedingRecipeHandler);
+            API.registerUsageHandler(breedingRecipeHandler);
+            AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+        }
 
-        productsRecipeHandler = new BeeProduceHandler();
-        API.registerRecipeHandler(productsRecipeHandler);
-        API.registerUsageHandler(productsRecipeHandler);
-        AddonForestry.instance.registerWithNEIPlugins(productsRecipeHandler.getRecipeName(), productsRecipeHandler.getRecipeIdent());
+        if (AddonForestry.showBeeProducts) {
+            productsRecipeHandler = new BeeProduceHandler();
+            API.registerRecipeHandler(productsRecipeHandler);
+            API.registerUsageHandler(productsRecipeHandler);
+            AddonForestry.instance.registerWithNEIPlugins(productsRecipeHandler.getRecipeName(), productsRecipeHandler.getRecipeIdent());
+        }
     }
 
     public static void setup() {
