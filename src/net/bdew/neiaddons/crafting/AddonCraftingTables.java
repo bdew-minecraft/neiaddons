@@ -63,7 +63,6 @@ public class AddonCraftingTables extends BaseAddon {
         tryLoadTableClass("EE3", "com.pahimar.ee3.client.gui.inventory.GuiPortableCrafting", "EE3 Minium Stone");
         tryLoadTableClass("BuildCraft|Factory", "buildcraft.factory.gui.GuiAutoCrafting", "BC Autorcrafting Table");
         tryLoadTableClass("PowersuitAddons", "andrew.powersuits.client.PortableCraftingGui", "MPSA In-Place Assembler");
-        tryLoadTableClass("Backpack", "backpack.gui.GuiWorkbenchBackpack", "Workbench Backpack");
         
         if (craftingTables.size() > 0) {
             logInfo("%d crafting tables registered", craftingTables.size());
