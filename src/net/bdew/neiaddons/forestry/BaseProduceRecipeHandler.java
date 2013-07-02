@@ -17,6 +17,8 @@ import java.util.Map.Entry;
 
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.PositionedStack;
@@ -139,12 +141,13 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void drawExtras(GuiContainerManager gui, int recipe) {
         CachedProduceRecipe rec = (CachedProduceRecipe) arecipes.get(recipe);
-        rec.producer.drawLabel(gui.window.fontRenderer);
+        rec.producer.drawLabel();
         for (LabeledPositionedStack stack : rec.products) {
-            stack.drawLabel(gui.window.fontRenderer);
+            stack.drawLabel();
         }
-        gui.window.fontRenderer.drawString("Prod:", 65, 8 + 4, 0xFFFFFF);
-        gui.window.fontRenderer.drawString("Spec:", 65, 36 + 4, 0xFFF200);
+        FontRenderer f = Minecraft.getMinecraft().fontRenderer;
+        f.drawString("Prod:", 65, 8 + 4, 0xFFFFFF);
+        f.drawString("Spec:", 65, 36 + 4, 0xFFF200);
     }
 
     public abstract String getRecipeIdent();

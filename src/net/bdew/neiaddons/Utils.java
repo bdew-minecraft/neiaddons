@@ -14,6 +14,7 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -36,7 +37,8 @@ public class Utils {
         }
     }
 
-    public static void drawCenteredString(FontRenderer f, String s, int x, int y, int color) {
+    public static void drawCenteredString(String s, int x, int y, int color) {
+        FontRenderer f = Minecraft.getMinecraft().fontRenderer;
         f.drawString(s, x - f.getStringWidth(s) / 2, y, color);
     }
 

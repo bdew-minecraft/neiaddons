@@ -31,14 +31,14 @@ public class LabeledPositionedStack extends PositionedStack {
         this.yoffs = yoffs;
     }
 
-    public void drawLabel(FontRenderer f) {
+    public void drawLabel() {
         if (label.contains(" ")) {
             String[] parts = label.split(" ");
             for (int i = 0; i<parts.length; i++) {
-                Utils.drawCenteredString(f, parts[i], relx + 8, rely + 8 + yoffs + 9*i, 0xFFFFFF);
+                Utils.drawCenteredString(parts[i], relx + 8, rely + 8 + yoffs + 9*i, 0xFFFFFF);
             }
         } else {
-            Utils.drawCenteredString(f, label, relx + 8, rely + 8 + yoffs, 0xFFFFFF);
+            Utils.drawCenteredString(label, relx + 8, rely + 8 + yoffs, 0xFFFFFF);
         }
     }
 

@@ -140,10 +140,10 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     @Override
     public void drawExtras(GuiContainerManager gui, int recipe) {
         CachedBreedingRecipe rec = (CachedBreedingRecipe) arecipes.get(recipe);
-        rec.result.drawLabel(gui.window.fontRenderer);
-        rec.parrent1.drawLabel(gui.window.fontRenderer);
-        rec.parrent2.drawLabel(gui.window.fontRenderer);
-        Utils.drawCenteredString(gui.window.fontRenderer, String.format("%.0f%%", rec.chance), 108, 15, 0xFFFFFF);
+        rec.result.drawLabel();
+        rec.parrent1.drawLabel();
+        rec.parrent2.drawLabel();
+        Utils.drawCenteredString(String.format("%.0f%%", rec.chance), 108, 15, 0xFFFFFF);
     }
 
     public abstract String getRecipeIdent();
