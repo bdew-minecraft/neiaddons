@@ -9,6 +9,10 @@
 
 package net.bdew.neiaddons;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.Item;
@@ -37,7 +41,8 @@ public class Utils {
     }
 
     public static void safeAddNBTItem(ItemStack item) {
-        if (item == null) return;
+        if (item == null)
+            return;
         API.addNBTItem(item);
     }
 
@@ -66,7 +71,7 @@ public class Utils {
         }
         if (multi.ranges.size() > 0) {
             API.addSetRange(rangeName, multi);
-        };
+        }
     }
 
     public static void addSubsetForItem(Class<?> cls, String field, String rangeName) {
@@ -75,6 +80,37 @@ public class Utils {
 
     public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName) {
         addSubsetForItems(cls, fields, rangeName, 0);
+    }
+
+    /**
+     * Like ItemStack.isItemStackEqual but ignores stack size
+     */
+    public static boolean isSameItem(ItemStack s1, ItemStack s2) {
+        if ((s1 == null) || (s2 == null))
+            return false;
+        if (s1.itemID != s2.itemID)
+            return false;
+        if (s1.getItemDamage() != s2.getItemDamage())
+            return false;
+        if ((s1.getTagCompound() == null) && (s2.getTagCompound() == null))
+            return true;
+        if ((s1.getTagCompound() == null) || (s2.getTagCompound() == null))
+            return false;
+        return s1.getTagCompound().equals(s2.getTagCompound());
+    }
+
+    public static Map<ItemStack, Integer> mergeStacks(Map<ItemStack, Integer> stacks) {
+        Map<ItemStack, Integer> merged = new HashMap<ItemStack, Integer>();
+        outer: for (Entry<ItemStack, Integer> stack : stacks.entrySet()) {
+            for (Entry<ItemStack, Integer> mergedStack : merged.entrySet()) {
+                if (isSameItem(stack.getKey(), mergedStack.getKey()) && (stack.getValue() == mergedStack.getValue())) {
+                    mergedStack.getKey().stackSize += 1;
+                    continue outer;
+                }
+            }
+            merged.put(stack.getKey().copy(), stack.getValue());
+        }
+        return merged;
     }
 
 }

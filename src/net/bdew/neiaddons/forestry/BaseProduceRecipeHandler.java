@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
@@ -49,13 +50,13 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
             products = new ArrayList<LabeledPositionedStack>();
 
             int i = 0;
-            for (Entry<ItemStack, Integer> product : GeneticsUtils.getProduceFromSpecies(species).entrySet()) {
+            for (Entry<ItemStack, Integer> product : Utils.mergeStacks(GeneticsUtils.getProduceFromSpecies(species)).entrySet()) {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 8, label, 10));
             }
 
             i = 0;
-            for (Entry<ItemStack, Integer> product : GeneticsUtils.getSpecialtyFromSpecies(species).entrySet()) {
+            for (Entry<ItemStack, Integer> product : Utils.mergeStacks(GeneticsUtils.getSpecialtyFromSpecies(species)).entrySet()) {
                 String label = String.format("%d%%", product.getValue());
                 products.add(new LabeledPositionedStack(product.getKey(), 96 + 22 * i++, 36, label, 10));
             }
