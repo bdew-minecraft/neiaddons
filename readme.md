@@ -21,8 +21,7 @@ NEI Addons
  * [BuildCraft](http://www.mod-buildcraft.com/) Autocrafting Table
  * [Equivalent Exchange 3](http://www.minecraftforum.net/topic/1540010-) Minium Stone
  * [Andrew2448's addon for MachineMuse's Modular Powersuits](https://github.com/Andrew2448/Andrew2448PowersuitAddons/) In-Place Assembler
- * [Backpacks mod](http://www.minecraftforum.net/topic/1492661-) Workbench Backpacks
-
+ 
 ***
 Changelog
 =========
