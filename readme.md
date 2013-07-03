@@ -27,6 +27,11 @@ NEI Addons
 Changelog
 =========
 
+###v1.8.1 - Released 03/07/2013
+* Added option to disable various mutation/products display
+* Product stacks will be merged to prevent ExtraTrees crazyness
+* Removed workbench backpacks [?] support, it was added in the mod itself
+
 ###v1.8.0 - Released 20/06/2013
 * Updated to Forestry API 2.2.8.x (should still work with 2.2.6.x)  
 * Updated to Extra Bees 1.6-pre15 (incompatible with earlier versions)
