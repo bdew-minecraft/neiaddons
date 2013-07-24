@@ -22,10 +22,13 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="src" path="resources"/>
+	<classpathentry kind="src" path="ccl">
+		<attributes>
+			<attribute name="ignore_optional_problems" value="true"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
-	<classpathentry kind="lib" path="jars/libraries/org/ow2/asm/asm-all/4.1/asm-all-4.1.jar" sourcepath="jars/libraries/org/ow2/asm/asm-all/4.1/asm-all-4.1-sources.jar"/>
 	<classpathentry kind="lib" path="jars/libraries/net/minecraft/launchwrapper/1.3/launchwrapper-1.3.jar"/>
-	<classpathentry kind="lib" path="jars/versions/1.6.1/1.6.1.jar"/>
 	<classpathentry kind="lib" path="jars/libraries/lzma/lzma/0.0.1/lzma-0.0.1.jar"/>
 	<classpathentry kind="lib" path="jars/libraries/net/sf/jopt-simple/jopt-simple/4.5/jopt-simple-4.5.jar" sourcepath="jars/libraries/net/sf/jopt-simple/jopt-simple/4.5/jopt-simple-4.5-sources.jar"/>
 	<classpathentry kind="lib" path="jars/libraries/com/paulscode/codecjorbis/20101023/codecjorbis-20101023.jar"/>
@@ -47,7 +50,7 @@
 	</classpathentry>
 	<classpathentry kind="lib" path="jars/libraries/org/lwjgl/lwjgl/lwjgl/2.9.0/lwjgl-2.9.0.jar" sourcepath="jars/libraries/org/lwjgl/lwjgl/lwjgl/2.9.0/lwjgl-2.9.0-sources.jar">
 		<attributes>
-			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="neiaddons/jars/versions/1.6.1/1.6.1-natives"/>
+			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="neiaddons/jars/versions/1.6.2/1.6.2-natives"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="lib" path="jars/libraries/org/lwjgl/lwjgl/lwjgl_util/2.9.0/lwjgl_util-2.9.0.jar" sourcepath="jars/libraries/org/lwjgl/lwjgl/lwjgl_util/2.9.0/lwjgl_util-2.9.0-sources.jar">
@@ -55,5 +58,7 @@
 			<attribute name="org.eclipse.jdt.launching.CLASSPATH_ATTR_LIBRARY_PATH_ENTRY" value="neiaddons/jars/versions/1.6.1/1.6.1-natives"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="lib" path="jars/versions/1.6.2/1.6.2.jar"/>
+	<classpathentry kind="lib" path="jars/libraries/org/ow2/asm/asm-debug-all/4.1/asm-debug-all-4.1.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

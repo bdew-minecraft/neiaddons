@@ -6,6 +6,7 @@
 	<property name="forge.path" value="${build.root}/forge-${build.forge.version}-neiat" />
 	<property name="nei.src" value="${build.root}/nei-src" />
 	<property name="ccc.src" value="${build.root}/ccc-src" />
+	<property name="ccl.src" value="${build.root}/ccl-src" />
 	<property name="forestry.api.path" value="${build.root}/forestry-${build.forestry.api.version}" />
 
 	<property name="build.version" value="${build.version.major}.${build.version.minor}.${build.version.patch}${build.version.suffix}" />
@@ -16,6 +17,7 @@
 		<available property="forge.installed" file="${forge.path}/ok"/>
 		<available property="nei.exists" file="${nei.src}" type="dir"/>
 		<available property="ccc.exists" file="${ccc.src}" type="dir"/>
+		<available property="ccl.exists" file="${ccl.src}" type="dir"/>
 		<available property="forestry.api.installed"  file="${forestry.api.path}" type="dir"/>
 	</target>
 
@@ -49,7 +51,20 @@
 		</exec>
 	</target>
 
-	<target name="forge.install" depends="init,nei.update,ccc.update" unless="forge.installed">
+	<target name="ccl.clone" depends="init" unless="ccl.exists">
+		<exec executable="git" failonerror="true">
+			<arg line="clone https://github.com/Chicken-Bones/CodeChickenLib.git ${ccl.src}"/>
+		</exec>
+	</target>
+
+	<target name="ccl.update" depends="ccl.clone">
+		<exec dir="${ccl.src}" executable="git" failonerror="true">
+			<arg line="pull"/>
+		</exec>
+	</target>
+
+
+	<target name="forge.install" depends="init,nei.update,ccc.update,ccl.update" unless="forge.installed">
 		<delete dir="${forge.path}" quiet="true" />
 
 		<echo>Downloading forge ${build.forge.version} for MC ${build.mc.version}</echo>
@@ -62,7 +77,6 @@
 
 		<echo>Adding access transformer configs</echo>
 
-		<copy file="${ccc.src}/codechickencore_at.cfg" todir="${forge.path}/accesstransformers"/>
 		<copy file="${nei.src}/nei_at.cfg" todir="${forge.path}/accesstransformers"/>
 
 		<echo>Setting up forge at ${forge.path}</echo>
@@ -134,6 +148,7 @@
 			<fileset dir="${forestry.api.path}"/>
 			<fileset dir="${nei.src}"/>
 			<fileset dir="${ccc.src}"/>
+			<fileset dir="${ccl.src}"/>
 		</copy>
 
 		<antcall target="compile" />	

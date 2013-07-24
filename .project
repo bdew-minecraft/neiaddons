@@ -21,6 +21,11 @@
 			<locationURI>CCC_LOC</locationURI>
 		</link>
 		<link>
+			<name>ccl</name>
+			<type>2</type>
+			<locationURI>CCL_LOC</locationURI>
+		</link>
+		<link>
 			<name>forestry</name>
 			<type>2</type>
 			<locationURI>FORESTRY_LOC</locationURI>
@@ -89,12 +94,16 @@
 			<value>$%7BBUILD_LOC%7D/ccc-src</value>
 		</variable>
 		<variable>
+			<name>CCL_LOC</name>
+			<value>$%7BBUILD_LOC%7D/ccl-src</value>
+		</variable>
+		<variable>
 			<name>FORESTRY_LOC</name>
 			<value>$%7BBUILD_LOC%7D/forestry-2.2.8.1</value>
 		</variable>
 		<variable>
 			<name>MCP_LOC</name>
-			<value>$%7BBUILD_LOC%7D/forge-8.9.0.755-neiat/mcp</value>
+			<value>$%7BBUILD_LOC%7D/forge-9.10.0.802-neiat/mcp</value>
 		</variable>
 		<variable>
 			<name>NEI_LOC</name>
