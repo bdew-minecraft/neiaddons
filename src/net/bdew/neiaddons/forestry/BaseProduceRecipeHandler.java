@@ -22,7 +22,6 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.ISpeciesRoot;
@@ -139,7 +138,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public void drawExtras(GuiContainerManager gui, int recipe) {
+    public void drawExtras(int recipe) {
         CachedProduceRecipe rec = (CachedProduceRecipe) arecipes.get(recipe);
         rec.producer.drawLabel();
         for (LabeledPositionedStack stack : rec.products) {

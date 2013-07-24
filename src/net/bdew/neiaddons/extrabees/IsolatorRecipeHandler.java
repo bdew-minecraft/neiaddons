@@ -13,10 +13,8 @@ import java.awt.Rectangle;
 
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
-import net.minecraft.client.Minecraft;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAllele;
@@ -97,7 +95,7 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public void drawExtras(GuiContainerManager gui, int recipe) {
+    public void drawExtras(int recipe) {
         CachedSerumRecipe rec = (CachedSerumRecipe) arecipes.get(recipe);
         rec.bee.drawLabel();
     }

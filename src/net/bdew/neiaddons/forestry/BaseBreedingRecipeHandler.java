@@ -16,7 +16,6 @@ import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
-import codechicken.nei.forge.GuiContainerManager;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
@@ -138,7 +137,7 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     }
 
     @Override
-    public void drawExtras(GuiContainerManager gui, int recipe) {
+    public void drawExtras(int recipe) {
         CachedBreedingRecipe rec = (CachedBreedingRecipe) arecipes.get(recipe);
         rec.result.drawLabel();
         rec.parrent1.drawLabel();

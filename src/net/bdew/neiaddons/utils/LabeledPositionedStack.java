@@ -10,7 +10,6 @@
 package net.bdew.neiaddons.utils;
 
 import net.bdew.neiaddons.Utils;
-import net.minecraft.client.gui.FontRenderer;
 import codechicken.nei.PositionedStack;
 
 public class LabeledPositionedStack extends PositionedStack {
