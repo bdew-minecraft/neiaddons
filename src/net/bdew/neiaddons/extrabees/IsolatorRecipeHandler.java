@@ -107,6 +107,6 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/mods/neiaddons/textures/gui/isolator.png";
+        return "neiaddons:textures/gui/isolator.png";
     }
 }

@@ -157,6 +157,6 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/mods/neiaddons/textures/gui/products.png";
+        return "neiaddons:textures/gui/products.png";
     }
 }

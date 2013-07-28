@@ -149,6 +149,6 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public String getGuiTexture() {
-        return "/mods/neiaddons/textures/gui/breeding.png";
+        return "neiaddons:textures/gui/breeding.png";
     }
 }
