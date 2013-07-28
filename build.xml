@@ -59,7 +59,10 @@
 
 	<target name="ccl.update" depends="ccl.clone">
 		<exec dir="${ccl.src}" executable="git" failonerror="true">
-			<arg line="pull"/>
+			<arg line="fetch"/>
+		</exec>
+		<exec dir="${ccl.src}" executable="git" failonerror="true">
+			<arg line="reset --hard ${build.ccl.revision}"/>
 		</exec>
 	</target>
 
