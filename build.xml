@@ -36,7 +36,7 @@
 			<arg line="pull"/>
 		</exec>
 		<exec dir="${nei.src}" executable="hg" failonerror="true">
-			<arg line="update -C"/>
+			<arg line="update -C ${build.nei.revision}"/>
 		</exec>
 	</target>
 
@@ -45,7 +45,7 @@
 			<arg line="pull"/>
 		</exec>
 		<exec dir="${ccc.src}" executable="hg" failonerror="true">
-			<arg line="update -C"/>
+			<arg line="update -C ${build.ccc.revision}"/>
 		</exec>
 	</target>
 
