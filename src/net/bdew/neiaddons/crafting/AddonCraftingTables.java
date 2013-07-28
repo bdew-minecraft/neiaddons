@@ -17,7 +17,7 @@ import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -37,7 +37,7 @@ public class AddonCraftingTables extends BaseAddon {
         return side.isClient();
     }
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent ev) {
         doPreInit(ev);
     }

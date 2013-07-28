@@ -17,8 +17,8 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
@@ -50,7 +50,7 @@ public class AddonMiscPeripherals extends BaseAddon {
     }
 
     @Override
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent ev) {
         doPreInit(ev);
     }

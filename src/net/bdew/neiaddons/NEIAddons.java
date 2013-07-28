@@ -18,8 +18,7 @@ import net.bdew.neiaddons.api.NEIAddon;
 import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.Init;
-import cpw.mods.fml.common.Mod.PreInit;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
@@ -54,7 +53,7 @@ public class NEIAddons {
     }    
     
     
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         log = event.getModLog();
         config = new Configuration(event.getSuggestedConfigurationFile());
@@ -66,7 +65,7 @@ public class NEIAddons {
         };
     }
 
-    @Init
+    @EventHandler
     public void init(FMLInitializationEvent event) {
         logInfo("Loading NEI Addons");
         for (NEIAddon addon : addons) {

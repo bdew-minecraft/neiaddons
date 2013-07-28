@@ -14,8 +14,8 @@ import java.util.Collection;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.Mod.PreInit;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
@@ -46,7 +46,7 @@ public class AddonExtraBees extends BaseAddon {
         return side.isClient();
     }
 
-    @PreInit
+    @EventHandler
     public void preInit(FMLPreInitializationEvent ev) {
         doPreInit(ev);
     }
