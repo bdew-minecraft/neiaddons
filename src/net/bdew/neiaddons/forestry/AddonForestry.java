@@ -36,6 +36,7 @@ public class AddonForestry extends BaseAddon {
     public static boolean showTreeProducts;
     public static boolean showButterflyMutations;
     public static boolean showButterflyProducts;
+    public static boolean showReqs;
 
     @Instance(NEIAddons.modid + "|Forestry")
     public static AddonForestry instance;
@@ -73,6 +74,8 @@ public class AddonForestry extends BaseAddon {
         //showButterflyProducts = NEIAddons.config.get(getName(), "Show Butterfly Products", true, "Set to false to disable butterfly products browsing").getBoolean(false);
         
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
+
+        showReqs = NEIAddons.config.get(getName(), "Show Mutation Requirements", true, "Set to false disable display of mutation requirements").getBoolean(false);
         
         addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add all bees to NEI search").getBoolean(false);
         addCombs = NEIAddons.config.get(getName(), "Add Combs to Search", false, "Set to true to add all combs that are produced by bees to NEI search").getBoolean(false);
