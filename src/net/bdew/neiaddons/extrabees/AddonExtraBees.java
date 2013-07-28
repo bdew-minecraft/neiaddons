@@ -38,7 +38,7 @@ public class AddonExtraBees extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[] { "ExtraBees@[1.6-pre15,)", "Forestry@[2.2.6.0,)" };
+        return new String[] { "ExtraBees@[1.6-pre15,)", "Forestry@[2.2.9.0,)" };
     }
 
     @Override

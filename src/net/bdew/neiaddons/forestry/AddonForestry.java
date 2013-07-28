@@ -52,7 +52,7 @@ public class AddonForestry extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[] { "Forestry@[2.2.6.0,)" };
+        return new String[] { "Forestry@[2.2.9.0,)" };
     }
 
     @Override
