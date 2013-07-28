@@ -18,6 +18,7 @@ import java.util.List;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
+import codechicken.core.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
@@ -167,7 +168,7 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
         CachedBreedingRecipe rec = (CachedBreedingRecipe) arecipes.get(recipe);
         if (AddonForestry.showReqs && rec.requirements.size() > 0 && gui.manager.shouldShowTooltip() && currenttip.size() == 0) {
             Point offset = gui.getRecipePosition(recipe);
-            Point pos = gui.manager.getMousePosition();
+            Point pos = GuiDraw.getMousePosition();
             Point relMouse = new Point(pos.x - gui.guiLeft - offset.x, pos.y - gui.guiTop - offset.y);
             Rectangle tiprect = new Rectangle(108 - 24, 15-2, 48, 12);
             if (tiprect.contains(relMouse)) {
