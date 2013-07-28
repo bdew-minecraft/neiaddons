@@ -9,14 +9,18 @@
 
 package net.bdew.neiaddons.forestry;
 
+import java.awt.Point;
 import java.awt.Rectangle;
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.forge.GuiContainerManager;
+import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
@@ -34,9 +38,9 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     public class CachedBreedingRecipe extends CachedRecipe {
         LabeledPositionedStack parrent1, parrent2, result;
         public float chance;
+        public Collection<String> requirements;
 
         public CachedBreedingRecipe(IMutation mutation) {
-
             ItemStack stackParent1 = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getAllele0(), GeneticsUtils.RecipePosition.Parent1);
             ItemStack stackParent2 = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getAllele1(), GeneticsUtils.RecipePosition.Parent2);
             ItemStack stackResult = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getTemplate()[0], GeneticsUtils.RecipePosition.Offspring);
@@ -45,6 +49,8 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             parrent2 = new LabeledPositionedStack(stackParent2, 75, 19, ((IAlleleSpecies) mutation.getAllele1()).getName(), 13);
             result = new LabeledPositionedStack(stackResult, 129, 19, ((IAlleleSpecies) mutation.getTemplate()[0]).getName(), 13);
             chance = mutation.getBaseChance();
+
+            requirements = mutation.getSpecialConditions();
         }
 
         @Override
@@ -89,8 +95,8 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             AddonForestry.instance.logWarning("Genome is null when searching recipe for %s",result.toString());
             return;
         }
-        if (resultIndividual.getGenome().getPrimary()==null) {
-            AddonForestry.instance.logWarning("Species is null when searching recipe for %s",result.toString());
+        if (resultIndividual.getGenome().getPrimary() == null) {
+            AddonForestry.instance.logWarning("Species is null when searching recipe for %s", result.toString());
             return;
         }
         IAlleleSpecies species = resultIndividual.getGenome().getPrimary();
@@ -143,7 +149,11 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
         rec.result.drawLabel(gui.window.fontRenderer);
         rec.parrent1.drawLabel(gui.window.fontRenderer);
         rec.parrent2.drawLabel(gui.window.fontRenderer);
-        Utils.drawCenteredString(gui.window.fontRenderer, String.format("%.0f%%", rec.chance), 108, 15, 0xFFFFFF);
+        if (rec.requirements.size() > 0 && AddonForestry.showReqs) {
+            Utils.drawCenteredString(gui.window.fontRenderer, String.format("[%.0f%%]", rec.chance), 108, 15, 0xFF0000);
+        } else {
+            Utils.drawCenteredString(gui.window.fontRenderer, String.format("%.0f%%", rec.chance), 108, 15, 0xFFFFFF);
+        }
     }
 
     public abstract String getRecipeIdent();
@@ -151,5 +161,21 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     @Override
     public String getGuiTexture() {
         return "/mods/neiaddons/textures/gui/breeding.png";
+    }
+
+    @Override
+    public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int recipe) {
+        CachedBreedingRecipe rec = (CachedBreedingRecipe) arecipes.get(recipe);
+        if (AddonForestry.showReqs && rec.requirements.size() > 0 && gui.manager.shouldShowTooltip() && currenttip.size() == 0) {
+            Point offset = gui.getRecipePosition(recipe);
+            Point pos = gui.manager.getMousePosition();
+            Point relMouse = new Point(pos.x - gui.guiLeft - offset.x, pos.y - gui.guiTop - offset.y);
+            Rectangle tiprect = new Rectangle(108 - 24, 15-2, 48, 12);
+            if (tiprect.contains(relMouse)) {
+                currenttip.addAll(rec.requirements);
+                return currenttip;
+            }
+        }
+        return super.handleTooltip(gui, currenttip, recipe);
     }
 }
