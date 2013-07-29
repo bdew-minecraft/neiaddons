@@ -3,6 +3,7 @@ NEI Addons
 
 * [Forestry](http://www.minecraftforum.net/topic/700588-) (2.2.6.0+)
  * Bee breeding and products as recipes (optionally includes secret mutations too)
+ * Can show special mutation requirements (biome, temperature, etc.)
  * Tree breeding and products
  * Supports bees added by other mods (Thaumic Bees, Extra Bees, etc.)
  * Adds all bees, combs, saplings and pollen types to NEI search
@@ -25,6 +26,12 @@ NEI Addons
 ***
 Changelog
 =========
+
+###v1.9.x - Currently in alpha 
+* Ported to MC 1.6.2
+
+###v1.8.2 - Released 29/07/2013
+* Added mutation requirements display (Mouse over the chance percentage when it's red)
 
 ###v1.8.1 - Released 03/07/2013
 * Added option to disable various mutation/products display
