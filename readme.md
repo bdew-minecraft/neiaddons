@@ -28,7 +28,12 @@ Changelog
 =========
 
 ###v1.9.x - Currently in alpha 
-* Ported to MC 1.6.2
+* r30 - 28/07/2013 
+    * Ported to MC 1.6.2
+* r33 - 29/07/2013
+    * Added mutation requirements display (Mouse over the chance percentage when it's red)
+* r35 - 09/08/2013
+    * Fixed crashes with new versions of NEI (1.6.0.7 and later)
 
 ###v1.8.2 - Released 29/07/2013
 * Added mutation requirements display (Mouse over the chance percentage when it's red)
