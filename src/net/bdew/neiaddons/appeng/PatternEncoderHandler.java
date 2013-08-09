@@ -9,7 +9,7 @@
 
 package net.bdew.neiaddons.appeng;
 
-import java.util.ArrayList;
+import java.util.List;
 
 import net.bdew.neiaddons.PacketHelper;
 import net.minecraft.client.gui.inventory.GuiContainer;
@@ -28,7 +28,7 @@ import codechicken.nei.recipe.IRecipeHandler;
 public class PatternEncoderHandler implements IOverlayHandler {
     @Override
     public void overlayRecipe(GuiContainer cont, IRecipeHandler recipe, int recipeIndex, boolean shift) {
-        ArrayList<PositionedStack> ingr = recipe.getIngredientStacks(recipeIndex);
+        List<PositionedStack> ingr = recipe.getIngredientStacks(recipeIndex);
 
         if (AddonAE.invertShift) {
             shift = !shift;
