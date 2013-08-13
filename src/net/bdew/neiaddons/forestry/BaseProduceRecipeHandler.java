@@ -114,6 +114,11 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
+        if (cache == null) return;
+        if (result == null) {
+            AddonForestry.instance.logWarning("loadCraftingRecipes() called with null, something is FUBAR.");
+            return;
+        }
         if (!cache.containsKey(result.itemID)) { return; }
         for (IAlleleSpecies species : cache.get(result.itemID)) {
             CachedProduceRecipe recipe = new CachedProduceRecipe(species);

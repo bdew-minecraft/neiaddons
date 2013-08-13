@@ -142,7 +142,13 @@ public class BeeHelper {
     private static List<Item> getMobCombs() {
         List<Item> res = new ArrayList<Item>();
 
-        res.add(ItemInterface.getItem("beeComb").getItem());
+        Item vanillaComb = ItemInterface.getItem("beeComb").getItem();
+        
+        if (vanillaComb == null) {
+            AddonForestry.instance.logWarning("Failed to get forestry bee comb item, something is messed up");
+        } else {
+            res.add(vanillaComb);
+        }
 
         if (Loader.isModLoaded("ExtraBees")) {
             try {
