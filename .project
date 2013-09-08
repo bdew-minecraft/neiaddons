@@ -48,7 +48,7 @@
 	</linkedResources>
 	<filteredResources>
 		<filter>
-			<id>1375006725991</id>
+			<id>1378636522417</id>
 			<name></name>
 			<type>10</type>
 			<matcher>
@@ -99,7 +99,7 @@
 		</variable>
 		<variable>
 			<name>FORESTRY_LOC</name>
-			<value>$%7BBUILD_LOC%7D/forestry-2.2.9.11</value>
+			<value>$%7BBUILD_LOC%7D/forestry-2.3.0.0</value>
 		</variable>
 		<variable>
 			<name>MCP_LOC</name>
