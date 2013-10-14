@@ -13,6 +13,7 @@ import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.ServerHandler;
 import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -32,6 +33,8 @@ public class AddonAE extends BaseAddon {
     public static Class<? extends Container> ContainerPatternEncoder;
     public static Class<? extends Slot> SlotFake;
 
+    public static final String commandName = "SetPatternEncoderRecipe"; 
+    
     @Instance(NEIAddons.modid + "|AE")
     public static AddonAE instance;
     
@@ -60,7 +63,7 @@ public class AddonAE extends BaseAddon {
         ContainerPatternEncoder = Utils.getAndCheckClass("appeng.me.container.ContainerPatternEncoder", Container.class);
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);
 
-        ServerHandler.registerHandler(SetPatternEncoderRecipe.command, new SetPatternEncoderRecipe());
+        ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerPatternEncoder, SlotFake));
         
         active = true;
     }

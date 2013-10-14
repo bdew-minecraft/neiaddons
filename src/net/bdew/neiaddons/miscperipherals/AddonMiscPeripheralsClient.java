@@ -9,12 +9,14 @@
 
 package net.bdew.neiaddons.miscperipherals;
 
+import net.bdew.neiaddons.utils.CustomOverlayHandler;
 import codechicken.nei.api.API;
 
 public class AddonMiscPeripheralsClient {
 
     public static void load() {
-        API.registerGuiOverlayHandler(AddonMiscPeripherals.GuiCrafter, new CrafterHandler(), "crafting");
+        CustomOverlayHandler handler = new CustomOverlayHandler(AddonMiscPeripherals.commandName, 5, 11, AddonMiscPeripherals.invertShift);
+        API.registerGuiOverlayHandler(AddonMiscPeripherals.GuiCrafter, handler, "crafting");
     }
 
 }

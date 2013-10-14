@@ -13,6 +13,7 @@ import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.ServerHandler;
 import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
@@ -34,7 +35,7 @@ public class AddonMiscPeripherals extends BaseAddon {
     public static Class<? extends Container> ContainerCrafter;
     public static Class<? extends Slot> SlotRO;
 
-    public static final String channel = "neiaddons.mp";
+    public static final String commandName = "SetCCCRecipe"; 
 
     @Instance(NEIAddons.modid + "|MiscPeripherals")
     public static AddonMiscPeripherals instance;
@@ -65,7 +66,7 @@ public class AddonMiscPeripherals extends BaseAddon {
         ContainerCrafter = Utils.getAndCheckClass("miscperipherals.inventory.ContainerCrafter", Container.class);
         SlotRO = Utils.getAndCheckClass("miscperipherals.inventory.SlotRO", Slot.class);
         
-        ServerHandler.registerHandler(SetCrafterRecipe.command, new SetCrafterRecipe());
+        ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerCrafter, SlotRO));
 
         active = true;
     }

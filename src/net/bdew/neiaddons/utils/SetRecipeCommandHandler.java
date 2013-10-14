@@ -7,7 +7,7 @@
  * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
-package net.bdew.neiaddons.appeng;
+package net.bdew.neiaddons.utils;
 
 import java.util.HashMap;
 
@@ -20,14 +20,20 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
-public class SetPatternEncoderRecipe implements SubPacketHandler {
-    static public final String command="SetPatternEncoderRecipe"; 
+public class SetRecipeCommandHandler implements SubPacketHandler {
+    private Class<? extends Container> ContainerClass;
+    private Class<? extends Slot> SlotClass;
     
+    public SetRecipeCommandHandler(Class<? extends Container> containerClass, Class<? extends Slot> slotClass) {
+        this.ContainerClass = containerClass;
+        this.SlotClass = slotClass;
+    }
+
     @Override
     public void handle(NBTTagCompound data, EntityPlayerMP player) {
         NBTTagList stacks = data.getTagList("stacks");
         Container cont = player.openContainer;
-        if (AddonAE.ContainerPatternEncoder.isInstance(cont)) {
+        if (ContainerClass.isInstance(cont)) {
             HashMap<Integer, ItemStack> stmap = new HashMap<Integer, ItemStack>();
             for(int i = 0; i < stacks.tagCount(); i++) {
                 NBTBase tag = stacks.tagAt(i);
@@ -37,8 +43,7 @@ public class SetPatternEncoderRecipe implements SubPacketHandler {
                 }
             }
             for (Object slotobj : cont.inventorySlots) {
-                // only operate on SlotFake to prevent potential exploits
-                if (AddonAE.SlotFake.isInstance(slotobj)) {
+                if (SlotClass.isInstance(slotobj)) {
                     Slot slot = (Slot) slotobj;
                     if (stmap.containsKey(slot.getSlotIndex())) {
                         slot.putStack(stmap.get(slot.getSlotIndex()));

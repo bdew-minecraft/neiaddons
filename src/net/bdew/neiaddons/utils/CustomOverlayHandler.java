@@ -7,7 +7,7 @@
  * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
-package net.bdew.neiaddons.forestry.crafting;
+package net.bdew.neiaddons.utils;
 
 import java.util.List;
 
@@ -25,13 +25,29 @@ import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.api.IStackPositioner;
 import codechicken.nei.recipe.IRecipeHandler;
 
-public class WorktableHandler implements IOverlayHandler {
+public class CustomOverlayHandler implements IOverlayHandler {
+    private boolean invert;
+    private String command;
+    private int xOffs, yOffs;
+    
+    public CustomOverlayHandler(String command, int xOffs, int yOffs, boolean invert) {
+        super();
+        this.command = command;
+        this.xOffs = xOffs;
+        this.yOffs = yOffs;
+        this.invert = invert;
+    }
+
     @Override
     public void overlayRecipe(GuiContainer cont, IRecipeHandler recipe, int recipeIndex, boolean shift) {
         List<PositionedStack> ingr = recipe.getIngredientStacks(recipeIndex);
 
+        if (invert) {
+            shift = !shift;
+        }
+
         if (!shift) {
-            IStackPositioner positioner = new OffsetPositioner(-14, 14);
+            IStackPositioner positioner = new OffsetPositioner(xOffs, yOffs);
             IRecipeOverlayRenderer renderer = new DefaultOverlayRenderer(ingr, positioner);
             LayoutManager.overlayRenderer = renderer;
         } else {
@@ -59,7 +75,7 @@ public class WorktableHandler implements IOverlayHandler {
             NBTTagCompound data = new NBTTagCompound();
             data.setTag("stacks", stacksnbt);
 
-            PacketHelper.send(SetWorktableRecipe.command, data);
+            PacketHelper.send(command, data);
         }
     }
 }

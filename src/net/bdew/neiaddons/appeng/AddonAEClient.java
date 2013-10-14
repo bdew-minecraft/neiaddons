@@ -9,12 +9,12 @@
 
 package net.bdew.neiaddons.appeng;
 
+import net.bdew.neiaddons.utils.CustomOverlayHandler;
 import codechicken.nei.api.API;
 
 public class AddonAEClient {
-
     public static void load() {
-        API.registerGuiOverlayHandler(AddonAE.GuiPatternEncoder, new PatternEncoderHandler(), "crafting");
-   }
-
+        CustomOverlayHandler handler = new CustomOverlayHandler(AddonAE.commandName, 5, 17, AddonAE.invertShift);
+        API.registerGuiOverlayHandler(AddonAE.GuiPatternEncoder, handler, "crafting");
+    }
 }

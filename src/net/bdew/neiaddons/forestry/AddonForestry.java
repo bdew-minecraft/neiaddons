@@ -13,7 +13,6 @@ import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.forestry.bees.BeeHelper;
 import net.bdew.neiaddons.forestry.butterflies.ButterflyHelper;
-import net.bdew.neiaddons.forestry.crafting.CraftingOverlayHelper;
 import net.bdew.neiaddons.forestry.trees.TreeHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
