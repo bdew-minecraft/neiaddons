@@ -41,6 +41,7 @@ public class ServerHandler implements IPacketHandler {
             String cmd = data.getString("cmd");
 
             if (handlers.containsKey(cmd)) {
+                NEIAddons.logInfo("Handling %s from %s -> %s", cmd, p.username, handlers.get(cmd).toString());
                 handlers.get(cmd).handle(data.getCompoundTag("data"), p);
             } else {
                 NEIAddons.logWarning("Uknown packet from client '%s': %s", p.username, cmd);

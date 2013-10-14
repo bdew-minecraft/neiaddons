@@ -13,6 +13,7 @@ import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.forestry.bees.BeeHelper;
 import net.bdew.neiaddons.forestry.butterflies.ButterflyHelper;
+import net.bdew.neiaddons.forestry.crafting.CraftingOverlayHelper;
 import net.bdew.neiaddons.forestry.trees.TreeHelper;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -83,7 +84,13 @@ public class AddonForestry extends BaseAddon {
         addPollen = NEIAddons.config.get(getName(), "Add Pollen to Search", true, "Set to true to add all pollen types to NEI search").getBoolean(false);
         
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
-        
+
+        if (this.verifyModVersion("Forestry@[2.3.0.5,)")) {
+            CraftingOverlayHelper.init(side);
+        } else {
+            this.logInfo("Forestry Worktable support not loaded");
+        }
+
         active = true;
     }
 
@@ -97,5 +104,6 @@ public class AddonForestry extends BaseAddon {
         BeeHelper.setup();
         TreeHelper.setup();
         ButterflyHelper.setup();
+        CraftingOverlayHelper.setup();
     }
 }
