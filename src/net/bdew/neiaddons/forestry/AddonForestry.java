@@ -47,11 +47,6 @@ public class AddonForestry extends BaseAddon {
     }
 
     @Override
-    public boolean checkSide(Side side) {
-        return side.isClient();
-    }
-
-    @Override
     public String[] getDependencies() {
         return new String[] { "Forestry@[2.2.9.0,)" };
     }
