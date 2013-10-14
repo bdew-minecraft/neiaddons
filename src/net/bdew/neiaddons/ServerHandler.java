@@ -13,15 +13,20 @@ import java.util.HashMap;
 import java.util.Map;
 
 import net.bdew.neiaddons.api.SubPacketHandler;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
+
+import org.apache.commons.lang3.StringUtils;
+
+import cpw.mods.fml.common.IPlayerTracker;
 import cpw.mods.fml.common.network.IPacketHandler;
 import cpw.mods.fml.common.network.Player;
 
-public class ServerHandler implements IPacketHandler {
+public class ServerHandler implements IPacketHandler, IPlayerTracker {
     private static Map<String,SubPacketHandler> handlers = new HashMap<String,SubPacketHandler>();
     
     public static void registerHandler(String command, SubPacketHandler handler) {
@@ -36,7 +41,6 @@ public class ServerHandler implements IPacketHandler {
         EntityPlayerMP p = (EntityPlayerMP) player;
 
         try {
-
             NBTTagCompound data = CompressedStreamTools.decompress(packet.data);
             String cmd = data.getString("cmd");
 
@@ -50,5 +54,29 @@ public class ServerHandler implements IPacketHandler {
             NEIAddons.logWarning("Error handling packet from client '%s'", p.username);
             e.printStackTrace();
         }
+    }
+
+    private void sendPlayerHello(EntityPlayer player) {
+        NBTTagCompound nbt = new NBTTagCompound();
+        nbt.setString("commands", StringUtils.join(handlers.keySet(),';'));
+        PacketHelper.sendToClient("hello", nbt, (EntityPlayerMP)player);
+    }
+    
+    @Override
+    public void onPlayerLogin(EntityPlayer player) {
+        sendPlayerHello(player);
+    }
+
+    @Override
+    public void onPlayerLogout(EntityPlayer player) {
+    }
+
+    @Override
+    public void onPlayerChangedDimension(EntityPlayer player) {
+        sendPlayerHello(player);
+    }
+
+    @Override
+    public void onPlayerRespawn(EntityPlayer player) {
     }
 }

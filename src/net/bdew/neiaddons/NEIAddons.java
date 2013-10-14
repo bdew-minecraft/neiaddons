@@ -23,6 +23,8 @@ import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
+import cpw.mods.fml.common.registry.GameRegistry;
+import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
 @Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "@@VERSION@@", dependencies = "after:NotEnoughItems")
@@ -50,9 +52,8 @@ public class NEIAddons {
 
     public static void logSevere(String message, Object... params) {
         log.log(Level.SEVERE, String.format(message, params));
-    }    
-    
-    
+    }
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         log = event.getModLog();
@@ -87,7 +88,14 @@ public class NEIAddons {
 
         config.save();
         
-        NetworkRegistry.instance().registerChannel(new ServerHandler(), channel, Side.SERVER);
+        ServerHandler serverHandler = new ServerHandler();
+        NetworkRegistry.instance().registerChannel(serverHandler, channel, Side.SERVER);
+        GameRegistry.registerPlayerTracker(serverHandler);
+        if (event.getSide() == Side.CLIENT) {
+            ClientHandler clientHandler = new ClientHandler();
+            NetworkRegistry.instance().registerChannel(clientHandler, channel, Side.CLIENT);
+            TickRegistry.registerTickHandler(clientHandler, Side.CLIENT);
+        }
         
         if (addons.size() > 0) {
             String addonslist = "Loaded Addons:";
