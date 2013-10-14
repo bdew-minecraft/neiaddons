@@ -8,6 +8,7 @@ NEI Addons
  * Supports bees added by other mods (Thaumic Bees, Extra Bees, etc.)
  * Adds all bees, combs, saplings and pollen types to NEI search
  * Adds item subsets for NEI menu for bees, saplings, combs, pollen, etc. if NEIPlugins is not installed
+ * [?] button support for the Worktable (requires 2.3.0.5 or newer)
 * [Extra Bees](http://www.minecraftforum.net/topic/1324321-)
  * Adds all serums to NEI search
  * Adds item subsets for NEI menu for all items
@@ -22,10 +23,17 @@ NEI Addons
  * [BuildCraft](http://www.mod-buildcraft.com/) Autocrafting Table
  * [Equivalent Exchange 3](http://www.minecraftforum.net/topic/1540010-) Minium Stone
  * [Andrew2448's addon for MachineMuse's Modular Powersuits](https://github.com/Andrew2448/Andrew2448PowersuitAddons/) In-Place Assembler
+ * [Tinkers' Construct](http://www.minecraftforum.net/topic/1659892-) Crafting station
  
 ***
 Changelog
 =========
+
+###v1.9.1 - Released 14/09/2013
+* Added [?] button support for Forestry - Worktable
+ * Requires Forestry 2.3.0.5 or newer 
+* Added [?] button support for Tinkers' Construct - Crafting station
+* Added manual recipe transfer for special crafting tables (Worktable, Pattern Encoder, CCC) so shift+click will work without server side mod 
 
 ###v1.9.0 - Released 17/08/2013
 * Updated to Minecraft 1.6.2
