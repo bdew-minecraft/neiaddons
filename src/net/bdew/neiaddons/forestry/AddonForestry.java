@@ -11,9 +11,15 @@ package net.bdew.neiaddons.forestry;
 
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.ServerHandler;
+import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.bees.BeeHelper;
 import net.bdew.neiaddons.forestry.butterflies.ButterflyHelper;
 import net.bdew.neiaddons.forestry.trees.TreeHelper;
+import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Container;
+import net.minecraft.inventory.Slot;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -38,6 +44,14 @@ public class AddonForestry extends BaseAddon {
     public static boolean showButterflyProducts;
     public static boolean showReqs;
 
+    public static Class<? extends GuiContainer> GuiWorktable;
+    public static Class<? extends Container> ContainerWorktable;
+    public static Class<? extends Slot> SlotCraftMatrix;
+    public static boolean craftingActive = false;
+
+    public static final String commandName = "SetForestryWorktableRecipe"; 
+
+    
     @Instance(NEIAddons.modid + "|Forestry")
     public static AddonForestry instance;
 
@@ -80,7 +94,18 @@ public class AddonForestry extends BaseAddon {
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
 
         if (this.verifyModVersion("Forestry@[2.3.0.5,)")) {
-            CraftingOverlayHelper.init(side);
+            try {
+                if (side == Side.CLIENT) {
+                    GuiWorktable = Utils.getAndCheckClass("forestry.factory.gui.GuiWorktable", GuiContainer.class);
+                }
+                ContainerWorktable = Utils.getAndCheckClass("forestry.factory.gui.ContainerWorktable", Container.class);
+                SlotCraftMatrix = Utils.getAndCheckClass("forestry.factory.gui.SlotCraftMatrix", Slot.class);
+                ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerWorktable, SlotCraftMatrix));
+                craftingActive = true;
+            } catch (Throwable e) {
+                AddonForestry.instance.logWarning("Failed to setup Worktable crafting overlay:");
+                e.printStackTrace();
+            }
         } else {
             this.logInfo("Forestry Worktable support not loaded");
         }
@@ -98,6 +123,8 @@ public class AddonForestry extends BaseAddon {
         BeeHelper.setup();
         TreeHelper.setup();
         ButterflyHelper.setup();
-        CraftingOverlayHelper.setup();
+        if (craftingActive) {
+            CraftingOverlayHelper.setup();
+        }
     }
 }
