@@ -34,6 +34,7 @@ public class NEIAddons {
 
     public static final String modid = "NEIAddons";
     public static final String channel = "bdew.neiaddons";
+    public static final int netVersion = 1;
 
     public static List<NEIAddon> addons;
     public static Configuration config;

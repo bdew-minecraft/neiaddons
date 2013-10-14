@@ -59,6 +59,7 @@ public class ServerHandler implements IPacketHandler, IPlayerTracker {
     private void sendPlayerHello(EntityPlayer player) {
         NBTTagCompound nbt = new NBTTagCompound();
         nbt.setString("commands", StringUtils.join(handlers.keySet(),';'));
+        nbt.setInteger("version", NEIAddons.netVersion);
         PacketHelper.sendToClient("hello", nbt, (EntityPlayerMP)player);
     }
     
