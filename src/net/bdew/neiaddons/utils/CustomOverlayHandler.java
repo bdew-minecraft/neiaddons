@@ -9,14 +9,21 @@
 
 package net.bdew.neiaddons.utils;
 
+import static codechicken.nei.NEIServerUtils.areStacksSameType;
+
 import java.util.List;
 
+import net.bdew.neiaddons.ClientHandler;
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.PacketHelper;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 import codechicken.nei.LayoutManager;
+import codechicken.nei.NEIClientUtils;
 import codechicken.nei.OffsetPositioner;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.DefaultOverlayRenderer;
@@ -29,13 +36,45 @@ public class CustomOverlayHandler implements IOverlayHandler {
     private boolean invert;
     private String command;
     private int xOffs, yOffs;
-    
-    public CustomOverlayHandler(String command, int xOffs, int yOffs, boolean invert) {
+    private Class<? extends Slot> craftingSlot;
+
+    public CustomOverlayHandler(String command, int xOffs, int yOffs, boolean invert, Class<? extends Slot> craftingSlot) {
         super();
         this.command = command;
         this.xOffs = xOffs;
         this.yOffs = yOffs;
-        this.invert = invert;
+        this.craftingSlot = craftingSlot;
+    }
+
+    private Slot findMatchingSlot(GuiContainer cont, PositionedStack pstack) {
+        for (Object slotob : cont.inventorySlots.inventorySlots) {
+            Slot slot = (Slot) slotob;
+            if ((slot.xDisplayPosition == pstack.relx + xOffs) && (slot.yDisplayPosition == pstack.rely + yOffs)) {
+                return slot;
+            }
+        }
+        NEIAddons.logWarning("Failed to find matching slot - (%d,%d) in %s", pstack.relx + xOffs, pstack.rely + yOffs, cont.toString());
+        return null;
+    }
+
+    private Boolean isValidSlot(Slot slot) {
+        // Don't try to take items from special slots
+        return (slot.inventory == Minecraft.getMinecraft().thePlayer.inventory) || (slot.getClass() == Slot.class);
+    }
+
+    private Slot findItem(GuiContainer cont, PositionedStack p) {
+        for (ItemStack teststack : p.items) {
+            for (Object slotob : cont.inventorySlots.inventorySlots) {
+                Slot slot = (Slot) slotob;
+                if (isValidSlot(slot)) {
+                    ItemStack stack = slot.getStack();
+                    if (stack != null && areStacksSameType(stack, teststack)) {
+                        return slot;
+                    }
+                }
+            }
+        }
+        return null;
     }
 
     @Override
@@ -50,17 +89,17 @@ public class CustomOverlayHandler implements IOverlayHandler {
             IStackPositioner positioner = new OffsetPositioner(xOffs, yOffs);
             IRecipeOverlayRenderer renderer = new DefaultOverlayRenderer(ingr, positioner);
             LayoutManager.overlayRenderer = renderer;
-        } else {
+        } else if (ClientHandler.enabledCommands.contains(command)) {
             NBTTagList stacksnbt = new NBTTagList();
 
             for (int i = 0; i < ingr.size(); i++) {
-
-                if (ingr.get(i) != null) {
+                PositionedStack pstack = ingr.get(i);
+                if (pstack != null) {
                     // This is back-asswards but i don't see a better way :(
-                    int x = (ingr.get(i).relx - 25) / 18;
-                    int y = (ingr.get(i).rely - 6) / 18;
+                    int x = (pstack.relx - 25) / 18;
+                    int y = (pstack.rely - 6) / 18;
 
-                    ItemStack stack = ingr.get(i).items[0];
+                    ItemStack stack = pstack.item;
                     NBTTagCompound stacknbt = stack.writeToNBT(new NBTTagCompound());
                     stacknbt.setInteger("slot", y * 3 + x);
                     stacksnbt.appendTag(stacknbt);
@@ -75,7 +114,41 @@ public class CustomOverlayHandler implements IOverlayHandler {
             NBTTagCompound data = new NBTTagCompound();
             data.setTag("stacks", stacksnbt);
 
-            PacketHelper.send(command, data);
+            PacketHelper.sendToServer(command, data);
+        } else {
+            if (NEIClientUtils.getHeldItem() != null) {
+                return;
+            }
+            NEIAddons.logInfo("Don't have server support, moving recipe manually");
+            for (Object slotob : cont.inventorySlots.inventorySlots) {
+                if (craftingSlot.isInstance(slotob)) {
+                    Slot slot = (Slot) slotob;
+                    // Left click once to clear
+                    cont.sendMouseClick(slot, slot.slotNumber, 0, 0);
+                }
+            }
+            for (int i = 0; i < ingr.size(); i++) {
+                PositionedStack pstack = ingr.get(i);
+                if (pstack != null) {
+                    
+                    Slot slotTo = findMatchingSlot(cont, pstack);
+                    if (slotTo == null)
+                        continue;
+                    
+                    Slot slotFrom = findItem(cont, pstack);
+                    if (slotFrom == null)
+                        continue;
+                    
+                    NEIAddons.logInfo("Moving from slot %s[%d] to %s[%d]", slotFrom.toString(), slotFrom.slotNumber, slotTo.toString(), slotTo.slotNumber);
+                    
+                    // pick up item
+                    cont.sendMouseClick(slotFrom, slotFrom.slotNumber, 0, 0);
+                    // right click to add 1
+                    cont.sendMouseClick(slotTo, slotTo.slotNumber, 1, 0);
+                    // put item back
+                    cont.sendMouseClick(slotFrom, slotFrom.slotNumber, 0, 0);
+                }
+            }
         }
     }
 }

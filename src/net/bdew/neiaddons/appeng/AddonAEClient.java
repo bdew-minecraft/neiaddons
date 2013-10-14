@@ -14,7 +14,7 @@ import codechicken.nei.api.API;
 
 public class AddonAEClient {
     public static void load() {
-        CustomOverlayHandler handler = new CustomOverlayHandler(AddonAE.commandName, 5, 17, AddonAE.invertShift);
+        CustomOverlayHandler handler = new CustomOverlayHandler(AddonAE.commandName, 5, 17, AddonAE.invertShift, AddonAE.SlotFake);
         API.registerGuiOverlayHandler(AddonAE.GuiPatternEncoder, handler, "crafting");
     }
 }

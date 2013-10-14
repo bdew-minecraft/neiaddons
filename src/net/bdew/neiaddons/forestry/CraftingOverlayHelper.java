@@ -44,7 +44,7 @@ public class CraftingOverlayHelper {
 
     public static void setup() {
         if (active) {
-            CustomOverlayHandler handler = new CustomOverlayHandler(commandName, -14, 14, false);
+            CustomOverlayHandler handler = new CustomOverlayHandler(commandName, -14, 14, false, SlotCraftMatrix);
             API.registerGuiOverlayHandler(GuiWorktable, handler, "crafting");
         }
     }

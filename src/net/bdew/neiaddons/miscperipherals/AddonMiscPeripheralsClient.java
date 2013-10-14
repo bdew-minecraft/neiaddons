@@ -15,7 +15,7 @@ import codechicken.nei.api.API;
 public class AddonMiscPeripheralsClient {
 
     public static void load() {
-        CustomOverlayHandler handler = new CustomOverlayHandler(AddonMiscPeripherals.commandName, 5, 11, AddonMiscPeripherals.invertShift);
+        CustomOverlayHandler handler = new CustomOverlayHandler(AddonMiscPeripherals.commandName, 5, 11, AddonMiscPeripherals.invertShift, AddonMiscPeripherals.SlotRO);
         API.registerGuiOverlayHandler(AddonMiscPeripherals.GuiCrafter, handler, "crafting");
     }
 
