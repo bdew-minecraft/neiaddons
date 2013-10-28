@@ -65,13 +65,17 @@ public class TreeHelper {
 
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
+        MultiItemRange fakeRange = new MultiItemRange();
+        
         for (IAlleleTreeSpecies species : allSpecies) {
             if (AddonForestry.addSaplings && !NEIAddons.fakeItemsOn) {
                 Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
             }
             if (AddonForestry.addPollen) {
                 if (NEIAddons.fakeItemsOn) {
-                    Utils.safeAddNBTItem(NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal())));
+                    ItemStack fake = NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
+                    Utils.safeAddNBTItem(fake);
+                    fakeRange.add(fake);
                 } else {
                     Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
                 }
@@ -83,16 +87,17 @@ public class TreeHelper {
                 addProductToCache(prod.itemID, species);
             }
         }
-        ;
 
+        API.addToRange("Forestry.Trees.Pollen", fakeRange);
+        
         if (!Loader.isModLoaded("NEIPlugins")) {
             MultiItemRange saplingRange = new MultiItemRange();
             saplingRange.add(ItemInterface.getItem("sapling"));
-            API.addSetRange("Forestry.Trees.Saplings", saplingRange);
+            API.addToRange("Forestry.Trees.Saplings", saplingRange);
         }
 
         MultiItemRange pollenRange = new MultiItemRange();
         pollenRange.add(ItemInterface.getItem("pollenFertile"));
-        API.addSetRange("Forestry.Trees.Pollen", pollenRange);
+        API.addToRange("Forestry.Trees.Pollen", pollenRange);
     }
 }

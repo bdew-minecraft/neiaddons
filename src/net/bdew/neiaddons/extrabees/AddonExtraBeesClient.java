@@ -15,6 +15,8 @@ import java.util.Set;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.minecraft.item.ItemStack;
+import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import forestry.api.apiculture.EnumBeeChromosome;
@@ -72,9 +74,13 @@ public class AddonExtraBeesClient {
         }
 
         if (NEIAddons.fakeItemsOn) {
+            MultiItemRange range = new MultiItemRange();
             for (AlleleBeeChromosomePair pair : res) {
-                API.addNBTItem(NEIAddons.fakeItem.addItem(SerumUtils.getSerum(pair)));
+                ItemStack fake = NEIAddons.fakeItem.addItem(SerumUtils.getSerum(pair));
+                range.add(fake);
+                API.addNBTItem(fake);
             }
+            API.addToRange("Extra Bees.Serums", range);
         } else {
             for (AlleleBeeChromosomePair pair : res) {
                 API.addNBTItem(SerumUtils.getSerum(pair));

@@ -79,10 +79,14 @@ public class BeeHelper {
 
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
+        MultiItemRange fakeRange = new MultiItemRange();
+        
         for (IAlleleBeeSpecies species : allSpecies) {
             if (AddonForestry.addBees) {
                 if (NEIAddons.fakeItemsOn) {
-                    Utils.safeAddNBTItem(NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal())));
+                    ItemStack fake = NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
+                    Utils.safeAddNBTItem(fake);
+                    fakeRange.add(fake);
                 } else {
                     Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.QUEEN.ordinal()));
                     Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
@@ -121,27 +125,27 @@ public class BeeHelper {
             }
         }
 
+        API.addToRange("Forestry.Bees.Princesses", fakeRange);
+        
         if (!Loader.isModLoaded("NEIPlugins")) {
             MultiItemRange queenRange = new MultiItemRange();
             queenRange.add(ItemInterface.getItem("beeQueenGE"));
-            API.addSetRange("Forestry.Bees.Queens", queenRange);
+            API.addToRange("Forestry.Bees.Queens", queenRange);
 
             MultiItemRange princessRange = new MultiItemRange();
             princessRange.add(ItemInterface.getItem("beePrincessGE"));
-            API.addSetRange("Forestry.Bees.Princesses", princessRange);
+            API.addToRange("Forestry.Bees.Princesses", princessRange);
 
             MultiItemRange droneRange = new MultiItemRange();
             droneRange.add(ItemInterface.getItem("beeDroneGE"));
-            API.addSetRange("Forestry.Bees.Drones", droneRange);
+            API.addToRange("Forestry.Bees.Drones", droneRange);
 
             MultiItemRange combRange = new MultiItemRange();
             for (Item i : modCombs) {
                 combRange.add(i.itemID);
             }
-            ;
-            API.addSetRange("Forestry.Bees.Combs", combRange);
+            API.addToRange("Forestry.Bees.Combs", combRange);
         }
-        ;
     }
 
     private static List<Item> getMobCombs() {

@@ -72,7 +72,7 @@ public class Utils {
             }
         }
         if (multi.ranges.size() > 0) {
-            API.addSetRange(rangeName, multi);
+            API.addToRange(rangeName, multi);
         }
     }
 
