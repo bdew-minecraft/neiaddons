@@ -29,6 +29,9 @@ NEI Addons
 Changelog
 =========
 
+###v1.9.2 - Released 29/09/2013
+* Workaround for NEI not showing items with NBT data outside cheat mode. See http://bit.ly/1aaP3wQ for details.
+
 ###v1.9.1 - Released 14/09/2013
 * Added [?] button support for Forestry - Worktable
  * Requires Forestry 2.3.0.5 or newer 
