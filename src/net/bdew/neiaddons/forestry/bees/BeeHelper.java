@@ -16,6 +16,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
@@ -80,9 +81,13 @@ public class BeeHelper {
 
         for (IAlleleBeeSpecies species : allSpecies) {
             if (AddonForestry.addBees) {
-                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.QUEEN.ordinal()));
-                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
-                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
+                if (NEIAddons.fakeItemsOn) {
+                    Utils.safeAddNBTItem(NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal())));
+                } else {
+                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.QUEEN.ordinal()));
+                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
+                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
+                }
             }
             for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
                 addProductToCache(prod.itemID, species);
@@ -143,7 +148,7 @@ public class BeeHelper {
         List<Item> res = new ArrayList<Item>();
 
         Item vanillaComb = ItemInterface.getItem("beeComb").getItem();
-        
+
         if (vanillaComb == null) {
             AddonForestry.instance.logWarning("Failed to get forestry bee comb item, something is messed up");
         } else {

@@ -14,6 +14,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
@@ -65,11 +66,15 @@ public class TreeHelper {
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
         for (IAlleleTreeSpecies species : allSpecies) {
-            if (AddonForestry.addSaplings) {
+            if (AddonForestry.addSaplings && !NEIAddons.fakeItemsOn) {
                 Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
             }
             if (AddonForestry.addPollen) {
-                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
+                if (NEIAddons.fakeItemsOn) {
+                    Utils.safeAddNBTItem(NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal())));
+                } else {
+                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
+                }
             }
             for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
                 addProductToCache(prod.itemID, species);
@@ -77,7 +82,8 @@ public class TreeHelper {
             for (ItemStack prod : GeneticsUtils.getSpecialtyFromSpecies(species).keySet()) {
                 addProductToCache(prod.itemID, species);
             }
-        };
+        }
+        ;
 
         if (!Loader.isModLoaded("NEIPlugins")) {
             MultiItemRange saplingRange = new MultiItemRange();

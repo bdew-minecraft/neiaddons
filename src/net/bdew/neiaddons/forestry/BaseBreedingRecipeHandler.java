@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
@@ -85,6 +86,9 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
+        if (NEIAddons.fakeItemsOn) {
+            result = NEIAddons.fakeItem.getOriginal(result);
+        }
         if (!speciesRoot.isMember(result)) { return; }
         IIndividual resultIndividual = speciesRoot.getMember(result);
         if (resultIndividual==null) {
@@ -112,6 +116,9 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
+        if (NEIAddons.fakeItemsOn) {
+            ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
+        }
         if (!speciesRoot.isMember(ingredient)) { return; }
         IIndividual individual = speciesRoot.getMember(ingredient);
         if (individual==null) {

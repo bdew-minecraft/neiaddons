@@ -12,6 +12,7 @@ package net.bdew.neiaddons.extrabees;
 import java.util.HashSet;
 import java.util.Set;
 
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import codechicken.nei.api.API;
@@ -70,8 +71,14 @@ public class AddonExtraBeesClient {
             }
         }
 
-        for (AlleleBeeChromosomePair pair : res) {
-            API.addNBTItem(SerumUtils.getSerum(pair));
+        if (NEIAddons.fakeItemsOn) {
+            for (AlleleBeeChromosomePair pair : res) {
+                API.addNBTItem(NEIAddons.fakeItem.addItem(SerumUtils.getSerum(pair)));
+            }
+        } else {
+            for (AlleleBeeChromosomePair pair : res) {
+                API.addNBTItem(SerumUtils.getSerum(pair));
+            }
         }
     }
 
@@ -96,7 +103,7 @@ public class AddonExtraBeesClient {
         Utils.addSubsetForItems(ebMain, new String[] { "templateBlank", "dictionary", "serumEmpty", "itemMisc" }, "Extra Bees.Misc");
         Utils.addSubsetForItems(ebConfig, new String[] { "hiveFrameID", "hiveFrame2ID", "hiveFrame3ID", "hiveFrame4ID", "hiveFrame5ID" }, "Extra Bees.Frames", 256);
         Utils.addSubsetForItem(ebConfig, "alvearyID", "Extra Bees.Machines.Alveary");
-        
+
     }
 
     public static void load() {

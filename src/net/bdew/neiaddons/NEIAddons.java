@@ -39,6 +39,9 @@ public class NEIAddons {
     public static List<NEIAddon> addons;
     public static Configuration config;
 
+    public static boolean fakeItemsOn;
+    public static ItemFakeNBT fakeItem;
+
     public static void register(NEIAddon addon) {
         addons.add(addon);
     }
@@ -49,7 +52,7 @@ public class NEIAddons {
 
     public static void logWarning(String message, Object... params) {
         log.log(Level.WARNING, String.format(message, params));
-    }    
+    }
 
     public static void logSevere(String message, Object... params) {
         log.log(Level.SEVERE, String.format(message, params));
@@ -62,9 +65,17 @@ public class NEIAddons {
         config.addCustomCategoryComment("Addons", "Controls loading of different addons, set to false to disable");
         addons = new ArrayList<NEIAddon>();
 
+        if (event.getSide() == Side.CLIENT) {
+            String cmt = "Enable to register fake items to work around NEI not showing items with metadata outside cheat mode";
+            fakeItemsOn = config.get(Configuration.CATEGORY_GENERAL, "Enable fake items", false, cmt).getBoolean(false);
+
+            if (fakeItemsOn)
+                fakeItem = new ItemFakeNBT(config.getItem("Fake item", 10050).getInt());
+        }
+
         if (event.getSide() == Side.CLIENT && !Loader.isModLoaded("NotEnoughItems")) {
             logSevere("NEI doesn't seem to be installed... NEI Addons require it to do anything useful client-side");
-        };
+        }
     }
 
     @EventHandler
@@ -72,23 +83,23 @@ public class NEIAddons {
         logInfo("Loading NEI Addons");
         for (NEIAddon addon : addons) {
             if (config.get("Addons", addon.getName(), true).getBoolean(false)) {
-                logInfo("Loading %s Addon...",addon.getName());
+                logInfo("Loading %s Addon...", addon.getName());
                 try {
                     addon.init(event.getSide());
                     if (addon.isActive()) {
-                        logInfo("%s Addon successfully loadded",addon.getName());
+                        logInfo("%s Addon successfully loadded", addon.getName());
                     }
                 } catch (Exception e) {
-                    logSevere("Loading %s Addon - Failed:",addon.getName());
+                    logSevere("Loading %s Addon - Failed:", addon.getName());
                     e.printStackTrace();
                 }
             } else {
-                logInfo("%s Addon disabled - skipping",addon.getName());
+                logInfo("%s Addon disabled - skipping", addon.getName());
             }
         }
 
         config.save();
-        
+
         ServerHandler serverHandler = new ServerHandler();
         NetworkRegistry.instance().registerChannel(serverHandler, channel, Side.SERVER);
         GameRegistry.registerPlayerTracker(serverHandler);
@@ -97,7 +108,7 @@ public class NEIAddons {
             NetworkRegistry.instance().registerChannel(clientHandler, channel, Side.CLIENT);
             TickRegistry.registerTickHandler(clientHandler, Side.CLIENT);
         }
-        
+
         if (addons.size() > 0) {
             String addonslist = "Loaded Addons:";
             for (NEIAddon addon : addons) {

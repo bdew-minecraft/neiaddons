@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.client.Minecraft;
@@ -119,6 +120,9 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
             AddonForestry.instance.logWarning("loadCraftingRecipes() called with null, something is FUBAR.");
             return;
         }
+        if (NEIAddons.fakeItemsOn) {
+            result = NEIAddons.fakeItem.getOriginal(result);
+        }
         if (!cache.containsKey(result.itemID)) { return; }
         for (IAlleleSpecies species : cache.get(result.itemID)) {
             CachedProduceRecipe recipe = new CachedProduceRecipe(species);
@@ -133,6 +137,9 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
+        if (NEIAddons.fakeItemsOn) {
+            ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
+        }
         if (!speciesRoot.isMember(ingredient)) { return; }
         arecipes.add(new CachedProduceRecipe(speciesRoot.getMember(ingredient).getGenome().getPrimary()));
     }
