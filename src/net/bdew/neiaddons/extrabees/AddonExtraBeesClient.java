@@ -120,7 +120,8 @@ public class AddonExtraBeesClient {
             e.printStackTrace();
             return;
         }
-
+        API.getRangeTag("Extra Bees").saveTag = false;
+        
         AddonExtraBees.allBeeSpecies = GeneticsUtils.getAllBeeSpecies(AddonExtraBees.loadBlacklisted);
         registerSerums();
         API.registerRecipeHandler(new IsolatorRecipeHandler());

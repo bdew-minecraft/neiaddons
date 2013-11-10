@@ -65,6 +65,8 @@ public class BeeHelper {
     }
 
     public static void setup() {
+        API.getRangeTag("Forestry").saveTag = false;
+        
         root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
         allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
 

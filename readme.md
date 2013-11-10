@@ -29,6 +29,9 @@ NEI Addons
 Changelog
 =========
 
+###v1.9.3 - Released 10/11/2013
+* Fixed potential crash with NEI item subsets (those affected might need to manually clean NEISubset.cfg to take effect)
+
 ###v1.9.2 - Released 29/09/2013
 * Workaround for NEI not showing items with NBT data outside cheat mode. See http://bit.ly/1aaP3wQ for details.
 
