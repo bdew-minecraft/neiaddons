@@ -1,6 +1,11 @@
 NEI Addons
 ==========
 
+### [Downloads on CurseForge](http://minecraft.curseforge.com/mc-mods/nei-addons/files/)
+### [Downloads on DropBox](http://bit.ly/189xpv6)
+### [Minecraft Forums thread](http://www.minecraftforum.net/topic/1803460-)
+***
+
 * [Forestry](http://www.minecraftforum.net/topic/700588-) (2.2.6.0+)
  * Bee breeding and products as recipes (optionally includes secret mutations too)
  * Can show special mutation requirements (biome, temperature, etc.)
@@ -109,9 +114,6 @@ Changelog
 ###1.0 - Released 10/05/2013
 * Initial public release
 
-***
-### [Downloads](http://bit.ly/189xpv6)
-### [Minecraft Forums thread](http://www.minecraftforum.net/topic/1803460-)
 ***
 ![Bee Breeding window](http://i.imgur.com/ENCP9He.png) ![Bee Products window](http://i.imgur.com/Jwv4n0Q.png)
 ***
