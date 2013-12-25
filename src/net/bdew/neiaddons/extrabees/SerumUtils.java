@@ -38,7 +38,7 @@ public class SerumUtils {
     @SuppressWarnings("deprecation")
     public static AlleleBeeChromosomePair getData(ItemStack serum) {
         NBTTagCompound nbt = serum.getTagCompound();
-        if (nbt.hasKey("chromosome") && nbt.hasKey("uid")) {
+        if ((nbt != null) && nbt.hasKey("chromosome") && nbt.hasKey("uid")) {
             int chromosome = nbt.getInteger("chromosome");
             String allele = nbt.getString("uid");
             if (chromosome >= EnumBeeChromosome.HUMIDITY.ordinal()) {

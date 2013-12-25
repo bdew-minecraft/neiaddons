@@ -35,6 +35,9 @@ Changelog
 =========
 
 ###v1.9.3 - Released 10/11/2013
+* Fixed crash with EB Serums that don't have NBT data
+
+###v1.9.3 - Released 10/11/2013
 * Fixed potential crash with NEI item subsets (those affected might need to manually clean NEISubset.cfg to take effect)
 
 ###v1.9.2 - Released 29/09/2013
