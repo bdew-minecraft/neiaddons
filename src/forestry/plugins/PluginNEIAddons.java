@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -13,7 +13,7 @@ import net.bdew.neiaddons.forestry.AddonForestry;
 import forestry.api.core.IPlugin;
 import forestry.api.core.PluginInfo;
 
-@PluginInfo(name = "NEI Addons Plugin", pluginID = "neiaddons", version = "@@VERSION@@")
+@PluginInfo(name = "NEI Addons Plugin", pluginID = "neiaddons", version = "NEIADDONS_VER")
 public class PluginNEIAddons implements IPlugin {
     public boolean isAvailable() {
         return true;

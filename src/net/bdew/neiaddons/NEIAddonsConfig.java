@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -35,6 +35,6 @@ public class NEIAddonsConfig implements IConfigureNEI {
 
     @Override
     public String getVersion() {
-        return "@@VERSION@@";
+        return "NEIADDONS_VER";
     }
 }

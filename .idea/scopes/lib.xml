@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="lib" pattern="src:net.bdew.lib..*" />
+</component>

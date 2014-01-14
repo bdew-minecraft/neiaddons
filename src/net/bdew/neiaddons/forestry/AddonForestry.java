@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -28,7 +28,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:Forestry")
+@Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
     public static boolean showSecret;
     public static boolean addBees;

@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -21,7 +21,7 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 
-@Mod(modid = NEIAddons.modid + "|ExtraBees", name = "NEI Addons: Extra Bees", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:ExtraBees;after:Forestry")
+@Mod(modid = NEIAddons.modid + "|ExtraBees", name = "NEI Addons: Extra Bees", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:ExtraBees;after:Forestry")
 public class AddonExtraBees extends BaseAddon {
 
     public static boolean loadBlacklisted;

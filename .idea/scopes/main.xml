@@ -1,0 +1,3 @@
+<component name="DependencyValidationManager">
+  <scope name="main" pattern="src:net.bdew.neiaddons..*||src:forestry.plugins.PluginNEIAddons" />
+</component>

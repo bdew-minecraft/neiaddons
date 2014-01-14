@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -25,7 +25,7 @@ import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = NEIAddons.modid + "|MiscPeripherals", name = "NEI Addons: Misc Peripherals", version = "@@VERSION@@", dependencies = "after:NEIAddons;after:MiscPeripherals")
+@Mod(modid = NEIAddons.modid + "|MiscPeripherals", name = "NEI Addons: Misc Peripherals", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:MiscPeripherals")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
 public class AddonMiscPeripherals extends BaseAddon {
 

@@ -3,8 +3,8 @@
   "modid": "NEIAddons",
   "name": "NEI Addons",
   "description": "",
-  "version": "@@VERSION@@",
-  "url": "bdew.net/mods/neiaddons",
+  "version": "@NEIADDONS_VER@",
+  "url": "bdew.net/neiaddons",
   "updateUrl": "",
   "authorList": [
     "bdew"
@@ -21,7 +21,7 @@
   "modid": "NEIAddons|Forestry",
   "name": "NEI Addons: Forestry",
   "description": "",
-  "version": "@@VERSION@@",
+  "version": "@NEIADDONS_VER@",
   "url": "bdew.net/mods/neiaddons",
   "updateUrl": "",
   "authorList": [
@@ -40,7 +40,7 @@
   "modid": "NEIAddons|CraftingTables",
   "name": "NEI Addons: Crafting Tables",
   "description": "",
-  "version": "@@VERSION@@",
+  "version": "@NEIADDONS_VER@",
   "url": "bdew.net/mods/neiaddons",
   "updateUrl": "",
   "authorList": [
@@ -59,7 +59,7 @@
   "modid": "NEIAddons|AE",
   "name": "NEI Addons: Applied Energistics",
   "description": "",
-  "version": "@@VERSION@@",
+  "version": "@NEIADDONS_VER@",
   "url": "bdew.net/mods/neiaddons",
   "updateUrl": "",
   "authorList": [
@@ -78,7 +78,7 @@
   "modid": "NEIAddons|ExtraBees",
   "name": "NEI Addons: Extra Bees",
   "description": "",
-  "version": "@@VERSION@@",
+  "version": "@NEIADDONS_VER@",
   "url": "bdew.net/mods/neiaddons",
   "updateUrl": "",
   "authorList": [
@@ -97,7 +97,7 @@
   "modid": "NEIAddons|MiscPeripherals",
   "name": "NEI Addons: Misc Peripherals",
   "description": "",
-  "version": "@@VERSION@@",
+  "version": "@NEIADDONS_VER@",
   "url": "bdew.net/mods/neiaddons",
   "updateUrl": "",
   "authorList": [

@@ -1,0 +1,151 @@
+buildscript {
+    configurations.all {
+        resolutionStrategy.cacheChangingModulesFor 0, 'seconds'
+    }
+    repositories {
+        mavenCentral()
+	mavenLocal()
+        maven {
+            name = "forge"
+            url = "http://files.minecraftforge.net/maven"
+        }
+    }
+    dependencies {
+        classpath 'net.minecraftforge.gradle:ForgeGradle:1.0-SNAPSHOT'
+    }
+}
+
+apply plugin: 'forge'
+apply plugin: 'scala'
+
+version = "1.10.0"
+ext.bdlibver = "1.0.0.15"
+ext.versuffix = "mc164"
+
+if (project.hasProperty('buildnum')) {
+    project.version = project.version + '.' + project.buildnum
+} else {
+    project.version = "0-SNAPSHOT"
+    ext.bdlibver = "0-SNAPSHOT"
+    repositories.mavenLocal()
+}
+
+group = "net.bdew"
+archivesBaseName = "neiaddons"
+
+minecraft {
+    version = "1.6.4-9.11.1.964"
+    replace("BDLIB_VER", project.bdlibver)
+    replace("NEIADDONS_VER", project.version)
+}
+
+repositories {
+    mavenCentral()
+    maven {
+        name = "bdew"
+        url = "http://jenkins.bdew.net/maven"
+    }
+}
+
+dependencies {
+    compile "net.bdew:bdlib:" + bdlibver
+    compile project(path: ':deps', configuration: 'deps')
+}
+
+import org.apache.tools.ant.filters.ReplaceTokens
+
+sourceSets {
+    main {
+        scala {
+            srcDir 'src'
+        }
+        resources {
+            srcDir 'resources'
+        }
+    }
+}
+
+processResources {
+    inputs.property "tokens", minecraft.replacements
+    from(sourceSets.main.resources.srcDirs) {
+        include 'mcmod.info'
+        filter(ReplaceTokens, tokens: minecraft.replacements)
+    }
+
+    from(sourceSets.main.resources.srcDirs) {
+        exclude 'mcmod.info'
+    }
+}
+
+task sourceJar(type: Jar) {
+    from sourceSets.main.allSource
+}
+
+task deobfJar(type: Jar) {
+    from sourceSets.main.output
+    exclude "**/*.psd"
+}
+
+jar {
+    exclude "**/*.psd"
+    appendix = project.versuffix
+}
+
+artifacts {
+    archives sourceJar
+    archives deobfJar
+}
+
+apply plugin: 'maven-publish'
+
+
+ideaModule {
+    dependsOn task(":deps:sourceJar")
+    dependsOn task(":deps:deobfJar")
+}
+
+idea {
+    module {
+        iml {
+            withXml { xmlProvider ->
+                // Fix the IDEA module XML to use the jars produced by deps, because using them directly doesn't work properly
+                // This is somwhat hackish, but i couldn't find a better way...
+
+                // Find the right node
+                def module = xmlProvider.asNode()
+                def moduleDeps = module.component.find {it.@name == "NewModuleRootManager"}
+
+                // Nuke the module dependency
+                moduleDeps.remove(moduleDeps.find {it['@module-name'] == 'deps'})
+
+                // Setup the entry structure
+                def myNode = new Node(null, 'orderEntry', [type:'module-library', exported:''])
+                moduleDeps.children().add(0, myNode)
+                def libNode = myNode.appendNode 'library'
+                def classesNode = libNode.appendNode 'CLASSES'
+                def sourceNode = libNode.appendNode 'SOURCES'
+
+                // Add the jars, project.depJarPath and project.depSourceJarPath are set in the subproject  
+                classesNode.appendNode 'root', [url: 'jar://' + project.depJarPath.getAbsolutePath().replace('\\','/')+'!/']
+                sourceNode.appendNode 'root', [url: 'jar://' + project.depSourceJarPath.getAbsolutePath().replace('\\','/')+'!/']
+            }
+        }
+    }
+}
+
+publishing {
+    publications {
+        maven(MavenPublication) {
+            artifact deobfJar
+
+            artifact sourceJar {
+                classifier "sources"
+            }
+        }
+    }
+    repositories {
+        maven {
+            url "file://var/www/maven"
+        }
+    }
+}

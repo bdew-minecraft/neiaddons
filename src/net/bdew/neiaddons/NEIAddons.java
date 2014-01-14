@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -27,7 +27,7 @@ import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
 
-@Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "@@VERSION@@", dependencies = "after:NotEnoughItems")
+@Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "NEIADDONS_VER", dependencies = "after:NotEnoughItems")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
 public class NEIAddons {
     public static Logger log;

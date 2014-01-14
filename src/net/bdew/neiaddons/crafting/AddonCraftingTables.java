@@ -1,5 +1,5 @@
-/**
- * Copyright (c) bdew, 2013
+/*
+ * Copyright (c) bdew, 2013 - 2014
  * https://github.com/bdew/neiaddons
  *
  * This mod is distributed under the terms of the Minecraft Mod Public
@@ -22,7 +22,7 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 
-@Mod(modid = NEIAddons.modid + "|CraftingTables", name = "NEI Addons: Crafting Tables", version = "@@VERSION@@", dependencies = "after:NEIAddons")
+@Mod(modid = NEIAddons.modid + "|CraftingTables", name = "NEI Addons: Crafting Tables", version = "NEIADDONS_VER", dependencies = "after:NEIAddons")
 public class AddonCraftingTables extends BaseAddon {
 
     public static Collection<Class<? extends GuiContainer>> craftingTables;
