@@ -65,6 +65,15 @@ sourceSets {
     }
 }
 
+
+compileScala {
+    // Hack the compile classpath to include deps jar before forge/mc so 
+    // that NEI custom GuiContainer is used. WTB SANITY PST
+    doFirst {
+	    sourceSets.main.compileClasspath = files(project.depJarPath) + sourceSets.main.compileClasspath;
+    }
+}
+
 processResources {
     inputs.property "tokens", minecraft.replacements
     from(sourceSets.main.resources.srcDirs) {
