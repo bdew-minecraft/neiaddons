@@ -27,12 +27,16 @@ NEI Addons
 * Various crafting tables - adds [?] button support for alternate crafting tables from many mods
  * [BuildCraft](http://www.mod-buildcraft.com/) Autocrafting Table
  * [Equivalent Exchange 3](http://www.minecraftforum.net/topic/1540010-) Minium Stone
- * [Andrew2448's addon for MachineMuse's Modular Powersuits](https://github.com/Andrew2448/Andrew2448PowersuitAddons/) In-Place Assembler
+ * [Modular Powersuits Addon](http://www.minecraftforum.net/topic/2287651-) In-Place Assembler
  * [Tinkers' Construct](http://www.minecraftforum.net/topic/1659892-) Crafting station
  
 ***
 Changelog
 =========
+
+###v1.10.0 - Released 26/01/2014
+* Updated support for MPSA In-Place Assembler (thanks Eximius88!)
+* Switched build system to ForgeGradle in preparation for 1.7.x
 
 ###v1.9.4 - Released 25/12/2013
 * Fixed crash with EB Serums that don't have NBT data
