@@ -15,6 +15,7 @@ import java.util.Collection;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import forestry.api.genetics.IIndividual;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
@@ -67,7 +68,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
         public boolean isNoOutput() {
             return products.size()==0;
         }
-        
+
         @Override
         public ArrayList<PositionedStack> getIngredients() {
             ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
@@ -141,7 +142,13 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
             ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
         }
         if (!speciesRoot.isMember(ingredient)) { return; }
-        arecipes.add(new CachedProduceRecipe(speciesRoot.getMember(ingredient).getGenome().getPrimary()));
+        IIndividual member = speciesRoot.getMember(ingredient);
+        if (member.getGenome() == null || member.getGenome().getPrimary() == null) {
+            AddonForestry.instance.logWarning("Genome is null when loading produce recipes!");
+            AddonForestry.instance.logWarning(ingredient.getTagCompound().toString());
+            return;
+        }
+        arecipes.add(new CachedProduceRecipe(member.getGenome().getPrimary()));
     }
 
     @Override
