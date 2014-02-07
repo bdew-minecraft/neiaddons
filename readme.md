@@ -34,6 +34,9 @@ NEI Addons
 Changelog
 =========
 
+###v1.10.1 - Released 07/02/2014
+* Fixed NPE when looking up produce recipes for bees/saplings with missing NBT data
+
 ###v1.10.0 - Released 26/01/2014
 * Updated support for MPSA In-Place Assembler (thanks Eximius88!)
 * Switched build system to ForgeGradle in preparation for 1.7.x
