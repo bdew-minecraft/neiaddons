@@ -143,9 +143,8 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
         }
         if (!speciesRoot.isMember(ingredient)) { return; }
         IIndividual member = speciesRoot.getMember(ingredient);
-        if (member.getGenome() == null || member.getGenome().getPrimary() == null) {
-            AddonForestry.instance.logWarning("Genome is null when loading produce recipes!");
-            AddonForestry.instance.logWarning(ingredient.getTagCompound().toString());
+        if (member == null || member.getGenome() == null || member.getGenome().getPrimary() == null) {
+            AddonForestry.instance.logWarning("Individual or genome is null searching recipe for %s",ingredient.toString());
             return;
         }
         arecipes.add(new CachedProduceRecipe(member.getGenome().getPrimary()));
