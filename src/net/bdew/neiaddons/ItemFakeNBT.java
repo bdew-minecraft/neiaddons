@@ -9,22 +9,24 @@
 
 package net.bdew.neiaddons;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
+import net.minecraft.client.renderer.texture.IconRegister;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.Icon;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class ItemFakeNBT extends Item {
     private Map<Integer, ItemStack> map;
     private int nextid;
+    private Icon invalid;
 
     public ItemFakeNBT(int id) {
         super(id);
@@ -34,7 +36,13 @@ public class ItemFakeNBT extends Item {
         setMaxDamage(-1);
     }
 
-    @SuppressWarnings({ "unchecked", "rawtypes" })
+    @Override
+    @SideOnly(Side.CLIENT)
+    public void registerIcons(IconRegister ir) {
+        invalid = ir.registerIcon(NEIAddons.modid + ":invalid");
+    }
+
+    @SuppressWarnings({"unchecked", "rawtypes"})
     @Override
     @SideOnly(Side.CLIENT)
     public void getSubItems(int par1, CreativeTabs par2CreativeTabs, List list) {
@@ -42,8 +50,10 @@ public class ItemFakeNBT extends Item {
             list.add(new ItemStack(itemID, 1, e.getKey()));
         }
     }
-    
+
     public ItemStack addItem(ItemStack stack) {
+        if (stack.getItem() == this)
+            throw new YoDawgException("Attempting to make a fake item for a fake item while making a fake item!");
         map.put(nextid, stack.copy());
         return new ItemStack(this, 1, nextid++);
     }
@@ -52,7 +62,15 @@ public class ItemFakeNBT extends Item {
         if (stack.itemID == itemID && map.containsKey(stack.getItemDamage())) {
             return map.get(stack.getItemDamage()).copy();
         } else {
-            return stack;
+            return null;
+        }
+    }
+
+    public ItemStack getOriginal(int damage) {
+        if (map.containsKey(damage)) {
+            return map.get(damage).copy();
+        } else {
+            return null;
         }
     }
 
@@ -61,53 +79,56 @@ public class ItemFakeNBT extends Item {
         ItemStack orig = getOriginal(stack);
         if (orig != null)
             return orig.getItem().getIcon(orig, pass);
-        return null;
+        else
+            return invalid;
     }
-    
+
     @Override
     public Icon getIcon(ItemStack stack, int renderPass, EntityPlayer player, ItemStack usingItem, int useRemaining) {
         ItemStack orig = getOriginal(stack);
         if (orig != null)
             return orig.getItem().getIcon(orig, renderPass, player, usingItem, useRemaining);
-        return null;
+        else
+            return invalid;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public Icon getIconFromDamageForRenderPass(int damage, int pass) {
-        if (map.containsKey(damage)) {
-            ItemStack orig = map.get(damage);
+        ItemStack orig = getOriginal(damage);
+        if (orig != null)
             return orig.getItem().getIconFromDamageForRenderPass(orig.getItemDamage(), pass);
-        }
-        return null;
+        else
+            return invalid;
     }
 
     @Override
     @SideOnly(Side.CLIENT)
     public Icon getIconFromDamage(int damage) {
-        if (map.containsKey(damage)) {
-            ItemStack orig = map.get(damage);
+        ItemStack orig = getOriginal(damage);
+        if (orig != null)
             return orig.getItem().getIconFromDamage(orig.getItemDamage());
-        }
-        return null;
+        else
+            return invalid;
     }
-    
+
     @Override
     @SideOnly(Side.CLIENT)
     public int getColorFromItemStack(ItemStack stack, int par2) {
         ItemStack orig = getOriginal(stack);
         if (orig != null)
             return orig.getItem().getColorFromItemStack(orig, par2);
-        return super.getColorFromItemStack(stack, par2);
+        else
+            return 0xFFFFFF;
     }
 
     @Override
     public int getRenderPasses(int metadata) {
-        if (map.containsKey(metadata)) {
-            ItemStack orig = map.get(metadata);
+        ItemStack orig = getOriginal(metadata);
+        if (orig != null)
             return orig.getItem().getRenderPasses(orig.getItemDamage());
-        }
-        return 1;
+        else
+            return 1;
     }
 
     @Override
@@ -115,13 +136,13 @@ public class ItemFakeNBT extends Item {
     public boolean requiresMultipleRenderPasses() {
         return true;
     }
-    
+
     @Override
     public String getItemDisplayName(ItemStack stack) {
         ItemStack orig = getOriginal(stack);
         if (orig != null)
-            return "[F] "+orig.getItem().getItemDisplayName(orig);
-        return "Unknown";
+            return "[F] " + orig.getItem().getItemDisplayName(orig);
+        return "Invalid Fake Item";
     }
 
     @SuppressWarnings("rawtypes")
