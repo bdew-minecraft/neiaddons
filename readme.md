@@ -1,8 +1,8 @@
 NEI Addons
 ==========
 
+### [Downloads on My Site](http://bdew.net/neiaddons#downloads)
 ### [Downloads on CurseForge](http://minecraft.curseforge.com/mc-mods/nei-addons/files/)
-### [Downloads on DropBox](http://bit.ly/189xpv6)
 ### [Minecraft Forums thread](http://www.minecraftforum.net/topic/1803460-)
 ***
 
@@ -33,6 +33,9 @@ NEI Addons
 ***
 Changelog
 =========
+
+###v1.10.2 - Released 11/02/2014
+* Fixed Fake Item causing crashes if it's enabled but not used by anything
 
 ###v1.10.1 - Released 07/02/2014
 * Fixed NPE when looking up produce recipes for bees/saplings with missing NBT data
