@@ -123,6 +123,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
         }
         if (NEIAddons.fakeItemsOn) {
             result = NEIAddons.fakeItem.getOriginal(result);
+            if (result == null) return;
         }
         if (!cache.containsKey(result.itemID)) { return; }
         for (IAlleleSpecies species : cache.get(result.itemID)) {

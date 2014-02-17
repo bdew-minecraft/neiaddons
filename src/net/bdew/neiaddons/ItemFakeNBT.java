@@ -61,6 +61,8 @@ public class ItemFakeNBT extends Item {
     public ItemStack getOriginal(ItemStack stack) {
         if (stack.itemID == itemID && map.containsKey(stack.getItemDamage())) {
             return map.get(stack.getItemDamage()).copy();
+        } else if (stack.itemID != itemID) {
+            return stack;
         } else {
             return null;
         }
