@@ -34,6 +34,9 @@ NEI Addons
 Changelog
 =========
 
+###v1.10.3 - Released 17/02/2014
+* Fixed a different crash introduced by the fix in v1.10.2
+
 ###v1.10.2 - Released 11/02/2014
 * Fixed Fake Item causing crashes if it's enabled but not used by anything
 
