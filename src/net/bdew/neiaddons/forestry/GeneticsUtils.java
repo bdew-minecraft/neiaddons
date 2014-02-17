@@ -9,13 +9,6 @@
 
 package net.bdew.neiaddons.forestry;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import net.minecraft.item.ItemStack;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
@@ -23,12 +16,15 @@ import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITree;
 import forestry.api.arboriculture.ITreeRoot;
-import forestry.api.genetics.AlleleManager;
-import forestry.api.genetics.IAllele;
-import forestry.api.genetics.IAlleleSpecies;
-import forestry.api.genetics.IIndividual;
-import forestry.api.genetics.ISpeciesRoot;
+import forestry.api.genetics.*;
 import forestry.api.lepidopterology.IAlleleButterflySpecies;
+import net.minecraft.item.ItemStack;
+
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class GeneticsUtils {
     public enum RecipePosition {
@@ -92,7 +88,7 @@ public class GeneticsUtils {
     public static Collection<IAlleleButterflySpecies> getAllButterflySpecies(boolean includeBlacklisted) {
         return getAllTypedSpecies(IAlleleButterflySpecies.class, includeBlacklisted);
     }
-    
+
     public static Collection<IAlleleTreeSpecies> getAllTreeSpecies(boolean includeBlacklisted) {
         return getAllTypedSpecies(IAlleleTreeSpecies.class, includeBlacklisted);
     }
@@ -156,6 +152,7 @@ public class GeneticsUtils {
             return result;
         }
         return null;
-    };
+    }
 
+    ;
 }

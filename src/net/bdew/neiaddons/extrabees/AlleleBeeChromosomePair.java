@@ -25,7 +25,7 @@ public class AlleleBeeChromosomePair {
         this.allele = allele;
         this.chromosome = chromosome;
     }
-    
+
     public boolean equals(Object obj) {
         if (obj == null) return false;
         if (!(obj instanceof AlleleBeeChromosomePair)) return false;
@@ -42,5 +42,4 @@ public class AlleleBeeChromosomePair {
     public int hashCode() {
         return allele.hashCode() + chromosome;
     }
-
 }

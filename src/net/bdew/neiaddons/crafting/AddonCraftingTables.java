@@ -9,18 +9,18 @@
 
 package net.bdew.neiaddons.crafting;
 
-import java.util.ArrayList;
-import java.util.Collection;
-
-import net.bdew.neiaddons.BaseAddon;
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
+import net.bdew.neiaddons.BaseAddon;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.Utils;
+import net.minecraft.client.gui.inventory.GuiContainer;
+
+import java.util.ArrayList;
+import java.util.Collection;
 
 @Mod(modid = NEIAddons.modid + "|CraftingTables", name = "NEI Addons: Crafting Tables", version = "NEIADDONS_VER", dependencies = "after:NEIAddons")
 public class AddonCraftingTables extends BaseAddon {
@@ -59,12 +59,12 @@ public class AddonCraftingTables extends BaseAddon {
     @Override
     public void init(Side side) throws Exception {
         craftingTables = new ArrayList<Class<? extends GuiContainer>>();
-        
+
         tryLoadTableClass("EE3", "com.pahimar.ee3.client.gui.inventory.GuiPortableCrafting", "EE3 Minium Stone");
         tryLoadTableClass("BuildCraft|Factory", "buildcraft.factory.gui.GuiAutoCrafting", "BC Autorcrafting Table");
         tryLoadTableClass("powersuitaddons", "andrew.powersuits.client.PortableCraftingGui", "MPSA In-Place Assembler");
         tryLoadTableClass("TConstruct", "tconstruct.client.gui.CraftingStationGui", "TC Crafting Station");
-        
+
         if (craftingTables.size() > 0) {
             logInfo("%d crafting tables registered", craftingTables.size());
             active = true;

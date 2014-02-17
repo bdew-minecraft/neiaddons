@@ -9,17 +9,17 @@
 
 package net.bdew.neiaddons.forestry.butterflies;
 
-import java.util.Collection;
-
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.forestry.AddonForestry;
-import net.bdew.neiaddons.forestry.GeneticsUtils;
 import codechicken.nei.api.API;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.lepidopterology.EnumFlutterType;
 import forestry.api.lepidopterology.IAlleleButterflySpecies;
 import forestry.api.lepidopterology.IButterflyRoot;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
+
+import java.util.Collection;
 
 public class ButterflyHelper {
     private static ButterflyBreedingHandler breedingRecipeHandler;
@@ -58,6 +58,5 @@ public class ButterflyHelper {
                 }
             }
         }
-
     }
 }

@@ -9,8 +9,8 @@
 
 package net.bdew.neiaddons.forestry;
 
-import net.bdew.neiaddons.utils.CustomOverlayHandler;
 import codechicken.nei.api.API;
+import net.bdew.neiaddons.utils.CustomOverlayHandler;
 
 public class CraftingOverlayHelper {
     public static void setup() {

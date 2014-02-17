@@ -9,9 +9,9 @@
 
 package forestry.plugins;
 
-import net.bdew.neiaddons.forestry.AddonForestry;
 import forestry.api.core.IPlugin;
 import forestry.api.core.PluginInfo;
+import net.bdew.neiaddons.forestry.AddonForestry;
 
 @PluginInfo(name = "NEI Addons Plugin", pluginID = "neiaddons", version = "NEIADDONS_VER")
 public class PluginNEIAddons implements IPlugin {

@@ -9,12 +9,12 @@
 
 package net.bdew.neiaddons.forestry.trees;
 
-import java.util.Collection;
-import java.util.Map;
-
-import net.bdew.neiaddons.forestry.BaseProduceRecipeHandler;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.genetics.IAlleleSpecies;
+import net.bdew.neiaddons.forestry.BaseProduceRecipeHandler;
+
+import java.util.Collection;
+import java.util.Map;
 
 public class TreeProduceHandler extends BaseProduceRecipeHandler {
 
@@ -41,5 +41,4 @@ public class TreeProduceHandler extends BaseProduceRecipeHandler {
     public Map<Integer, Collection<IAlleleSpecies>> getProduceCache() {
         return TreeHelper.productsCache;
     }
-
 }

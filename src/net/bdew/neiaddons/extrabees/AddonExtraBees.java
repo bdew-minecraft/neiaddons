@@ -9,10 +9,6 @@
 
 package net.bdew.neiaddons.extrabees;
 
-import java.util.Collection;
-
-import net.bdew.neiaddons.BaseAddon;
-import net.bdew.neiaddons.NEIAddons;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.Mod.Instance;
@@ -20,6 +16,10 @@ import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import forestry.api.apiculture.IAlleleBeeSpecies;
+import net.bdew.neiaddons.BaseAddon;
+import net.bdew.neiaddons.NEIAddons;
+
+import java.util.Collection;
 
 @Mod(modid = NEIAddons.modid + "|ExtraBees", name = "NEI Addons: Extra Bees", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:ExtraBees;after:Forestry")
 public class AddonExtraBees extends BaseAddon {
@@ -38,7 +38,7 @@ public class AddonExtraBees extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[] { "ExtraBees@[1.6-pre15,)", "Forestry@[2.2.9.0,)" };
+        return new String[]{"ExtraBees@[1.6-pre15,)", "Forestry@[2.2.9.0,)"};
     }
 
     @Override

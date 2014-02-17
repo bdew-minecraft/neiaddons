@@ -9,9 +9,9 @@
 
 package net.bdew.neiaddons;
 
-import java.util.HashMap;
-import java.util.Map;
-
+import cpw.mods.fml.common.IPlayerTracker;
+import cpw.mods.fml.common.network.IPacketHandler;
+import cpw.mods.fml.common.network.Player;
 import net.bdew.neiaddons.api.SubPacketHandler;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -19,23 +19,21 @@ import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.INetworkManager;
 import net.minecraft.network.packet.Packet250CustomPayload;
-
 import org.apache.commons.lang3.StringUtils;
 
-import cpw.mods.fml.common.IPlayerTracker;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
+import java.util.HashMap;
+import java.util.Map;
 
 public class ServerHandler implements IPacketHandler, IPlayerTracker {
-    private static Map<String,SubPacketHandler> handlers = new HashMap<String,SubPacketHandler>();
-    
+    private static Map<String, SubPacketHandler> handlers = new HashMap<String, SubPacketHandler>();
+
     public static void registerHandler(String command, SubPacketHandler handler) {
         if (handlers.containsKey(command)) {
             throw new RuntimeException(String.format("Tried to register handler for command %s that's already registered for %s", command, handler.toString()));
         }
         handlers.put(command, handler);
     }
-    
+
     @Override
     public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
         EntityPlayerMP p = (EntityPlayerMP) player;
@@ -58,11 +56,11 @@ public class ServerHandler implements IPacketHandler, IPlayerTracker {
 
     private void sendPlayerHello(EntityPlayer player) {
         NBTTagCompound nbt = new NBTTagCompound();
-        nbt.setString("commands", StringUtils.join(handlers.keySet(),';'));
+        nbt.setString("commands", StringUtils.join(handlers.keySet(), ';'));
         nbt.setInteger("version", NEIAddons.netVersion);
-        PacketHelper.sendToClient("hello", nbt, (EntityPlayerMP)player);
+        PacketHelper.sendToClient("hello", nbt, (EntityPlayerMP) player);
     }
-    
+
     @Override
     public void onPlayerLogin(EntityPlayer player) {
         sendPlayerHello(player);

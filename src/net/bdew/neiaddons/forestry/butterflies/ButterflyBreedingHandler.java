@@ -11,7 +11,6 @@ package net.bdew.neiaddons.forestry.butterflies;
 
 import net.bdew.neiaddons.forestry.BaseBreedingRecipeHandler;
 
-
 public class ButterflyBreedingHandler extends BaseBreedingRecipeHandler {
 
     public ButterflyBreedingHandler() {
@@ -27,5 +26,4 @@ public class ButterflyBreedingHandler extends BaseBreedingRecipeHandler {
     public String getRecipeIdent() {
         return "butterflybreeding";
     }
-
 }

@@ -11,7 +11,6 @@ package net.bdew.neiaddons.forestry.trees;
 
 import net.bdew.neiaddons.forestry.BaseBreedingRecipeHandler;
 
-
 public class TreeBreedingHandler extends BaseBreedingRecipeHandler {
 
     public TreeBreedingHandler() {
@@ -27,6 +26,4 @@ public class TreeBreedingHandler extends BaseBreedingRecipeHandler {
     public String getRecipeIdent() {
         return "treebreeding";
     }
-
-
 }

@@ -9,18 +9,18 @@
 
 package net.bdew.neiaddons;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import codechicken.nei.ItemRange;
+import codechicken.nei.MultiItemRange;
+import codechicken.nei.api.API;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import codechicken.nei.ItemRange;
-import codechicken.nei.MultiItemRange;
-import codechicken.nei.api.API;
+
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public class Utils {
     @SuppressWarnings("unchecked")
@@ -77,7 +77,7 @@ public class Utils {
     }
 
     public static void addSubsetForItem(Class<?> cls, String field, String rangeName) {
-        addSubsetForItems(cls, new String[] { field }, rangeName, 0);
+        addSubsetForItems(cls, new String[]{field}, rangeName, 0);
     }
 
     public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName) {
@@ -103,7 +103,8 @@ public class Utils {
 
     public static Map<ItemStack, Integer> mergeStacks(Map<ItemStack, Integer> stacks) {
         Map<ItemStack, Integer> merged = new HashMap<ItemStack, Integer>();
-        outer: for (Entry<ItemStack, Integer> stack : stacks.entrySet()) {
+        outer:
+        for (Entry<ItemStack, Integer> stack : stacks.entrySet()) {
             for (Entry<ItemStack, Integer> mergedStack : merged.entrySet()) {
                 if (isSameItem(stack.getKey(), mergedStack.getKey()) && (stack.getValue() == mergedStack.getValue())) {
                     mergedStack.getKey().stackSize += 1;
@@ -114,5 +115,4 @@ public class Utils {
         }
         return merged;
     }
-
 }

@@ -9,8 +9,8 @@
 
 package net.bdew.neiaddons.utils;
 
-import net.bdew.neiaddons.Utils;
 import codechicken.nei.PositionedStack;
+import net.bdew.neiaddons.Utils;
 
 public class LabeledPositionedStack extends PositionedStack {
 
@@ -33,12 +33,11 @@ public class LabeledPositionedStack extends PositionedStack {
     public void drawLabel() {
         if (label.contains(" ")) {
             String[] parts = label.split(" ");
-            for (int i = 0; i<parts.length; i++) {
-                Utils.drawCenteredString(parts[i], relx + 8, rely + 8 + yoffs + 9*i, 0xFFFFFF);
+            for (int i = 0; i < parts.length; i++) {
+                Utils.drawCenteredString(parts[i], relx + 8, rely + 8 + yoffs + 9 * i, 0xFFFFFF);
             }
         } else {
             Utils.drawCenteredString(label, relx + 8, rely + 8 + yoffs, 0xFFFFFF);
         }
     }
-
 }

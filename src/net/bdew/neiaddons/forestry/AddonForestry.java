@@ -9,6 +9,13 @@
 
 package net.bdew.neiaddons.forestry;
 
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLInterModComms;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.ServerHandler;
@@ -20,13 +27,6 @@ import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLInterModComms;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
@@ -49,9 +49,8 @@ public class AddonForestry extends BaseAddon {
     public static Class<? extends Slot> SlotCraftMatrix;
     public static boolean craftingActive = false;
 
-    public static final String commandName = "SetForestryWorktableRecipe"; 
+    public static final String commandName = "SetForestryWorktableRecipe";
 
-    
     @Instance(NEIAddons.modid + "|Forestry")
     public static AddonForestry instance;
 
@@ -62,7 +61,7 @@ public class AddonForestry extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[] { "Forestry@[2.2.9.0,)" };
+        return new String[]{"Forestry@[2.2.9.0,)"};
     }
 
     @Override
@@ -73,24 +72,24 @@ public class AddonForestry extends BaseAddon {
 
     @Override
     public void init(Side side) throws Exception {
-        showBeeMutations= NEIAddons.config.get(getName(), "Show Bee Mutations", true, "Set to false to disable bee mutations browsing").getBoolean(false);
+        showBeeMutations = NEIAddons.config.get(getName(), "Show Bee Mutations", true, "Set to false to disable bee mutations browsing").getBoolean(false);
         showBeeProducts = NEIAddons.config.get(getName(), "Show Bee Products", true, "Set to false to disable bee products browsing").getBoolean(false);
 
-        showTreeMutations= NEIAddons.config.get(getName(), "Show Tree Mutations", true, "Set to false to disable tree mutations browsing").getBoolean(false);
+        showTreeMutations = NEIAddons.config.get(getName(), "Show Tree Mutations", true, "Set to false to disable tree mutations browsing").getBoolean(false);
         showTreeProducts = NEIAddons.config.get(getName(), "Show Tree Products", true, "Set to false to disable tree products browsing").getBoolean(false);
 
-        showButterflyMutations= NEIAddons.config.get(getName(), "Show Butterfly Mutations", true, "Set to false to disable butterfly mutations browsing").getBoolean(false);
+        showButterflyMutations = NEIAddons.config.get(getName(), "Show Butterfly Mutations", true, "Set to false to disable butterfly mutations browsing").getBoolean(false);
         //showButterflyProducts = NEIAddons.config.get(getName(), "Show Butterfly Products", true, "Set to false to disable butterfly products browsing").getBoolean(false);
-        
+
         showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
 
         showReqs = NEIAddons.config.get(getName(), "Show Mutation Requirements", true, "Set to false disable display of mutation requirements").getBoolean(false);
-        
+
         addBees = NEIAddons.config.get(getName(), "Add Bees to Search", true, "Set to true to add all bees to NEI search").getBoolean(false);
         addCombs = NEIAddons.config.get(getName(), "Add Combs to Search", false, "Set to true to add all combs that are produced by bees to NEI search").getBoolean(false);
         addSaplings = NEIAddons.config.get(getName(), "Add Saplings to Search", true, "Set to true to add all saplings to NEI search").getBoolean(false);
         addPollen = NEIAddons.config.get(getName(), "Add Pollen to Search", true, "Set to true to add all pollen types to NEI search").getBoolean(false);
-        
+
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
 
         if (this.verifyModVersion("Forestry@[2.3.0.5,)")) {

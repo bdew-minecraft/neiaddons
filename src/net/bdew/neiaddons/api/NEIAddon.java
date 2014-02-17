@@ -18,7 +18,7 @@ public interface NEIAddon {
 
     /**
      * Called from FMLPreInitializationEvent
-     * 
+     *
      * @throws Exception
      */
     public void init(Side side) throws Exception;

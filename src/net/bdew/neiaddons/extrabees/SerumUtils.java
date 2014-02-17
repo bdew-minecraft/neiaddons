@@ -9,10 +9,10 @@
 
 package net.bdew.neiaddons.extrabees;
 
+import forestry.api.apiculture.EnumBeeChromosome;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import forestry.api.apiculture.EnumBeeChromosome;
 
 public class SerumUtils {
     public static Item itemSerum;

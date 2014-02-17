@@ -9,19 +9,6 @@
 
 package net.bdew.neiaddons.utils;
 
-import static codechicken.nei.NEIServerUtils.areStacksSameType;
-
-import java.util.List;
-
-import net.bdew.neiaddons.ClientHandler;
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.PacketHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.gui.inventory.GuiContainer;
-import net.minecraft.inventory.Slot;
-import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
 import codechicken.nei.LayoutManager;
 import codechicken.nei.NEIClientUtils;
 import codechicken.nei.OffsetPositioner;
@@ -31,6 +18,19 @@ import codechicken.nei.api.IOverlayHandler;
 import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.api.IStackPositioner;
 import codechicken.nei.recipe.IRecipeHandler;
+import net.bdew.neiaddons.ClientHandler;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.PacketHelper;
+import net.minecraft.client.Minecraft;
+import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.inventory.Slot;
+import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.nbt.NBTTagList;
+
+import java.util.List;
+
+import static codechicken.nei.NEIServerUtils.areStacksSameType;
 
 public class CustomOverlayHandler implements IOverlayHandler {
     private boolean invert;
@@ -130,17 +130,17 @@ public class CustomOverlayHandler implements IOverlayHandler {
             for (int i = 0; i < ingr.size(); i++) {
                 PositionedStack pstack = ingr.get(i);
                 if (pstack != null) {
-                    
+
                     Slot slotTo = findMatchingSlot(cont, pstack);
                     if (slotTo == null)
                         continue;
-                    
+
                     Slot slotFrom = findItem(cont, pstack);
                     if (slotFrom == null)
                         continue;
-                    
+
                     NEIAddons.logInfo("Moving from slot %s[%d] to %s[%d]", slotFrom.toString(), slotFrom.slotNumber, slotTo.toString(), slotTo.slotNumber);
-                    
+
                     // pick up item
                     cont.sendMouseClick(slotFrom, slotFrom.slotNumber, 0, 0);
                     // right click to add 1

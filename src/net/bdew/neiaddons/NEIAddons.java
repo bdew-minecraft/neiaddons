@@ -9,13 +9,6 @@
 
 package net.bdew.neiaddons;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import net.bdew.neiaddons.api.NEIAddon;
-import net.minecraftforge.common.Configuration;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
@@ -26,6 +19,13 @@ import cpw.mods.fml.common.network.NetworkRegistry;
 import cpw.mods.fml.common.registry.GameRegistry;
 import cpw.mods.fml.common.registry.TickRegistry;
 import cpw.mods.fml.relauncher.Side;
+import net.bdew.neiaddons.api.NEIAddon;
+import net.minecraftforge.common.Configuration;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 @Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "NEIADDONS_VER", dependencies = "after:NotEnoughItems")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
@@ -119,5 +119,4 @@ public class NEIAddons {
             Loader.instance().activeModContainer().getMetadata().description = "No Addons loaded :(";
         }
     }
-
 }

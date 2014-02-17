@@ -9,8 +9,8 @@
 
 package net.bdew.neiaddons;
 
-import net.bdew.neiaddons.api.NEIAddon;
 import codechicken.nei.api.IConfigureNEI;
+import net.bdew.neiaddons.api.NEIAddon;
 
 public class NEIAddonsConfig implements IConfigureNEI {
 

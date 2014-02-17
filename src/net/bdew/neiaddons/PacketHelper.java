@@ -9,13 +9,13 @@
 
 package net.bdew.neiaddons;
 
-import java.io.IOException;
-
+import cpw.mods.fml.common.network.PacketDispatcher;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.packet.Packet250CustomPayload;
-import cpw.mods.fml.common.network.PacketDispatcher;
+
+import java.io.IOException;
 
 public class PacketHelper {
     private static Packet250CustomPayload makePacket(String cmd, NBTTagCompound data) throws IOException {
@@ -26,7 +26,7 @@ public class PacketHelper {
 
         return new Packet250CustomPayload(NEIAddons.channel, CompressedStreamTools.compress(nbt));
     }
-    
+
     public static void sendToServer(String cmd, NBTTagCompound data) {
         try {
             PacketDispatcher.sendPacketToServer(makePacket(cmd, data));

@@ -9,17 +9,17 @@
 
 package net.bdew.neiaddons;
 
-import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import net.bdew.neiaddons.api.NEIAddon;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.ModContainer;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.VersionParser;
 import cpw.mods.fml.relauncher.Side;
+import net.bdew.neiaddons.api.NEIAddon;
+
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class BaseAddon implements NEIAddon {
 
@@ -99,5 +99,4 @@ public abstract class BaseAddon implements NEIAddon {
 
         return true;
     }
-
 }

@@ -9,24 +9,24 @@
 
 package net.bdew.neiaddons.forestry;
 
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Map;
-import java.util.Map.Entry;
-
+import codechicken.nei.NEIClientUtils;
+import codechicken.nei.PositionedStack;
+import codechicken.nei.recipe.TemplateRecipeHandler;
+import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
+import forestry.api.genetics.ISpeciesRoot;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.ItemStack;
-import codechicken.nei.NEIClientUtils;
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.TemplateRecipeHandler;
-import forestry.api.genetics.IAlleleSpecies;
-import forestry.api.genetics.ISpeciesRoot;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Map;
+import java.util.Map.Entry;
 
 public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
@@ -44,7 +44,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
         public CachedProduceRecipe(IAlleleSpecies species) {
             ItemStack producerStack = GeneticsUtils.stackFromSpecies(species, GeneticsUtils.RecipePosition.Producer);
-            if (producerStack==null) {
+            if (producerStack == null) {
                 AddonForestry.instance.logWarning("Producer is null... wtf? species = %s", species.getUID());
             } else {
                 producer = new LabeledPositionedStack(producerStack, 22, 19, species.getName(), 13);
@@ -66,7 +66,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
         }
 
         public boolean isNoOutput() {
-            return products.size()==0;
+            return products.size() == 0;
         }
 
         @Override
@@ -104,7 +104,9 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        if (!outputId.equals(getRecipeIdent())) { return; }
+        if (!outputId.equals(getRecipeIdent())) {
+            return;
+        }
 
         for (IAlleleSpecies species : getAllSpecies()) {
             CachedProduceRecipe rec = new CachedProduceRecipe(species);
@@ -125,7 +127,9 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
             result = NEIAddons.fakeItem.getOriginal(result);
             if (result == null) return;
         }
-        if (!cache.containsKey(result.itemID)) { return; }
+        if (!cache.containsKey(result.itemID)) {
+            return;
+        }
         for (IAlleleSpecies species : cache.get(result.itemID)) {
             CachedProduceRecipe recipe = new CachedProduceRecipe(species);
             for (LabeledPositionedStack stack : recipe.products) {
@@ -142,10 +146,12 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
         if (NEIAddons.fakeItemsOn) {
             ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
         }
-        if (!speciesRoot.isMember(ingredient)) { return; }
+        if (!speciesRoot.isMember(ingredient)) {
+            return;
+        }
         IIndividual member = speciesRoot.getMember(ingredient);
         if (member == null || member.getGenome() == null || member.getGenome().getPrimary() == null) {
-            AddonForestry.instance.logWarning("Individual or genome is null searching recipe for %s",ingredient.toString());
+            AddonForestry.instance.logWarning("Individual or genome is null searching recipe for %s", ingredient.toString());
             return;
         }
         arecipes.add(new CachedProduceRecipe(member.getGenome().getPrimary()));

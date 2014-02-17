@@ -9,8 +9,6 @@
 
 package net.bdew.neiaddons.utils;
 
-import java.util.HashMap;
-
 import net.bdew.neiaddons.api.SubPacketHandler;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
@@ -20,10 +18,12 @@ import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
+import java.util.HashMap;
+
 public class SetRecipeCommandHandler implements SubPacketHandler {
     private Class<? extends Container> ContainerClass;
     private Class<? extends Slot> SlotClass;
-    
+
     public SetRecipeCommandHandler(Class<? extends Container> containerClass, Class<? extends Slot> slotClass) {
         this.ContainerClass = containerClass;
         this.SlotClass = slotClass;
@@ -35,7 +35,7 @@ public class SetRecipeCommandHandler implements SubPacketHandler {
         Container cont = player.openContainer;
         if (ContainerClass.isInstance(cont)) {
             HashMap<Integer, ItemStack> stmap = new HashMap<Integer, ItemStack>();
-            for(int i = 0; i < stacks.tagCount(); i++) {
+            for (int i = 0; i < stacks.tagCount(); i++) {
                 NBTBase tag = stacks.tagAt(i);
                 if (tag instanceof NBTTagCompound) {
                     NBTTagCompound itemdata = (NBTTagCompound) tag;

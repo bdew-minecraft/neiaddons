@@ -9,8 +9,8 @@
 
 package net.bdew.neiaddons.appeng;
 
-import net.bdew.neiaddons.utils.CustomOverlayHandler;
 import codechicken.nei.api.API;
+import net.bdew.neiaddons.utils.CustomOverlayHandler;
 
 public class AddonAEClient {
     public static void load() {

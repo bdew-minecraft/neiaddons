@@ -9,6 +9,13 @@
 
 package net.bdew.neiaddons.miscperipherals;
 
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.network.NetworkMod;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.ServerHandler;
@@ -17,13 +24,6 @@ import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|MiscPeripherals", name = "NEI Addons: Misc Peripherals", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:MiscPeripherals")
 @NetworkMod(clientSideRequired = false, serverSideRequired = false)
@@ -35,7 +35,7 @@ public class AddonMiscPeripherals extends BaseAddon {
     public static Class<? extends Container> ContainerCrafter;
     public static Class<? extends Slot> SlotRO;
 
-    public static final String commandName = "SetCCCRecipe"; 
+    public static final String commandName = "SetCCCRecipe";
 
     @Instance(NEIAddons.modid + "|MiscPeripherals")
     public static AddonMiscPeripherals instance;
@@ -47,7 +47,7 @@ public class AddonMiscPeripherals extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[] { "MiscPeripherals" };
+        return new String[]{"MiscPeripherals"};
     }
 
     @Override
@@ -65,7 +65,7 @@ public class AddonMiscPeripherals extends BaseAddon {
 
         ContainerCrafter = Utils.getAndCheckClass("miscperipherals.inventory.ContainerCrafter", Container.class);
         SlotRO = Utils.getAndCheckClass("miscperipherals.inventory.SlotRO", Slot.class);
-        
+
         ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerCrafter, SlotRO));
 
         active = true;
@@ -76,5 +76,4 @@ public class AddonMiscPeripherals extends BaseAddon {
     public void loadClient() {
         AddonMiscPeripheralsClient.load();
     }
-
 }

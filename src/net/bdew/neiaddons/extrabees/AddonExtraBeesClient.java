@@ -9,13 +9,6 @@
 
 package net.bdew.neiaddons.extrabees;
 
-import java.util.HashSet;
-import java.util.Set;
-
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.forestry.GeneticsUtils;
-import net.minecraft.item.ItemStack;
 import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.event.FMLInterModComms;
@@ -24,6 +17,13 @@ import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.minecraft.item.ItemStack;
+
+import java.util.HashSet;
+import java.util.Set;
 
 public class AddonExtraBeesClient {
 
@@ -106,10 +106,9 @@ public class AddonExtraBeesClient {
         Utils.addSubsetForItem(ebMain, "geneticMachine", "Extra Bees.Machines.Genetic");
         Utils.addSubsetForItem(ebMain, "advGeneticMachine", "Extra Bees.Machines.Advanced");
         Utils.addSubsetForItem(ebMain, "hive", "Extra Bees.Hives");
-        Utils.addSubsetForItems(ebMain, new String[] { "templateBlank", "dictionary", "serumEmpty", "itemMisc" }, "Extra Bees.Misc");
-        Utils.addSubsetForItems(ebConfig, new String[] { "hiveFrameID", "hiveFrame2ID", "hiveFrame3ID", "hiveFrame4ID", "hiveFrame5ID" }, "Extra Bees.Frames", 256);
+        Utils.addSubsetForItems(ebMain, new String[]{"templateBlank", "dictionary", "serumEmpty", "itemMisc"}, "Extra Bees.Misc");
+        Utils.addSubsetForItems(ebConfig, new String[]{"hiveFrameID", "hiveFrame2ID", "hiveFrame3ID", "hiveFrame4ID", "hiveFrame5ID"}, "Extra Bees.Frames", 256);
         Utils.addSubsetForItem(ebConfig, "alvearyID", "Extra Bees.Machines.Alveary");
-
     }
 
     public static void load() {
@@ -121,7 +120,7 @@ public class AddonExtraBeesClient {
             return;
         }
         API.getRangeTag("Extra Bees").saveTag = false;
-        
+
         AddonExtraBees.allBeeSpecies = GeneticsUtils.getAllBeeSpecies(AddonExtraBees.loadBlacklisted);
         registerSerums();
         API.registerRecipeHandler(new IsolatorRecipeHandler());

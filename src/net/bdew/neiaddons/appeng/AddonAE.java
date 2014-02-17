@@ -9,6 +9,12 @@
 
 package net.bdew.neiaddons.appeng;
 
+import cpw.mods.fml.common.Mod;
+import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.Mod.Instance;
+import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.relauncher.Side;
+import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.ServerHandler;
@@ -17,12 +23,6 @@ import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
-import cpw.mods.fml.common.Mod;
-import cpw.mods.fml.common.Mod.EventHandler;
-import cpw.mods.fml.common.Mod.Instance;
-import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.relauncher.Side;
-import cpw.mods.fml.relauncher.SideOnly;
 
 @Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:AppliedEnergistics")
 public class AddonAE extends BaseAddon {
@@ -33,11 +33,11 @@ public class AddonAE extends BaseAddon {
     public static Class<? extends Container> ContainerPatternEncoder;
     public static Class<? extends Slot> SlotFake;
 
-    public static final String commandName = "SetPatternEncoderRecipe"; 
-    
+    public static final String commandName = "SetPatternEncoderRecipe";
+
     @Instance(NEIAddons.modid + "|AE")
     public static AddonAE instance;
-    
+
     @Override
     public String getName() {
         return "Applied Energistics";
@@ -52,7 +52,7 @@ public class AddonAE extends BaseAddon {
     public void preInit(FMLPreInitializationEvent ev) {
         doPreInit(ev);
     }
-    
+
     @Override
     public void init(Side side) throws ClassNotFoundException {
         if (side == Side.CLIENT) {
@@ -64,7 +64,7 @@ public class AddonAE extends BaseAddon {
         SlotFake = Utils.getAndCheckClass("appeng.slot.SlotFake", Slot.class);
 
         ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerPatternEncoder, SlotFake));
-        
+
         active = true;
     }
 
@@ -73,5 +73,4 @@ public class AddonAE extends BaseAddon {
     public void loadClient() {
         AddonAEClient.load();
     }
-
 }

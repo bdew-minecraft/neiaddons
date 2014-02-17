@@ -9,17 +9,17 @@
 
 package net.bdew.neiaddons.extrabees;
 
-import java.awt.Rectangle;
-
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.forestry.GeneticsUtils;
-import net.bdew.neiaddons.utils.LabeledPositionedStack;
-import net.minecraft.item.ItemStack;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleSpecies;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.bdew.neiaddons.utils.LabeledPositionedStack;
+import net.minecraft.item.ItemStack;
+
+import java.awt.*;
 
 public class IsolatorRecipeHandler extends TemplateRecipeHandler {
 
@@ -50,11 +50,13 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        if (!outputId.equals("isolator")) { return; }
+        if (!outputId.equals("isolator")) {
+            return;
+        }
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
             IAllele[] template = AddonExtraBeesClient.beeRoot.getTemplate(species.getUID());
-            if (template==null) {
+            if (template == null) {
                 AddonExtraBees.instance.logWarning("Template for %s is null, wtf?", species.getUID());
                 continue;
             }
@@ -74,16 +76,20 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
         if (NEIAddons.fakeItemsOn) {
             result = NEIAddons.fakeItem.getOriginal(result);
         }
-        
-        if (!SerumUtils.isSerum(result)) { return; }
+
+        if (!SerumUtils.isSerum(result)) {
+            return;
+        }
 
         AlleleBeeChromosomePair pair = SerumUtils.getData(result);
 
-        if (pair == null) { return; }
+        if (pair == null) {
+            return;
+        }
 
         for (IAlleleBeeSpecies species : AddonExtraBees.allBeeSpecies) {
             IAllele[] template = AddonExtraBeesClient.beeRoot.getTemplate(species.getUID());
-            if (template==null) {
+            if (template == null) {
                 AddonExtraBees.instance.logWarning("Template for %s is null, wtf?", species.getUID());
                 continue;
             }

@@ -9,16 +9,6 @@
 
 package net.bdew.neiaddons.forestry;
 
-import java.awt.Point;
-import java.awt.Rectangle;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.utils.LabeledPositionedStack;
-import net.minecraft.item.ItemStack;
 import codechicken.core.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
@@ -27,6 +17,15 @@ import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.IMutation;
 import forestry.api.genetics.ISpeciesRoot;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.utils.LabeledPositionedStack;
+import net.minecraft.item.ItemStack;
+
+import java.awt.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
@@ -75,7 +74,9 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             return;
         }
 
-        if (!outputId.equals(getRecipeIdent())) { return; }
+        if (!outputId.equals(getRecipeIdent())) {
+            return;
+        }
 
         for (IMutation mutation : speciesRoot.getMutations(false)) {
             if (!mutation.isSecret() || AddonForestry.showSecret) {
@@ -89,14 +90,16 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
         if (NEIAddons.fakeItemsOn) {
             result = NEIAddons.fakeItem.getOriginal(result);
         }
-        if (!speciesRoot.isMember(result)) { return; }
-        IIndividual resultIndividual = speciesRoot.getMember(result);
-        if (resultIndividual==null) {
-            AddonForestry.instance.logWarning("IIndividual is null searching recipe for %s",result.toString());
+        if (!speciesRoot.isMember(result)) {
             return;
         }
-        if (resultIndividual.getGenome()==null) {
-            AddonForestry.instance.logWarning("Genome is null when searching recipe for %s",result.toString());
+        IIndividual resultIndividual = speciesRoot.getMember(result);
+        if (resultIndividual == null) {
+            AddonForestry.instance.logWarning("IIndividual is null searching recipe for %s", result.toString());
+            return;
+        }
+        if (resultIndividual.getGenome() == null) {
+            AddonForestry.instance.logWarning("Genome is null when searching recipe for %s", result.toString());
             return;
         }
         if (resultIndividual.getGenome().getPrimary() == null) {
@@ -119,18 +122,20 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
         if (NEIAddons.fakeItemsOn) {
             ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
         }
-        if (!speciesRoot.isMember(ingredient)) { return; }
+        if (!speciesRoot.isMember(ingredient)) {
+            return;
+        }
         IIndividual individual = speciesRoot.getMember(ingredient);
-        if (individual==null) {
-            AddonForestry.instance.logWarning("IIndividual is null searching recipe for %s",ingredient.toString());
+        if (individual == null) {
+            AddonForestry.instance.logWarning("IIndividual is null searching recipe for %s", ingredient.toString());
             return;
         }
-        if (individual.getGenome()==null) {
-            AddonForestry.instance.logWarning("Genome is null when searching recipe for %s",ingredient.toString());
+        if (individual.getGenome() == null) {
+            AddonForestry.instance.logWarning("Genome is null when searching recipe for %s", ingredient.toString());
             return;
         }
-        if (individual.getGenome().getPrimary()==null) {
-            AddonForestry.instance.logWarning("Species is null when searching recipe for %s",ingredient.toString());
+        if (individual.getGenome().getPrimary() == null) {
+            AddonForestry.instance.logWarning("Species is null when searching recipe for %s", ingredient.toString());
             return;
         }
         IAlleleSpecies species = individual.getGenome().getPrimary();
@@ -177,7 +182,7 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             Point offset = gui.getRecipePosition(recipe);
             Point pos = GuiDraw.getMousePosition();
             Point relMouse = new Point(pos.x - gui.guiLeft - offset.x, pos.y - gui.guiTop - offset.y);
-            Rectangle tiprect = new Rectangle(108 - 24, 15-2, 48, 12);
+            Rectangle tiprect = new Rectangle(108 - 24, 15 - 2, 48, 12);
             if (tiprect.contains(relMouse)) {
                 currenttip.addAll(rec.requirements);
                 return currenttip;

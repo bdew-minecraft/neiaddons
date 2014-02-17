@@ -9,19 +9,6 @@
 
 package net.bdew.neiaddons.forestry.bees;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-
-import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.forestry.AddonForestry;
-import net.bdew.neiaddons.forestry.GeneticsUtils;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
 import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Loader;
@@ -31,6 +18,14 @@ import forestry.api.apiculture.IBeeRoot;
 import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
+import net.bdew.neiaddons.NEIAddons;
+import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemStack;
+
+import java.util.*;
 
 public class BeeHelper {
     private static BeeBreedingHandler breedingRecipeHandler;
@@ -66,7 +61,7 @@ public class BeeHelper {
 
     public static void setup() {
         API.getRangeTag("Forestry").saveTag = false;
-        
+
         root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
         allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
 
@@ -82,7 +77,7 @@ public class BeeHelper {
         productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
 
         MultiItemRange fakeRange = new MultiItemRange();
-        
+
         for (IAlleleBeeSpecies species : allSpecies) {
             if (AddonForestry.addBees) {
                 if (NEIAddons.fakeItemsOn) {
@@ -123,12 +118,11 @@ public class BeeHelper {
                 AddonForestry.instance.logInfo("Registering variants for %s: %s", combItem.getClass().getName(), subitems.toString());
 
                 API.setItemDamageVariants(combItem.itemID, subitems);
-
             }
         }
 
         API.addToRange("Forestry.Bees.Princesses", fakeRange);
-        
+
         if (!Loader.isModLoaded("NEIPlugins")) {
             MultiItemRange queenRange = new MultiItemRange();
             queenRange.add(ItemInterface.getItem("beeQueenGE"));
