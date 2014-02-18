@@ -51,6 +51,11 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             chance = mutation.getBaseChance();
 
             requirements = mutation.getSpecialConditions();
+            if (requirements == null) {
+                AddonForestry.instance.logWarning("Mutation %s + %s -> %s is returning null from getSpecialConditions",
+                        mutation.getAllele0().getUID(), mutation.getAllele1().getUID(), mutation.getTemplate()[0].getUID());
+                requirements = new ArrayList<String>();
+            }
         }
 
         @Override
