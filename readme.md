@@ -34,6 +34,9 @@ NEI Addons
 Changelog
 =========
 
+###v1.10.4 - Released 19/02/2014
+* Workaround crashes caused by Metallurgy Bees
+
 ###v1.10.3 - Released 17/02/2014
 * Fixed a different crash introduced by the fix in v1.10.2
 
