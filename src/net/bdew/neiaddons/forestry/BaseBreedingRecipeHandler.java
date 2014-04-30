@@ -9,15 +9,15 @@
 
 package net.bdew.neiaddons.forestry;
 
-import codechicken.core.gui.GuiDraw;
+import codechicken.lib.gui.GuiDraw;
 import codechicken.nei.PositionedStack;
+import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.IMutation;
 import forestry.api.genetics.ISpeciesRoot;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
@@ -92,9 +92,6 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        if (NEIAddons.fakeItemsOn) {
-            result = NEIAddons.fakeItem.getOriginal(result);
-        }
         if (!speciesRoot.isMember(result)) {
             return;
         }
@@ -124,9 +121,6 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (NEIAddons.fakeItemsOn) {
-            ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
-        }
         if (!speciesRoot.isMember(ingredient)) {
             return;
         }
@@ -183,7 +177,7 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
     @Override
     public List<String> handleTooltip(GuiRecipe gui, List<String> currenttip, int recipe) {
         CachedBreedingRecipe rec = (CachedBreedingRecipe) arecipes.get(recipe);
-        if (AddonForestry.showReqs && rec.requirements.size() > 0 && gui.manager.shouldShowTooltip() && currenttip.size() == 0) {
+        if (AddonForestry.showReqs && rec.requirements.size() > 0 && GuiContainerManager.shouldShowTooltip(gui) && currenttip.size() == 0) {
             Point offset = gui.getRecipePosition(recipe);
             Point pos = GuiDraw.getMousePosition();
             Point relMouse = new Point(pos.x - gui.guiLeft - offset.x, pos.y - gui.guiTop - offset.y);

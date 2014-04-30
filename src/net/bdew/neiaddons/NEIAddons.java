@@ -14,33 +14,34 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkMod;
 import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.registry.GameRegistry;
-import cpw.mods.fml.common.registry.TickRegistry;
+import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.bdew.neiaddons.api.NEIAddon;
-import net.minecraftforge.common.Configuration;
+import net.bdew.neiaddons.network.ClientPacketHandler;
+import net.bdew.neiaddons.network.NBTMessage;
+import net.bdew.neiaddons.network.ServerPacketHandler;
+import net.minecraftforge.common.config.Configuration;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
-@Mod(modid = NEIAddons.modid, name = "NEI Addons", version = "NEIADDONS_VER", dependencies = "after:NotEnoughItems")
-@NetworkMod(clientSideRequired = false, serverSideRequired = false)
+@Mod(modid = NEIAddons.modId, name = "NEI Addons", version = "NEIADDONS_VER", dependencies = "after:NotEnoughItems")
 public class NEIAddons {
-    public static Logger log;
 
-    public static final String modid = "NEIAddons";
-    public static final String channel = "bdew.neiaddons";
+    public static final String modId = "NEIAddons";
+    public static final String channelId = "bdew.neiaddons";
     public static final int netVersion = 1;
 
     public static List<NEIAddon> addons;
     public static Configuration config;
+    public static Logger log;
+    public static SimpleNetworkWrapper channel;
 
-    public static boolean fakeItemsOn;
-    public static ItemFakeNBT fakeItem;
+    public static ServerHandler serverHandler;
+    public static ClientHandler clientHandler;
 
     public static void register(NEIAddon addon) {
         addons.add(addon);
@@ -51,27 +52,21 @@ public class NEIAddons {
     }
 
     public static void logWarning(String message, Object... params) {
-        log.log(Level.WARNING, String.format(message, params));
+        log.log(Level.WARN, String.format(message, params));
     }
 
     public static void logSevere(String message, Object... params) {
-        log.log(Level.SEVERE, String.format(message, params));
+        log.log(Level.ERROR, String.format(message, params));
     }
 
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         log = event.getModLog();
+        channel = NetworkRegistry.INSTANCE.newSimpleChannel(channelId);
+
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.addCustomCategoryComment("Addons", "Controls loading of different addons, set to false to disable");
         addons = new ArrayList<NEIAddon>();
-
-        if (event.getSide() == Side.CLIENT) {
-            String cmt = "Enable to register fake items to work around NEI not showing items with metadata outside cheat mode";
-            fakeItemsOn = config.get(Configuration.CATEGORY_GENERAL, "Enable fake items", false, cmt).getBoolean(false);
-
-            if (fakeItemsOn)
-                fakeItem = new ItemFakeNBT(config.getItem("Fake item", 10050).getInt());
-        }
 
         if (event.getSide() == Side.CLIENT && !Loader.isModLoaded("NotEnoughItems")) {
             logSevere("NEI doesn't seem to be installed... NEI Addons require it to do anything useful client-side");
@@ -100,13 +95,12 @@ public class NEIAddons {
 
         config.save();
 
-        ServerHandler serverHandler = new ServerHandler();
-        NetworkRegistry.instance().registerChannel(serverHandler, channel, Side.SERVER);
-        GameRegistry.registerPlayerTracker(serverHandler);
-        if (event.getSide() == Side.CLIENT) {
-            ClientHandler clientHandler = new ClientHandler();
-            NetworkRegistry.instance().registerChannel(clientHandler, channel, Side.CLIENT);
-            TickRegistry.registerTickHandler(clientHandler, Side.CLIENT);
+        serverHandler = new ServerHandler();
+        channel.registerMessage(ServerPacketHandler.class, NBTMessage.class, 0, Side.SERVER);
+
+        if (event.getSide().isClient()) {
+            clientHandler = new ClientHandler();
+            channel.registerMessage(ClientPacketHandler.class, NBTMessage.class, 0, Side.CLIENT);
         }
 
         if (addons.size() > 0) {

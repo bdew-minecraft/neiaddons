@@ -28,7 +28,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
-@Mod(modid = NEIAddons.modid + "|Forestry", name = "NEI Addons: Forestry", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Forestry")
+@Mod(modid = NEIAddons.modId + "|Forestry", name = "NEI Addons: Forestry", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
     public static boolean showSecret;
     public static boolean addBees;
@@ -51,7 +51,7 @@ public class AddonForestry extends BaseAddon {
 
     public static final String commandName = "SetForestryWorktableRecipe";
 
-    @Instance(NEIAddons.modid + "|Forestry")
+    @Instance(NEIAddons.modId + "|Forestry")
     public static AddonForestry instance;
 
     @Override

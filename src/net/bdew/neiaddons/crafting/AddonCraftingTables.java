@@ -22,7 +22,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import java.util.ArrayList;
 import java.util.Collection;
 
-@Mod(modid = NEIAddons.modid + "|CraftingTables", name = "NEI Addons: Crafting Tables", version = "NEIADDONS_VER", dependencies = "after:NEIAddons")
+@Mod(modid = NEIAddons.modId + "|CraftingTables", name = "NEI Addons: Crafting Tables", version = "NEIADDONS_VER", dependencies = "after:NEIAddons")
 public class AddonCraftingTables extends BaseAddon {
 
     public static Collection<Class<? extends GuiContainer>> craftingTables;

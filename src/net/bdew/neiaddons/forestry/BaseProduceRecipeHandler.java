@@ -15,11 +15,11 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.IIndividual;
 import forestry.api.genetics.ISpeciesRoot;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.awt.*;
@@ -31,7 +31,7 @@ import java.util.Map.Entry;
 public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     private final ISpeciesRoot speciesRoot;
-    private final Map<Integer, Collection<IAlleleSpecies>> cache;
+    private final Map<Item, Collection<IAlleleSpecies>> cache;
 
     public BaseProduceRecipeHandler(ISpeciesRoot root) {
         this.speciesRoot = root;
@@ -123,14 +123,10 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
             AddonForestry.instance.logWarning("loadCraftingRecipes() called with null, something is FUBAR.");
             return;
         }
-        if (NEIAddons.fakeItemsOn) {
-            result = NEIAddons.fakeItem.getOriginal(result);
-            if (result == null) return;
-        }
-        if (!cache.containsKey(result.itemID)) {
+        if (!cache.containsKey(result.getItem())) {
             return;
         }
-        for (IAlleleSpecies species : cache.get(result.itemID)) {
+        for (IAlleleSpecies species : cache.get(result.getItem())) {
             CachedProduceRecipe recipe = new CachedProduceRecipe(species);
             for (LabeledPositionedStack stack : recipe.products) {
                 if (NEIClientUtils.areStacksSameTypeCrafting(stack.item, result)) {
@@ -143,9 +139,6 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadUsageRecipes(ItemStack ingredient) {
-        if (NEIAddons.fakeItemsOn) {
-            ingredient = NEIAddons.fakeItem.getOriginal(ingredient);
-        }
         if (!speciesRoot.isMember(ingredient)) {
             return;
         }
@@ -178,7 +171,7 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
 
     public abstract Collection<? extends IAlleleSpecies> getAllSpecies();
 
-    public abstract Map<Integer, Collection<IAlleleSpecies>> getProduceCache();
+    public abstract Map<Item, Collection<IAlleleSpecies>> getProduceCache();
 
     @Override
     public String getGuiTexture() {

@@ -9,19 +9,16 @@
 
 package net.bdew.neiaddons.forestry.trees;
 
-import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
-import cpw.mods.fml.common.Loader;
 import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;
-import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -34,15 +31,15 @@ public class TreeHelper {
     private static TreeProduceHandler produceRecipeHandler;
 
     public static Collection<IAlleleTreeSpecies> allSpecies;
-    public static Map<Integer, Collection<IAlleleSpecies>> productsCache;
+    public static Map<Item, Collection<IAlleleSpecies>> productsCache = new HashMap<Item, Collection<IAlleleSpecies>>();
 
     public static ITreeRoot root;
 
-    private static void addProductToCache(int id, IAlleleTreeSpecies species) {
-        if (!productsCache.containsKey(id)) {
-            productsCache.put(id, new ArrayList<IAlleleSpecies>());
+    private static void addProductToCache(Item item, IAlleleTreeSpecies species) {
+        if (!productsCache.containsKey(item)) {
+            productsCache.put(item, new ArrayList<IAlleleSpecies>());
         }
-        productsCache.get(id).add(species);
+        productsCache.get(item).add(species);
     }
 
     public static void setup() {
@@ -63,31 +60,26 @@ public class TreeHelper {
             AddonForestry.instance.registerWithNEIPlugins(produceRecipeHandler.getRecipeName(), produceRecipeHandler.getRecipeIdent());
         }
 
-        productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
-
-        MultiItemRange fakeRange = new MultiItemRange();
+        // TODO: fix after NEI re-adds ranges
+        // MultiItemRange fakeRange = new MultiItemRange();
 
         for (IAlleleTreeSpecies species : allSpecies) {
-            if (AddonForestry.addSaplings && !NEIAddons.fakeItemsOn) {
+            if (AddonForestry.addSaplings) {
                 Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
             }
             if (AddonForestry.addPollen) {
-                if (NEIAddons.fakeItemsOn) {
-                    ItemStack fake = NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
-                    Utils.safeAddNBTItem(fake);
-                    fakeRange.add(fake);
-                } else {
-                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
-                }
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.POLLEN.ordinal()));
             }
             for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
-                addProductToCache(prod.itemID, species);
+                addProductToCache(prod.getItem(), species);
             }
             for (ItemStack prod : GeneticsUtils.getSpecialtyFromSpecies(species).keySet()) {
-                addProductToCache(prod.itemID, species);
+                addProductToCache(prod.getItem(), species);
             }
         }
 
+        // TODO: fix after NEI re-adds ranges
+        /*
         API.addToRange("Forestry.Trees.Pollen", fakeRange);
 
         if (!Loader.isModLoaded("NEIPlugins")) {
@@ -99,5 +91,6 @@ public class TreeHelper {
         MultiItemRange pollenRange = new MultiItemRange();
         pollenRange.add(ItemInterface.getItem("pollenFertile"));
         API.addToRange("Forestry.Trees.Pollen", pollenRange);
+        */
     }
 }

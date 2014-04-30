@@ -9,13 +9,9 @@
 
 package net.bdew.neiaddons;
 
-import codechicken.nei.ItemRange;
-import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
-import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.HashMap;
@@ -45,10 +41,11 @@ public class Utils {
     public static void safeAddNBTItem(ItemStack item) {
         if (item == null)
             return;
-        API.addNBTItem(item);
+        API.addItemListEntry(item);
     }
 
     public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName, int shift) {
+        /* TODO: Disabled for now, no ranges in new NEI
         MultiItemRange multi = new MultiItemRange();
         for (String field : fields) {
             try {
@@ -74,6 +71,7 @@ public class Utils {
         if (multi.ranges.size() > 0) {
             API.addToRange(rangeName, multi);
         }
+        */
     }
 
     public static void addSubsetForItem(Class<?> cls, String field, String rangeName) {
@@ -90,7 +88,7 @@ public class Utils {
     public static boolean isSameItem(ItemStack s1, ItemStack s2) {
         if ((s1 == null) || (s2 == null))
             return false;
-        if (s1.itemID != s2.itemID)
+        if (s1.getItem() != s2.getItem())
             return false;
         if (s1.getItemDamage() != s2.getItemDamage())
             return false;

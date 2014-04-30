@@ -21,14 +21,14 @@ import net.bdew.neiaddons.NEIAddons;
 
 import java.util.Collection;
 
-@Mod(modid = NEIAddons.modid + "|ExtraBees", name = "NEI Addons: Extra Bees", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:ExtraBees;after:Forestry")
+@Mod(modid = NEIAddons.modId + "|ExtraBees", name = "NEI Addons: Extra Bees", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:ExtraBees;after:Forestry")
 public class AddonExtraBees extends BaseAddon {
 
     public static boolean loadBlacklisted;
     public static boolean dumpSerums;
     public static Collection<IAlleleBeeSpecies> allBeeSpecies;
 
-    @Instance(NEIAddons.modid + "|ExtraBees")
+    @Instance(NEIAddons.modId + "|ExtraBees")
     public static AddonExtraBees instance;
 
     @Override

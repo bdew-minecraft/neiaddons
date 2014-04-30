@@ -9,32 +9,33 @@
 
 package net.bdew.neiaddons;
 
-import cpw.mods.fml.common.ITickHandler;
-import cpw.mods.fml.common.TickType;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.TickEvent;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.Arrays;
-import java.util.EnumSet;
 import java.util.HashSet;
 import java.util.Set;
 
-public class ClientHandler implements IPacketHandler, ITickHandler {
+public class ClientHandler {
     public static Set<String> enabledCommands = new HashSet<String>();
     private WorldClient oldworld;
 
-    @Override
-    public void tickStart(EnumSet<TickType> type, Object... tickData) {
-        WorldClient world = Minecraft.getMinecraft().theWorld;
-        if ((world != null) && (world != oldworld)) {
-            reset();
+    public ClientHandler() {
+        FMLCommonHandler.instance().bus().register(this);
+    }
+
+    @SubscribeEvent
+    public void handleTickEvent(TickEvent ev) {
+        if (ev.phase == TickEvent.Phase.START && ev.type == TickEvent.Type.WORLD) {
+            WorldClient world = Minecraft.getMinecraft().theWorld;
+            if ((world != null) && (world != oldworld)) {
+                reset();
+            }
         }
     }
 
@@ -44,25 +45,8 @@ public class ClientHandler implements IPacketHandler, ITickHandler {
         enabledCommands.clear();
     }
 
-    @Override
-    public void tickEnd(EnumSet<TickType> type, Object... tickData) {
-    }
-
-    @Override
-    public EnumSet<TickType> ticks() {
-        return EnumSet.of(TickType.WORLD);
-    }
-
-    @Override
-    public String getLabel() {
-        return "NEI Addons";
-    }
-
-    @Override
-    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
+    public void processCommand(String cmd, NBTTagCompound data) {
         try {
-            NBTTagCompound data = CompressedStreamTools.decompress(packet.data);
-            String cmd = data.getString("cmd");
             if (cmd.equals("hello")) {
                 reset();
                 if (data.getCompoundTag("data").getInteger("version") != NEIAddons.netVersion) {

@@ -13,7 +13,6 @@ import codechicken.nei.api.IConfigureNEI;
 import net.bdew.neiaddons.api.NEIAddon;
 
 public class NEIAddonsConfig implements IConfigureNEI {
-
     @Override
     public void loadConfig() {
         for (NEIAddon addon : NEIAddons.addons) {
@@ -21,7 +20,7 @@ public class NEIAddonsConfig implements IConfigureNEI {
                 try {
                     addon.loadClient();
                 } catch (Throwable e) {
-                    NEIAddons.log.warning(String.format("Addon %s failed client initialization: %s", addon.getName(), e.toString()));
+                    NEIAddons.logWarning("Addon %s failed client initialization: %s", addon.getName(), e.toString());
                     e.printStackTrace();
                 }
             }

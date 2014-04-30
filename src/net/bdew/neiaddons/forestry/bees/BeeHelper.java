@@ -9,7 +9,6 @@
 
 package net.bdew.neiaddons.forestry.bees;
 
-import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Loader;
 import forestry.api.apiculture.EnumBeeType;
@@ -18,7 +17,6 @@ import forestry.api.apiculture.IBeeRoot;
 import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
@@ -32,15 +30,15 @@ public class BeeHelper {
     private static BeeProduceHandler productsRecipeHandler;
 
     public static Collection<IAlleleBeeSpecies> allSpecies;
-    public static Map<Integer, Collection<IAlleleSpecies>> productsCache;
+    public static Map<Item, Collection<IAlleleSpecies>> productsCache = new HashMap<Item, Collection<IAlleleSpecies>>();
 
     public static IBeeRoot root;
 
-    private static void addProductToCache(int id, IAlleleBeeSpecies species) {
-        if (!productsCache.containsKey(id)) {
-            productsCache.put(id, new ArrayList<IAlleleSpecies>());
+    private static void addProductToCache(Item item, IAlleleBeeSpecies species) {
+        if (!productsCache.containsKey(item)) {
+            productsCache.put(item, new ArrayList<IAlleleSpecies>());
         }
-        productsCache.get(id).add(species);
+        productsCache.get(item).add(species);
     }
 
     private static void addHandlers() {
@@ -60,67 +58,61 @@ public class BeeHelper {
     }
 
     public static void setup() {
-        API.getRangeTag("Forestry").saveTag = false;
+        // TODO: Check if needed after NEI re-adds ranges
+        //API.getRangeTag("Forestry").saveTag = false;
 
         root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
         allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
 
         addHandlers();
 
-        HashMap<Integer, HashSet<Integer>> seencombs = new HashMap<Integer, HashSet<Integer>>();
+        HashMap<Item, HashSet<Integer>> seencombs = new HashMap<Item, HashSet<Integer>>();
 
         List<Item> modCombs = getMobCombs();
         for (Item combItem : modCombs) {
-            seencombs.put(combItem.itemID, new HashSet<Integer>());
+            seencombs.put(combItem, new HashSet<Integer>());
         }
 
-        productsCache = new HashMap<Integer, Collection<IAlleleSpecies>>();
-
-        MultiItemRange fakeRange = new MultiItemRange();
+        // TODO: fix after NEI re-adds ranges
+        //MultiItemRange fakeRange = new MultiItemRange();
 
         for (IAlleleBeeSpecies species : allSpecies) {
             if (AddonForestry.addBees) {
-                if (NEIAddons.fakeItemsOn) {
-                    ItemStack fake = NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
-                    Utils.safeAddNBTItem(fake);
-                    fakeRange.add(fake);
-                } else {
-                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.QUEEN.ordinal()));
-                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
-                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
-                }
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.QUEEN.ordinal()));
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.DRONE.ordinal()));
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumBeeType.PRINCESS.ordinal()));
             }
             for (ItemStack prod : GeneticsUtils.getProduceFromSpecies(species).keySet()) {
-                addProductToCache(prod.itemID, species);
-                if (AddonForestry.addCombs && seencombs.containsKey(prod.itemID)) {
-                    seencombs.get(prod.itemID).add(prod.getItemDamage());
+                addProductToCache(prod.getItem(), species);
+                if (AddonForestry.addCombs && seencombs.containsKey(prod.getItem())) {
+                    seencombs.get(prod.getItem()).add(prod.getItemDamage());
                 }
             }
             for (ItemStack prod : GeneticsUtils.getSpecialtyFromSpecies(species).keySet()) {
-                addProductToCache(prod.itemID, species);
-                if (AddonForestry.addCombs && seencombs.containsKey(prod.itemID)) {
-                    seencombs.get(prod.itemID).add(prod.getItemDamage());
+                addProductToCache(prod.getItem(), species);
+                if (AddonForestry.addCombs && seencombs.containsKey(prod.getItem())) {
+                    seencombs.get(prod.getItem()).add(prod.getItemDamage());
                 }
             }
         }
 
         if (AddonForestry.addCombs) {
             for (Item combItem : modCombs) {
-                HashSet<Integer> subitems = seencombs.get(combItem.itemID);
+                HashSet<Integer> subitems = seencombs.get(combItem);
 
                 ArrayList<ItemStack> combs = new ArrayList<ItemStack>();
-                combItem.getSubItems(combItem.itemID, null, combs);
+                combItem.getSubItems(combItem, null, combs);
 
                 for (ItemStack item : combs) {
                     subitems.add(item.getItemDamage());
+                    AddonForestry.instance.logInfo("Registering comb variant for %s: %s", combItem.getClass().getName(), item.toString());
+                    API.addItemListEntry(item);
                 }
-
-                AddonForestry.instance.logInfo("Registering variants for %s: %s", combItem.getClass().getName(), subitems.toString());
-
-                API.setItemDamageVariants(combItem.itemID, subitems);
             }
         }
 
+        // TODO: fix after NEI re-adds ranges
+        /*
         API.addToRange("Forestry.Bees.Princesses", fakeRange);
 
         if (!Loader.isModLoaded("NEIPlugins")) {
@@ -138,10 +130,11 @@ public class BeeHelper {
 
             MultiItemRange combRange = new MultiItemRange();
             for (Item i : modCombs) {
-                combRange.add(i.itemID);
+                combRange.add(i.getItem());
             }
             API.addToRange("Forestry.Bees.Combs", combRange);
         }
+        */
     }
 
     private static List<Item> getMobCombs() {
@@ -160,7 +153,7 @@ public class BeeHelper {
                 Class<?> ebItems = Class.forName("binnie.extrabees.ExtraBees");
                 Object ebComb = ebItems.getField("comb").get(null);
                 if (ebComb instanceof Item) {
-                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%d)", ebComb.toString(), ((Item) ebComb).itemID);
+                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%d)", ebComb.toString(), ((Item) ebComb));
                     res.add((Item) ebComb);
                 } else {
                     AddonForestry.instance.logWarning("Extra Bees comb is not Item subclass!");
@@ -176,7 +169,7 @@ public class BeeHelper {
                 Object mbComb = mbConfig.getField("combs").get(null);
                 AddonForestry.instance.logInfo("Loaded TB comb item: %s", mbComb.toString());
                 if (mbComb instanceof Item) {
-                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%d)", mbComb.toString(), ((Item) mbComb).itemID);
+                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%d)", mbComb.toString(), ((Item) mbComb));
                     res.add((Item) mbComb);
                 } else {
                     AddonForestry.instance.logWarning("Magic Bees comb is not Item subclass!");

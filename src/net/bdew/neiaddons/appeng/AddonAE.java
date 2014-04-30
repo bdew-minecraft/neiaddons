@@ -24,7 +24,7 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
-@Mod(modid = NEIAddons.modid + "|AE", name = "NEI Addons: Applied Energistics", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:AppliedEnergistics")
+@Mod(modid = NEIAddons.modId + "|AE", name = "NEI Addons: Applied Energistics", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:AppliedEnergistics")
 public class AddonAE extends BaseAddon {
 
     public static boolean invertShift;
@@ -35,7 +35,7 @@ public class AddonAE extends BaseAddon {
 
     public static final String commandName = "SetPatternEncoderRecipe";
 
-    @Instance(NEIAddons.modid + "|AE")
+    @Instance(NEIAddons.modId + "|AE")
     public static AddonAE instance;
 
     @Override

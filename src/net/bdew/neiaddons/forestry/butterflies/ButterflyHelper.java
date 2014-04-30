@@ -14,7 +14,6 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.lepidopterology.EnumFlutterType;
 import forestry.api.lepidopterology.IAlleleButterflySpecies;
 import forestry.api.lepidopterology.IButterflyRoot;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
@@ -51,11 +50,7 @@ public class ButterflyHelper {
 
         for (IAlleleButterflySpecies species : allSpecies) {
             if (AddonForestry.addBees) {
-                if (NEIAddons.fakeItemsOn) {
-                    Utils.safeAddNBTItem(NEIAddons.fakeItem.addItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.BUTTERFLY.ordinal())));
-                } else {
-                    Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.BUTTERFLY.ordinal()));
-                }
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.BUTTERFLY.ordinal()));
             }
         }
     }

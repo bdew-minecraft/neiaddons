@@ -17,10 +17,11 @@ import codechicken.nei.api.DefaultOverlayRenderer;
 import codechicken.nei.api.IOverlayHandler;
 import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.api.IStackPositioner;
+import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.recipe.IRecipeHandler;
 import net.bdew.neiaddons.ClientHandler;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.PacketHelper;
+import net.bdew.neiaddons.network.PacketHelper;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Slot;
@@ -120,11 +121,12 @@ public class CustomOverlayHandler implements IOverlayHandler {
                 return;
             }
             NEIAddons.logInfo("Don't have server support, moving recipe manually");
+            GuiContainerManager manager = GuiContainerManager.getManager(cont);
             for (Object slotob : cont.inventorySlots.inventorySlots) {
                 if (craftingSlot.isInstance(slotob)) {
                     Slot slot = (Slot) slotob;
                     // Left click once to clear
-                    cont.sendMouseClick(slot, slot.slotNumber, 0, 0);
+                    manager.handleSlotClick(slot.slotNumber, 0, 0);
                 }
             }
             for (int i = 0; i < ingr.size(); i++) {
@@ -142,11 +144,11 @@ public class CustomOverlayHandler implements IOverlayHandler {
                     NEIAddons.logInfo("Moving from slot %s[%d] to %s[%d]", slotFrom.toString(), slotFrom.slotNumber, slotTo.toString(), slotTo.slotNumber);
 
                     // pick up item
-                    cont.sendMouseClick(slotFrom, slotFrom.slotNumber, 0, 0);
+                    manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
                     // right click to add 1
-                    cont.sendMouseClick(slotTo, slotTo.slotNumber, 1, 0);
+                    manager.handleSlotClick(slotFrom.slotNumber, 1, 0);
                     // put item back
-                    cont.sendMouseClick(slotFrom, slotFrom.slotNumber, 0, 0);
+                    manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
                 }
             }
         }

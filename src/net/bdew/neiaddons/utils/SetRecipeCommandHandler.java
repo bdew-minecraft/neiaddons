@@ -14,7 +14,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
-import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.nbt.NBTTagList;
 
@@ -31,16 +30,13 @@ public class SetRecipeCommandHandler implements SubPacketHandler {
 
     @Override
     public void handle(NBTTagCompound data, EntityPlayerMP player) {
-        NBTTagList stacks = data.getTagList("stacks");
+        NBTTagList stacks = data.getTagList("stacks", 10);
         Container cont = player.openContainer;
         if (ContainerClass.isInstance(cont)) {
             HashMap<Integer, ItemStack> stmap = new HashMap<Integer, ItemStack>();
             for (int i = 0; i < stacks.tagCount(); i++) {
-                NBTBase tag = stacks.tagAt(i);
-                if (tag instanceof NBTTagCompound) {
-                    NBTTagCompound itemdata = (NBTTagCompound) tag;
-                    stmap.put(itemdata.getInteger("slot"), ItemStack.loadItemStackFromNBT(itemdata));
-                }
+                NBTTagCompound itemdata = stacks.getCompoundTagAt(i);
+                stmap.put(itemdata.getInteger("slot"), ItemStack.loadItemStackFromNBT(itemdata));
             }
             for (Object slotobj : cont.inventorySlots) {
                 if (SlotClass.isInstance(slotobj)) {

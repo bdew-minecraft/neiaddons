@@ -9,7 +9,6 @@
 
 package net.bdew.neiaddons.extrabees;
 
-import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import forestry.api.apiculture.EnumBeeChromosome;
@@ -17,10 +16,8 @@ import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAllele;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
-import net.minecraft.item.ItemStack;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -73,18 +70,8 @@ public class AddonExtraBeesClient {
             }
         }
 
-        if (NEIAddons.fakeItemsOn) {
-            MultiItemRange range = new MultiItemRange();
-            for (AlleleBeeChromosomePair pair : res) {
-                ItemStack fake = NEIAddons.fakeItem.addItem(SerumUtils.getSerum(pair));
-                range.add(fake);
-                API.addNBTItem(fake);
-            }
-            API.addToRange("Extra Bees.Serums", range);
-        } else {
-            for (AlleleBeeChromosomePair pair : res) {
-                API.addNBTItem(SerumUtils.getSerum(pair));
-            }
+        for (AlleleBeeChromosomePair pair : res) {
+            API.addItemListEntry(SerumUtils.getSerum(pair));
         }
     }
 
@@ -119,7 +106,9 @@ public class AddonExtraBeesClient {
             e.printStackTrace();
             return;
         }
-        API.getRangeTag("Extra Bees").saveTag = false;
+
+        // TODO: Check if needed after NEI re-adds ranges
+        // API.getRangeTag("Extra Bees").saveTag = false;
 
         AddonExtraBees.allBeeSpecies = GeneticsUtils.getAllBeeSpecies(AddonExtraBees.loadBlacklisted);
         registerSerums();

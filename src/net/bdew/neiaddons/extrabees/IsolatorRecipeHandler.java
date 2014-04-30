@@ -14,7 +14,6 @@ import codechicken.nei.recipe.TemplateRecipeHandler;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAllele;
 import forestry.api.genetics.IAlleleSpecies;
-import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.item.ItemStack;
@@ -73,10 +72,6 @@ public class IsolatorRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadCraftingRecipes(ItemStack result) {
-        if (NEIAddons.fakeItemsOn) {
-            result = NEIAddons.fakeItem.getOriginal(result);
-        }
-
         if (!SerumUtils.isSerum(result)) {
             return;
         }

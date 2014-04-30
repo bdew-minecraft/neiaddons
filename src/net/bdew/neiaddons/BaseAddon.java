@@ -16,10 +16,10 @@ import cpw.mods.fml.common.versioning.ArtifactVersion;
 import cpw.mods.fml.common.versioning.VersionParser;
 import cpw.mods.fml.relauncher.Side;
 import net.bdew.neiaddons.api.NEIAddon;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.Logger;
 
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public abstract class BaseAddon implements NEIAddon {
 
@@ -36,7 +36,7 @@ public abstract class BaseAddon implements NEIAddon {
     }
 
     public final void logWarning(String message, Object... params) {
-        log.log(Level.WARNING, String.format(message, params));
+        log.log(Level.ERROR, String.format(message, params));
     }
 
     /**

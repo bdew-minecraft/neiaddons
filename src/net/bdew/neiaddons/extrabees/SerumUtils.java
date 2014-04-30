@@ -26,7 +26,7 @@ public class SerumUtils {
     }
 
     public static boolean isSerum(ItemStack stack) {
-        return stack.getItem().itemID == itemSerum.itemID;
+        return stack.getItem() == itemSerum;
     }
 
     public static boolean shouldMakeSerum(String allele, int chromosome) {

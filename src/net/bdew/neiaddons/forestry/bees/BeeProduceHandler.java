@@ -12,6 +12,7 @@ package net.bdew.neiaddons.forestry.bees;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.forestry.BaseProduceRecipeHandler;
+import net.minecraft.item.Item;
 
 import java.util.Collection;
 import java.util.Map;
@@ -38,7 +39,7 @@ public class BeeProduceHandler extends BaseProduceRecipeHandler {
     }
 
     @Override
-    public Map<Integer, Collection<IAlleleSpecies>> getProduceCache() {
+    public Map<Item, Collection<IAlleleSpecies>> getProduceCache() {
         return BeeHelper.productsCache;
     }
 }

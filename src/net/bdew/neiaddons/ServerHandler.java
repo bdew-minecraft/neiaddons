@@ -9,23 +9,25 @@
 
 package net.bdew.neiaddons;
 
-import cpw.mods.fml.common.IPlayerTracker;
-import cpw.mods.fml.common.network.IPacketHandler;
-import cpw.mods.fml.common.network.Player;
+import cpw.mods.fml.common.FMLCommonHandler;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
+import cpw.mods.fml.common.gameevent.PlayerEvent;
 import net.bdew.neiaddons.api.SubPacketHandler;
+import net.bdew.neiaddons.network.PacketHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.network.INetworkManager;
-import net.minecraft.network.packet.Packet250CustomPayload;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServerHandler implements IPacketHandler, IPlayerTracker {
+public class ServerHandler {
     private static Map<String, SubPacketHandler> handlers = new HashMap<String, SubPacketHandler>();
+
+    public ServerHandler() {
+        FMLCommonHandler.instance().bus().register(this);
+    }
 
     public static void registerHandler(String command, SubPacketHandler handler) {
         if (handlers.containsKey(command)) {
@@ -34,23 +36,12 @@ public class ServerHandler implements IPacketHandler, IPlayerTracker {
         handlers.put(command, handler);
     }
 
-    @Override
-    public void onPacketData(INetworkManager manager, Packet250CustomPayload packet, Player player) {
-        EntityPlayerMP p = (EntityPlayerMP) player;
-
-        try {
-            NBTTagCompound data = CompressedStreamTools.decompress(packet.data);
-            String cmd = data.getString("cmd");
-
-            if (handlers.containsKey(cmd)) {
-                NEIAddons.logInfo("Handling %s from %s -> %s", cmd, p.username, handlers.get(cmd).toString());
-                handlers.get(cmd).handle(data.getCompoundTag("data"), p);
-            } else {
-                NEIAddons.logWarning("Uknown packet from client '%s': %s", p.username, cmd);
-            }
-        } catch (Throwable e) {
-            NEIAddons.logWarning("Error handling packet from client '%s'", p.username);
-            e.printStackTrace();
+    public void processCommand(String cmd, NBTTagCompound data, EntityPlayerMP from) {
+        if (handlers.containsKey(cmd)) {
+            NEIAddons.logInfo("Handling %s from %s -> %s", cmd, from.getDisplayName(), handlers.get(cmd).toString());
+            handlers.get(cmd).handle(data.getCompoundTag("data"), from);
+        } else {
+            NEIAddons.logWarning("Uknown packet from client '%s': %s", from.getDisplayName(), cmd);
         }
     }
 
@@ -61,21 +52,13 @@ public class ServerHandler implements IPacketHandler, IPlayerTracker {
         PacketHelper.sendToClient("hello", nbt, (EntityPlayerMP) player);
     }
 
-    @Override
-    public void onPlayerLogin(EntityPlayer player) {
-        sendPlayerHello(player);
+    @SubscribeEvent
+    public void handlePlayerLoggedIn(PlayerEvent.PlayerLoggedInEvent ev) {
+        sendPlayerHello(ev.player);
     }
 
-    @Override
-    public void onPlayerLogout(EntityPlayer player) {
-    }
-
-    @Override
-    public void onPlayerChangedDimension(EntityPlayer player) {
-        sendPlayerHello(player);
-    }
-
-    @Override
-    public void onPlayerRespawn(EntityPlayer player) {
+    @SubscribeEvent
+    public void handlePlayerChangedDimension(PlayerEvent.PlayerChangedDimensionEvent ev) {
+        sendPlayerHello(ev.player);
     }
 }
