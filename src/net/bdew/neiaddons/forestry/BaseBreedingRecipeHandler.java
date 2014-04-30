@@ -45,9 +45,9 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             ItemStack stackParent2 = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getAllele1(), GeneticsUtils.RecipePosition.Parent2);
             ItemStack stackResult = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getTemplate()[0], GeneticsUtils.RecipePosition.Offspring);
 
-            parrent1 = new LabeledPositionedStack(stackParent1, 22, 19, ((IAlleleSpecies) mutation.getAllele0()).getName(), 13);
-            parrent2 = new LabeledPositionedStack(stackParent2, 75, 19, ((IAlleleSpecies) mutation.getAllele1()).getName(), 13);
-            result = new LabeledPositionedStack(stackResult, 129, 19, ((IAlleleSpecies) mutation.getTemplate()[0]).getName(), 13);
+            parrent1 = new LabeledPositionedStack(stackParent1, 22, 19, mutation.getAllele0().getName(), 13);
+            parrent2 = new LabeledPositionedStack(stackParent2, 75, 19, mutation.getAllele1().getName(), 13);
+            result = new LabeledPositionedStack(stackResult, 129, 19, mutation.getTemplate()[0].getName(), 13);
             chance = mutation.getBaseChance();
 
             requirements = mutation.getSpecialConditions();

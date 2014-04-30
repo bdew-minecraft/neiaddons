@@ -15,7 +15,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class SerumUtils {
-    public static Item itemSerum;
+    private static Item itemSerum;
 
     public static ItemStack getSerum(AlleleBeeChromosomePair pair) {
         return getSerum(pair.allele, pair.chromosome);
@@ -30,9 +30,7 @@ public class SerumUtils {
     }
 
     public static boolean shouldMakeSerum(String allele, int chromosome) {
-        if (allele.equals("forestry.boolFalse"))
-            return false;
-        return true;
+        return !allele.equals("forestry.boolFalse");
     }
 
     @SuppressWarnings("deprecation")

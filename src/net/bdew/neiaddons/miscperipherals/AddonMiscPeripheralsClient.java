@@ -12,7 +12,7 @@ package net.bdew.neiaddons.miscperipherals;
 import codechicken.nei.api.API;
 import net.bdew.neiaddons.utils.CustomOverlayHandler;
 
-public class AddonMiscPeripheralsClient {
+class AddonMiscPeripheralsClient {
 
     public static void load() {
         CustomOverlayHandler handler = new CustomOverlayHandler(AddonMiscPeripherals.commandName, 5, 11, AddonMiscPeripherals.invertShift, AddonMiscPeripherals.SlotRO);

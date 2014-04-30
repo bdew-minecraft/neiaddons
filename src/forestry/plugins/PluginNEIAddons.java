@@ -28,7 +28,4 @@ public class PluginNEIAddons implements IPlugin {
 
     public void postInit() {
     }
-
-    public static void modLoaded() {
-    }
 }

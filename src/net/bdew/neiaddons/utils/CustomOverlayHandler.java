@@ -15,7 +15,6 @@ import codechicken.nei.OffsetPositioner;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.api.DefaultOverlayRenderer;
 import codechicken.nei.api.IOverlayHandler;
-import codechicken.nei.api.IRecipeOverlayRenderer;
 import codechicken.nei.api.IStackPositioner;
 import codechicken.nei.guihook.GuiContainerManager;
 import codechicken.nei.recipe.IRecipeHandler;
@@ -45,6 +44,7 @@ public class CustomOverlayHandler implements IOverlayHandler {
         this.xOffs = xOffs;
         this.yOffs = yOffs;
         this.craftingSlot = craftingSlot;
+        this.invert = invert;
     }
 
     private Slot findMatchingSlot(GuiContainer cont, PositionedStack pstack) {
@@ -88,13 +88,11 @@ public class CustomOverlayHandler implements IOverlayHandler {
 
         if (!shift) {
             IStackPositioner positioner = new OffsetPositioner(xOffs, yOffs);
-            IRecipeOverlayRenderer renderer = new DefaultOverlayRenderer(ingr, positioner);
-            LayoutManager.overlayRenderer = renderer;
+            LayoutManager.overlayRenderer = new DefaultOverlayRenderer(ingr, positioner);
         } else if (ClientHandler.enabledCommands.contains(command)) {
             NBTTagList stacksnbt = new NBTTagList();
 
-            for (int i = 0; i < ingr.size(); i++) {
-                PositionedStack pstack = ingr.get(i);
+            for (PositionedStack pstack : ingr) {
                 if (pstack != null) {
                     // This is back-asswards but i don't see a better way :(
                     int x = (pstack.relx - 25) / 18;
@@ -129,8 +127,7 @@ public class CustomOverlayHandler implements IOverlayHandler {
                     manager.handleSlotClick(slot.slotNumber, 0, 0);
                 }
             }
-            for (int i = 0; i < ingr.size(); i++) {
-                PositionedStack pstack = ingr.get(i);
+            for (PositionedStack pstack : ingr) {
                 if (pstack != null) {
 
                     Slot slotTo = findMatchingSlot(cont, pstack);

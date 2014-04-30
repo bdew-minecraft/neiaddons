@@ -27,9 +27,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class TreeHelper {
-    private static TreeBreedingHandler breedingRecipeHandler;
-    private static TreeProduceHandler produceRecipeHandler;
-
     public static Collection<IAlleleTreeSpecies> allSpecies;
     public static Map<Item, Collection<IAlleleSpecies>> productsCache = new HashMap<Item, Collection<IAlleleSpecies>>();
 
@@ -47,14 +44,14 @@ public class TreeHelper {
         allSpecies = GeneticsUtils.getAllTreeSpecies(AddonForestry.loadBlacklisted);
 
         if (AddonForestry.showTreeMutations) {
-            breedingRecipeHandler = new TreeBreedingHandler();
+            TreeBreedingHandler breedingRecipeHandler = new TreeBreedingHandler();
             API.registerRecipeHandler(breedingRecipeHandler);
             API.registerUsageHandler(breedingRecipeHandler);
             AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
         }
 
         if (AddonForestry.showTreeProducts) {
-            produceRecipeHandler = new TreeProduceHandler();
+            TreeProduceHandler produceRecipeHandler = new TreeProduceHandler();
             API.registerRecipeHandler(produceRecipeHandler);
             API.registerUsageHandler(produceRecipeHandler);
             AddonForestry.instance.registerWithNEIPlugins(produceRecipeHandler.getRecipeName(), produceRecipeHandler.getRecipeIdent());

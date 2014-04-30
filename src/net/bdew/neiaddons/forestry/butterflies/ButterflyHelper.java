@@ -21,7 +21,6 @@ import net.bdew.neiaddons.forestry.GeneticsUtils;
 import java.util.Collection;
 
 public class ButterflyHelper {
-    private static ButterflyBreedingHandler breedingRecipeHandler;
 
     public static Collection<IAlleleButterflySpecies> allSpecies;
 //    public static Map<Integer, Collection<IAlleleSpecies>> productsCache;
@@ -40,7 +39,7 @@ public class ButterflyHelper {
         allSpecies = GeneticsUtils.getAllButterflySpecies(AddonForestry.loadBlacklisted);
 
         if (AddonForestry.showButterflyMutations) {
-            breedingRecipeHandler = new ButterflyBreedingHandler();
+            ButterflyBreedingHandler breedingRecipeHandler = new ButterflyBreedingHandler();
             API.registerRecipeHandler(breedingRecipeHandler);
             API.registerUsageHandler(breedingRecipeHandler);
             AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());

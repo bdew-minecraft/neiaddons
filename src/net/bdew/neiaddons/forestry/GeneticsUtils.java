@@ -28,7 +28,7 @@ import java.util.Map.Entry;
 
 public class GeneticsUtils {
     public enum RecipePosition {
-        Parent1, Parent2, Offspring, Producer;
+        Parent1, Parent2, Offspring, Producer
     }
 
     public static Map<RecipePosition, Integer> beePositionToType;
@@ -163,6 +163,4 @@ public class GeneticsUtils {
         }
         return null;
     }
-
-    ;
 }

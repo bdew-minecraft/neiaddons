@@ -12,7 +12,7 @@ package net.bdew.neiaddons.appeng;
 import codechicken.nei.api.API;
 import net.bdew.neiaddons.utils.CustomOverlayHandler;
 
-public class AddonAEClient {
+class AddonAEClient {
     public static void load() {
         CustomOverlayHandler handler = new CustomOverlayHandler(AddonAE.commandName, 5, 17, AddonAE.invertShift, AddonAE.SlotFake);
         API.registerGuiOverlayHandler(AddonAE.GuiPatternEncoder, handler, "crafting");

@@ -22,11 +22,11 @@ import net.bdew.neiaddons.forestry.GeneticsUtils;
 import java.util.HashSet;
 import java.util.Set;
 
-public class AddonExtraBeesClient {
+class AddonExtraBeesClient {
 
     public static IBeeRoot beeRoot;
 
-    public static void registerSerums() {
+    private static void registerSerums() {
         Set<AlleleBeeChromosomePair> res = new HashSet<AlleleBeeChromosomePair>();
 
         beeRoot = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");

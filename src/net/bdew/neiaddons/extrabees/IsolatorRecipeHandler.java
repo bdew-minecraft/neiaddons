@@ -20,7 +20,7 @@ import net.minecraft.item.ItemStack;
 
 import java.awt.*;
 
-public class IsolatorRecipeHandler extends TemplateRecipeHandler {
+class IsolatorRecipeHandler extends TemplateRecipeHandler {
 
     public class CachedSerumRecipe extends CachedRecipe {
         LabeledPositionedStack bee;

@@ -11,10 +11,10 @@ package net.bdew.neiaddons.forestry.bees;
 
 import codechicken.nei.api.API;
 import cpw.mods.fml.common.Loader;
+import cpw.mods.fml.common.registry.GameRegistry;
 import forestry.api.apiculture.EnumBeeType;
 import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
-import forestry.api.core.ItemInterface;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.Utils;
@@ -26,8 +26,6 @@ import net.minecraft.item.ItemStack;
 import java.util.*;
 
 public class BeeHelper {
-    private static BeeBreedingHandler breedingRecipeHandler;
-    private static BeeProduceHandler productsRecipeHandler;
 
     public static Collection<IAlleleBeeSpecies> allSpecies;
     public static Map<Item, Collection<IAlleleSpecies>> productsCache = new HashMap<Item, Collection<IAlleleSpecies>>();
@@ -43,14 +41,14 @@ public class BeeHelper {
 
     private static void addHandlers() {
         if (AddonForestry.showBeeMutations) {
-            breedingRecipeHandler = new BeeBreedingHandler();
+            BeeBreedingHandler breedingRecipeHandler = new BeeBreedingHandler();
             API.registerRecipeHandler(breedingRecipeHandler);
             API.registerUsageHandler(breedingRecipeHandler);
             AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
         }
 
         if (AddonForestry.showBeeProducts) {
-            productsRecipeHandler = new BeeProduceHandler();
+            BeeProduceHandler productsRecipeHandler = new BeeProduceHandler();
             API.registerRecipeHandler(productsRecipeHandler);
             API.registerUsageHandler(productsRecipeHandler);
             AddonForestry.instance.registerWithNEIPlugins(productsRecipeHandler.getRecipeName(), productsRecipeHandler.getRecipeIdent());
@@ -140,7 +138,7 @@ public class BeeHelper {
     private static List<Item> getMobCombs() {
         List<Item> res = new ArrayList<Item>();
 
-        Item vanillaComb = ItemInterface.getItem("beeComb").getItem();
+        Item vanillaComb = GameRegistry.findItem("forestry", "beeComb");
 
         if (vanillaComb == null) {
             AddonForestry.instance.logWarning("Failed to get forestry bee comb item, something is messed up");
@@ -153,7 +151,7 @@ public class BeeHelper {
                 Class<?> ebItems = Class.forName("binnie.extrabees.ExtraBees");
                 Object ebComb = ebItems.getField("comb").get(null);
                 if (ebComb instanceof Item) {
-                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%d)", ebComb.toString(), ((Item) ebComb));
+                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%d)", ebComb.toString(), ebComb);
                     res.add((Item) ebComb);
                 } else {
                     AddonForestry.instance.logWarning("Extra Bees comb is not Item subclass!");
@@ -169,7 +167,7 @@ public class BeeHelper {
                 Object mbComb = mbConfig.getField("combs").get(null);
                 AddonForestry.instance.logInfo("Loaded TB comb item: %s", mbComb.toString());
                 if (mbComb instanceof Item) {
-                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%d)", mbComb.toString(), ((Item) mbComb));
+                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%d)", mbComb.toString(), mbComb);
                     res.add((Item) mbComb);
                 } else {
                     AddonForestry.instance.logWarning("Magic Bees comb is not Item subclass!");

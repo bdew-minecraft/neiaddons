@@ -13,7 +13,7 @@ import codechicken.nei.api.API;
 import codechicken.nei.recipe.DefaultOverlayHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
 
-public class AddonCraftingTablesClient {
+class AddonCraftingTablesClient {
     public static void load() {
         for (Class<? extends GuiContainer> tableClass : AddonCraftingTables.craftingTables) {
             API.registerGuiOverlay(tableClass, "crafting");
