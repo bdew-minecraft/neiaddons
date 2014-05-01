@@ -138,7 +138,7 @@ public class BeeHelper {
     private static List<Item> getMobCombs() {
         List<Item> res = new ArrayList<Item>();
 
-        Item vanillaComb = GameRegistry.findItem("forestry", "beeComb");
+        Item vanillaComb = GameRegistry.findItem("Forestry", "beeCombs");
 
         if (vanillaComb == null) {
             AddonForestry.instance.logWarning("Failed to get forestry bee comb item, something is messed up");
