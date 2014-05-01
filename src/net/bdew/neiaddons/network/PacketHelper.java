@@ -14,13 +14,13 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 public class PacketHelper {
-    private static NBTMessage makePacket(String cmd, NBTTagCompound data) {
+    private static NBTTagCompound makePacket(String cmd, NBTTagCompound data) {
         NBTTagCompound nbt = new NBTTagCompound();
 
         nbt.setString("cmd", cmd);
         nbt.setTag("data", data);
 
-        return new NBTMessage(nbt);
+        return nbt;
     }
 
     public static void sendToServer(String cmd, NBTTagCompound data) {

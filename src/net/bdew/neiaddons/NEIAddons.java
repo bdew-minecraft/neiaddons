@@ -14,13 +14,11 @@ import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
-import cpw.mods.fml.common.network.NetworkRegistry;
-import cpw.mods.fml.common.network.simpleimpl.SimpleNetworkWrapper;
 import cpw.mods.fml.relauncher.Side;
 import net.bdew.neiaddons.api.NEIAddon;
-import net.bdew.neiaddons.network.ClientPacketHandler;
-import net.bdew.neiaddons.network.NBTMessage;
-import net.bdew.neiaddons.network.ServerPacketHandler;
+import net.bdew.neiaddons.network.ClientHandler;
+import net.bdew.neiaddons.network.NetChannel;
+import net.bdew.neiaddons.network.ServerHandler;
 import net.minecraftforge.common.config.Configuration;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.Logger;
@@ -38,10 +36,10 @@ public class NEIAddons {
     public static List<NEIAddon> addons;
     public static Configuration config;
     public static Logger log;
-    public static SimpleNetworkWrapper channel;
 
     public static ServerHandler serverHandler;
     public static ClientHandler clientHandler;
+    public static NetChannel channel;
 
     public static void register(NEIAddon addon) {
         addons.add(addon);
@@ -62,7 +60,7 @@ public class NEIAddons {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         log = event.getModLog();
-        channel = NetworkRegistry.INSTANCE.newSimpleChannel(channelId);
+        channel = new NetChannel(channelId);
 
         config = new Configuration(event.getSuggestedConfigurationFile());
         config.addCustomCategoryComment("Addons", "Controls loading of different addons, set to false to disable");
@@ -96,11 +94,11 @@ public class NEIAddons {
         config.save();
 
         serverHandler = new ServerHandler();
-        channel.registerMessage(ServerPacketHandler.class, NBTMessage.class, 0, Side.SERVER);
+        channel.addHandler(Side.SERVER, serverHandler);
 
         if (event.getSide().isClient()) {
             clientHandler = new ClientHandler();
-            channel.registerMessage(ClientPacketHandler.class, NBTMessage.class, 0, Side.CLIENT);
+            channel.addHandler(Side.CLIENT, clientHandler);
         }
 
         if (addons.size() > 0) {

@@ -7,22 +7,26 @@
  * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
  */
 
-package net.bdew.neiaddons;
+package net.bdew.neiaddons.network;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.gameevent.PlayerEvent;
+import cpw.mods.fml.common.network.NetworkRegistry;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.SimpleChannelInboundHandler;
+import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.api.SubPacketHandler;
-import net.bdew.neiaddons.network.PacketHelper;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
+import net.minecraft.network.NetHandlerPlayServer;
 import org.apache.commons.lang3.StringUtils;
 
 import java.util.HashMap;
 import java.util.Map;
 
-public class ServerHandler {
+public class ServerHandler extends SimpleChannelInboundHandler<NBTTagCompound> {
     private static Map<String, SubPacketHandler> handlers = new HashMap<String, SubPacketHandler>();
 
     public ServerHandler() {
@@ -36,10 +40,22 @@ public class ServerHandler {
         handlers.put(command, handler);
     }
 
+    @Override
+    protected void channelRead0(ChannelHandlerContext ctx, NBTTagCompound msg) throws Exception {
+        String cmd = msg.getString("cmd");
+        NBTTagCompound data = msg.getCompoundTag("data");
+        NetHandlerPlayServer nh = (NetHandlerPlayServer) (ctx.channel().attr(NetworkRegistry.NET_HANDLER).get());
+        processCommand(cmd, data, nh.playerEntity);
+    }
+
     public void processCommand(String cmd, NBTTagCompound data, EntityPlayerMP from) {
         if (handlers.containsKey(cmd)) {
             NEIAddons.logInfo("Handling %s from %s -> %s", cmd, from.getDisplayName(), handlers.get(cmd).toString());
-            handlers.get(cmd).handle(data.getCompoundTag("data"), from);
+            try {
+                handlers.get(cmd).handle(data, from);
+            } catch (Throwable e) {
+                NEIAddons.log.warn(String.format("Error processing command '%s' from '%s'", cmd, from.getDisplayName()), e);
+            }
         } else {
             NEIAddons.logWarning("Uknown packet from client '%s': %s", from.getDisplayName(), cmd);
         }
