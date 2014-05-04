@@ -51,8 +51,7 @@ public class AddonCraftingTables extends BaseAddon {
                 logInfo("Not registering %s", humanName);
             }
         } catch (Throwable e) {
-            logWarning("Registering %s failed: %s", humanName, e.toString());
-            e.printStackTrace();
+            logWarningExc(e, "Registering %s failed", humanName);
         }
     }
 

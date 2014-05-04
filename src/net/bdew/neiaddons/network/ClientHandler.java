@@ -66,7 +66,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<NBTTagCompound> {
                 NEIAddons.logWarning("Uknown packet from server: %s", cmd);
             }
         } catch (Throwable e) {
-            NEIAddons.log.warn("Error handling packet from server", e);
+            NEIAddons.logSevereExc(e, "Error handling packet from server");
         }
     }
 }

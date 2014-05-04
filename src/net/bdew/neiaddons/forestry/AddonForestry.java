@@ -102,8 +102,7 @@ public class AddonForestry extends BaseAddon {
                 ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerWorktable, SlotCraftMatrix));
                 craftingActive = true;
             } catch (Throwable e) {
-                AddonForestry.instance.logWarning("Failed to setup Worktable crafting overlay:");
-                e.printStackTrace();
+                AddonForestry.instance.logWarningExc(e, "Failed to setup Worktable crafting overlay");
             }
         } else {
             this.logInfo("Forestry Worktable support not loaded");

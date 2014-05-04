@@ -39,6 +39,18 @@ public abstract class BaseAddon implements NEIAddon {
         log.log(Level.ERROR, String.format(message, params));
     }
 
+    public final void logSevere(String message, Object... params) {
+        log.log(Level.ERROR, String.format(message, params));
+    }
+
+    public final void logWarningExc(Throwable t, String message, Object... params) {
+        log.log(Level.WARN, String.format(message, params), t);
+    }
+
+    public final void logSevereExc(Throwable t, String message, Object... params) {
+        log.log(Level.ERROR, String.format(message, params), t);
+    }
+
     /**
      * @return Array of version dependencies, format used by FML {@link VersionParser}
      */

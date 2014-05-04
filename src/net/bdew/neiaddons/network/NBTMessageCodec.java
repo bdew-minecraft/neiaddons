@@ -43,7 +43,7 @@ public class NBTMessageCodec extends MessageToMessageCodec<FMLProxyPacket, NBTTa
         try {
             out.add(CompressedStreamTools.read(stream));
         } catch (Throwable e) {
-            NEIAddons.log.warn("Error decoding packet", e);
+            NEIAddons.logSevereExc(e, "Error decoding packet");
         } finally {
             stream.close();
         }

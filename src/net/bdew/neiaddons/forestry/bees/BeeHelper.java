@@ -157,7 +157,7 @@ public class BeeHelper {
                     AddonForestry.instance.logWarning("Extra Bees comb is not Item subclass!");
                 }
             } catch (Throwable e) {
-                e.printStackTrace();
+                AddonForestry.instance.logWarningExc(e, "Error locating Extra Bees comb item");
             }
         }
 
@@ -173,7 +173,7 @@ public class BeeHelper {
                     AddonForestry.instance.logWarning("Magic Bees comb is not Item subclass!");
                 }
             } catch (Throwable e) {
-                e.printStackTrace();
+                AddonForestry.instance.logWarningExc(e, "Error locating Magic Bees comb item");
             }
         }
 

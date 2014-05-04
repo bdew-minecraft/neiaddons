@@ -61,8 +61,7 @@ class AddonExtraBeesClient {
                         try {
                             AddonExtraBees.instance.logInfo(" * %s -> %s", pair.allele, SerumUtils.getSerum(pair).getDisplayName());
                         } catch (Throwable e) {
-                            AddonExtraBees.instance.logInfo(" * %s -> BORKED! %s", pair.allele, e.toString());
-                            e.printStackTrace();
+                            AddonExtraBees.instance.logWarningExc(e, " * %s -> BORKED!", pair.allele);
                         }
                     }
                 }
@@ -82,8 +81,7 @@ class AddonExtraBeesClient {
             ebMain = Class.forName("binnie.extrabees.ExtraBees");
             ebConfig = Class.forName("binnie.extrabees.config.ConfigurationMain");
         } catch (Throwable e) {
-            AddonExtraBees.instance.logWarning("Failed to get Extra Bees items and blocks");
-            e.printStackTrace();
+            AddonExtraBees.instance.logWarningExc(e, "Failed to get Extra Bees items and blocks");
             return;
         }
         Utils.addSubsetForItem(ebMain, "template", "Extra Bees.Templates");
@@ -102,8 +100,7 @@ class AddonExtraBeesClient {
         try {
             SerumUtils.setup();
         } catch (Throwable e) {
-            AddonExtraBees.instance.logWarning("Failed to get serum item:");
-            e.printStackTrace();
+            AddonExtraBees.instance.logWarningExc(e, "Failed to get serum item");
             return;
         }
 

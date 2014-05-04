@@ -64,8 +64,7 @@ public class Utils {
                 multi.add(range);
                 NEIAddons.logInfo("Registered subset %s: %s", rangeName, range.toString());
             } catch (Throwable e) {
-                NEIAddons.logWarning("Failed to get %s.%s", cls.getName(), field);
-                e.printStackTrace();
+                NEIAddons.logWarningExc(e, "Failed to get %s.%s", cls.getName(), field);
             }
         }
         if (multi.ranges.size() > 0) {

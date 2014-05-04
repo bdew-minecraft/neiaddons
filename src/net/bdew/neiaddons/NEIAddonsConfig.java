@@ -20,8 +20,7 @@ public class NEIAddonsConfig implements IConfigureNEI {
                 try {
                     addon.loadClient();
                 } catch (Throwable e) {
-                    NEIAddons.logWarning("Addon %s failed client initialization: %s", addon.getName(), e.toString());
-                    e.printStackTrace();
+                    NEIAddons.logWarningExc(e, "Addon %s failed client initialization", addon.getName());
                 }
             }
         }

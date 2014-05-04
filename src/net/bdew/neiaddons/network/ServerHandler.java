@@ -54,7 +54,7 @@ public class ServerHandler extends SimpleChannelInboundHandler<NBTTagCompound> {
             try {
                 handlers.get(cmd).handle(data, from);
             } catch (Throwable e) {
-                NEIAddons.log.warn(String.format("Error processing command '%s' from '%s'", cmd, from.getDisplayName()), e);
+                NEIAddons.logSevereExc(e, "Error processing command '%s' from '%s'", cmd, from.getDisplayName());
             }
         } else {
             NEIAddons.logWarning("Uknown packet from client '%s': %s", from.getDisplayName(), cmd);

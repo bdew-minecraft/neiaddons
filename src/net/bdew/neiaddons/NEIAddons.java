@@ -35,7 +35,7 @@ public class NEIAddons {
 
     public static List<NEIAddon> addons;
     public static Configuration config;
-    public static Logger log;
+    private static Logger log;
 
     public static ServerHandler serverHandler;
     public static ClientHandler clientHandler;
@@ -55,6 +55,14 @@ public class NEIAddons {
 
     public static void logSevere(String message, Object... params) {
         log.log(Level.ERROR, String.format(message, params));
+    }
+
+    public static void logWarningExc(Throwable t, String message, Object... params) {
+        log.log(Level.WARN, String.format(message, params), t);
+    }
+
+    public static void logSevereExc(Throwable t, String message, Object... params) {
+        log.log(Level.ERROR, String.format(message, params), t);
     }
 
     @EventHandler
@@ -83,8 +91,7 @@ public class NEIAddons {
                         logInfo("%s Addon successfully loadded", addon.getName());
                     }
                 } catch (Exception e) {
-                    logSevere("Loading %s Addon - Failed:", addon.getName());
-                    e.printStackTrace();
+                    log.warn(String.format("Loading %s Addon - Failed:", addon.getName()), e);
                 }
             } else {
                 logInfo("%s Addon disabled - skipping", addon.getName());
