@@ -143,7 +143,7 @@ public class CustomOverlayHandler implements IOverlayHandler {
                     // pick up item
                     manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
                     // right click to add 1
-                    manager.handleSlotClick(slotFrom.slotNumber, 1, 0);
+                    manager.handleSlotClick(slotTo.slotNumber, 1, 0);
                     // put item back
                     manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
                 }
