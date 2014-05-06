@@ -18,6 +18,7 @@ import net.minecraft.client.gui.FontRenderer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -34,6 +35,23 @@ public class Utils {
             }
         } else {
             throw new RuntimeException("Can't get " + cls);
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    public static <T> T getAndCheckStaicField(String cls, String field, Class<T> sup) throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+        Class<?> c = Class.forName(cls);
+        if (c == null) throw new RuntimeException("Can't get " + cls);
+
+        Field f = c.getField(field);
+        if (f == null) throw new RuntimeException("Can't get " + cls + "." + field);
+
+        Object v = f.get(null);
+        if (v == null) throw new RuntimeException(cls + "." + field + " is null");
+        if (sup.isInstance(v)) {
+            return (T) v;
+        } else {
+            throw new RuntimeException(String.format("%s.%s is of wrong type, expected: %s, got: %s", cls, field, sup, v.getClass()));
         }
     }
 
