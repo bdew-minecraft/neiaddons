@@ -69,6 +69,7 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
                     list.add(output.get(i));
                 }
             }
+            tool.setPermutationToRender(cycleticks / 20 % (getTools().size()));
             list.add(tool);
             return list;
         }

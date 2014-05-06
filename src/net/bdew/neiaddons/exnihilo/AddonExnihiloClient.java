@@ -21,7 +21,7 @@ class AddonExnihiloClient {
     private static void registerRecipeHandler(BaseRecipeHandler handler) {
         API.registerRecipeHandler(handler);
         API.registerUsageHandler(handler);
-        FMLInterModComms.sendRuntimeMessage(AddonExnihilo.instance, "NEIPlugins", "register-crafting-handler", String.format("Forestry Genetics@%s@%s", handler.getRecipeName(), handler.getRecipeId()));
+        FMLInterModComms.sendRuntimeMessage(AddonExnihilo.instance, "NEIPlugins", "register-crafting-handler", String.format("Ex Nihilo@%s@%s", handler.getRecipeName(), handler.getRecipeId()));
     }
 
     public static void load() {

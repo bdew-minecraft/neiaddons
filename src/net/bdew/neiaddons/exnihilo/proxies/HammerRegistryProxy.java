@@ -37,11 +37,9 @@ public class HammerRegistryProxy {
 
         clsBaseHammer = Utils.getAndCheckClass("exnihilo.items.hammers.ItemHammerBase", Item.class);
 
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerWood", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerStone", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerIron", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerGold", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerDiamond", Item.class)));
+        for (Item i : Item.itemsList)
+            if (clsBaseHammer.isInstance(i))
+                hammers.add(new ItemStack(i, 1));
 
         dropIds = new HashSet<Integer>();
         sourceIds = new HashSet<Integer>();
