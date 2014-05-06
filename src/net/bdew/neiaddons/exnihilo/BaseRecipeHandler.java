@@ -45,13 +45,13 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
         List<PositionedStackWithChance> output;
 
         public CachedExnihiloRecipe(ItemStack source, List<ItemStackWithChance> drops) {
-            tool = new PositionedStack(getTools(), 65 - 5, 24 - 11);
-            input = new PositionedStack(source, 34 - 5, 35 - 11);
+            tool = new PositionedStack(getTools(), 35 - 5, 24 - 11);
+            input = new PositionedStack(source, 8 - 5, 35 - 11);
             output = new ArrayList<PositionedStackWithChance>();
 
             int pos = 0;
             for (ItemStackWithChance x : drops) {
-                output.add(new PositionedStackWithChance(x, 92 - 5 + (pos % 3) * 18, 17 - 11 + (pos / 3) * 18));
+                output.add(new PositionedStackWithChance(x, 62 - 5 + (pos % 6) * 18, 17 - 11 + (pos / 6) * 18));
                 pos++;
             }
         }
@@ -113,7 +113,7 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
 
     @Override
     public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(62 - 5, 42 - 11, 22, 15), getRecipeId()));
+        transferRects.add(new RecipeTransferRect(new Rectangle(32 - 5, 42 - 11, 22, 15), getRecipeId()));
     }
 
     @Override
