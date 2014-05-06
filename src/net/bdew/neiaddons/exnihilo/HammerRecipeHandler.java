@@ -9,116 +9,89 @@
 
 package net.bdew.neiaddons.exnihilo;
 
-import codechicken.nei.PositionedStack;
-import codechicken.nei.recipe.GuiRecipe;
-import codechicken.nei.recipe.TemplateRecipeHandler;
+import net.bdew.neiaddons.Utils;
+import net.bdew.neiaddons.exnihilo.proxies.HammerRegistryProxy;
+import net.bdew.neiaddons.exnihilo.proxies.SmashableProxy;
 import net.bdew.neiaddons.utils.ItemStackWithChance;
-import net.bdew.neiaddons.utils.PositionedStackWithChance;
 import net.minecraft.item.ItemStack;
+import org.apache.commons.lang3.tuple.Pair;
 
-import java.awt.*;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
-public class HammerRecipeHandler extends TemplateRecipeHandler {
-
-    public class CachedHammerRecipe extends CachedRecipe {
-        PositionedStack hammer;
-        PositionedStack input;
-        List<PositionedStackWithChance> output;
-
-        public CachedHammerRecipe(ItemStack source, List<ItemStackWithChance> drops) {
-            hammer = new PositionedStack(AddonExnihilo.hammers, 65 - 5, 24 - 11);
-            input = new PositionedStack(source, 34 - 5, 35 - 11);
-            output = new ArrayList<PositionedStackWithChance>();
-
-            int pos = 0;
-            for (ItemStackWithChance x : drops) {
-                output.add(new PositionedStackWithChance(x, 92 - 5 + (pos % 3) * 18, 17 - 11 + (pos / 3) * 18));
-                pos++;
-            }
-        }
-
-        @Override
-        public PositionedStack getIngredient() {
-            return input;
-        }
-
-        @Override
-        public ArrayList<PositionedStack> getOtherStacks() {
-            ArrayList<PositionedStack> list = new ArrayList<PositionedStack>();
-            if (output.size() > 1) {
-                for (int i = 1; i < output.size(); i++) {
-                    list.add(output.get(i));
-                }
-            }
-            list.add(hammer);
-            return list;
-        }
-
-        @Override
-        public PositionedStack getResult() {
-            if (output.size() > 0) {
-                return output.get(0);
-            } else {
-                return null;
-            }
-        }
-    }
-
-    private void addAllRecipes() {
-        for (ItemStack source : ExnihiloUtils.getAllHammerSources())
-            arecipes.add(new CachedHammerRecipe(source, ExnihiloUtils.getHammerDrops(source)));
-    }
-
-    @Override
-    public void loadCraftingRecipes(String outputId, Object... results) {
-        if (outputId.equals(getRecipeIdent())) addAllRecipes();
-        super.loadCraftingRecipes(outputId, results);
-    }
-
-    @Override
-    public void loadCraftingRecipes(ItemStack result) {
-        if (!AddonExnihiloClient.hammerDropIds.contains(result.itemID)) return;
-
-        for (ItemStack source : ExnihiloUtils.getHammerSourcesFor(result))
-            arecipes.add(new CachedHammerRecipe(source, ExnihiloUtils.getHammerDrops(source)));
-    }
-
-    @Override
-    public void loadUsageRecipes(ItemStack ingredient) {
-        if (AddonExnihilo.clsBaseHammer.isInstance(ingredient.getItem())) addAllRecipes();
-        if (!AddonExnihiloClient.hammerSourceIds.contains(ingredient.itemID)) return;
-        List<ItemStackWithChance> drops = ExnihiloUtils.getHammerDrops(ingredient);
-        if (drops.size() > 0)
-            arecipes.add(new CachedHammerRecipe(ingredient, drops));
-    }
-
-    @Override
-    public void loadTransferRects() {
-        transferRects.add(new RecipeTransferRect(new Rectangle(62 - 5, 42 - 11, 22, 15), getRecipeIdent()));
-    }
-
-    @Override
-    public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int recipe) {
-        if (stack != null)
-            for (PositionedStackWithChance x : ((CachedHammerRecipe) arecipes.get(recipe)).output)
-                if (gui.isMouseOver(x, recipe))
-                    currenttip.add(String.format("Drop chance: %.0f%%", x.chance * 100));
-        return super.handleTooltip(gui, currenttip, recipe);
-    }
-
+public class HammerRecipeHandler extends BaseRecipeHandler {
     @Override
     public String getRecipeName() {
         return "ExNihilo Hammer";
     }
 
-    public String getRecipeIdent() {
-        return "ExNihiloHammer";
+    @Override
+    public String getRecipeId() {
+        return "bdew.exnihilo.hammer";
     }
 
     @Override
-    public String getGuiTexture() {
-        return "neiaddons:textures/gui/exnihilo.png";
+    public boolean isPossibleInput(ItemStack stack) {
+        return HammerRegistryProxy.sourceIds.contains(stack.itemID);
+    }
+
+    @Override
+    public boolean isPossibleOutput(ItemStack stack) {
+        return HammerRegistryProxy.dropIds.contains(stack.itemID);
+    }
+
+    @Override
+    public List<ItemStack> getTools() {
+        return HammerRegistryProxy.hammers;
+    }
+
+    @Override
+    public boolean isValidTool(ItemStack tool) {
+        return HammerRegistryProxy.clsBaseHammer.isInstance(tool.getItem());
+    }
+
+    @Override
+    public List<ItemStackWithChance> getProcessingResults(ItemStack from) {
+        Map<Pair<Integer, Integer>, Float> drops = new HashMap<Pair<Integer, Integer>, Float>();
+        for (SmashableProxy x : HammerRegistryProxy.getRegistry()) {
+            if (x.sourceID() == from.itemID && x.sourceMeta() == from.getItemDamage() && x.id() > 0) {
+                Pair<Integer, Integer> idAndMeta = Pair.of(x.id(), x.meta());
+                if (drops.containsKey(idAndMeta))
+                    drops.put(idAndMeta, drops.get(idAndMeta) + x.chance());
+                else
+                    drops.put(idAndMeta, x.chance());
+            }
+        }
+
+        ArrayList<ItemStackWithChance> dropsList = new ArrayList<ItemStackWithChance>();
+        for (Map.Entry<Pair<Integer, Integer>, Float> x : drops.entrySet())
+            dropsList.add(new ItemStackWithChance(new ItemStack(x.getKey().getLeft(), x.getValue() < 1 ? 1 : Math.round(x.getValue()), x.getKey().getRight()), x.getValue()));
+        Utils.sortDropListByChance(dropsList);
+        return dropsList;
+    }
+
+    @Override
+    public List<ItemStack> getInputsFor(ItemStack result) {
+        HashSet<Pair<Integer, Integer>> sources = new HashSet<Pair<Integer, Integer>>();
+        for (SmashableProxy x : HammerRegistryProxy.getRegistry()) {
+            if (x.id() == result.itemID && x.meta() == result.getItemDamage())
+                sources.add(Pair.of(x.sourceID(), x.sourceMeta()));
+        }
+        ArrayList<ItemStack> res = new ArrayList<ItemStack>();
+        for (Pair<Integer, Integer> p : sources)
+            res.add(new ItemStack(p.getLeft(), 1, p.getRight()));
+        return res;
+    }
+
+    @Override
+    public List<ItemStack> getAllValidInputs() {
+        HashSet<Pair<Integer, Integer>> sources = new HashSet<Pair<Integer, Integer>>();
+        for (SmashableProxy x : HammerRegistryProxy.getRegistry())
+            if (x.id() > 0)
+                sources.add(Pair.of(x.sourceID(), x.sourceMeta()));
+
+        ArrayList<ItemStack> res = new ArrayList<ItemStack>();
+        for (Pair<Integer, Integer> p : sources)
+            res.add(new ItemStack(p.getLeft(), 1, p.getRight()));
+        return res;
     }
 }

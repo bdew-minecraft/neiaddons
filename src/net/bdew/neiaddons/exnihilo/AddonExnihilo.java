@@ -16,21 +16,11 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.exnihilo.proxies.HammerRegistryProxy;
 import net.bdew.neiaddons.exnihilo.proxies.SmashableProxy;
-import net.minecraft.item.Item;
-import net.minecraft.item.ItemStack;
-
-import java.util.ArrayList;
-import java.util.List;
 
 @Mod(modid = NEIAddons.modid + "|ExNihilo", name = "NEI Addons: Ex Nihilo", version = "NEIADDONS_VER", dependencies = "after:crowley.skyblock")
 public class AddonExnihilo extends BaseAddon {
-
-    public static List<ItemStack> hammers = new ArrayList<ItemStack>();
-    public static Class<? extends Item> clsBaseHammer;
-
     @Mod.Instance(NEIAddons.modid + "|ExNihilo")
     public static AddonExnihilo instance;
 
@@ -56,17 +46,6 @@ public class AddonExnihilo extends BaseAddon {
 
     @Override
     public void init(Side side) throws Exception {
-        SmashableProxy.init();
-        HammerRegistryProxy.init();
-
-        clsBaseHammer = Utils.getAndCheckClass("exnihilo.items.hammers.ItemHammerBase", Item.class);
-
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerWood", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerStone", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerIron", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerGold", Item.class)));
-        hammers.add(new ItemStack(Utils.getAndCheckStaicField("exnihilo.Items", "HammerDiamond", Item.class)));
-
         active = true;
     }
 
