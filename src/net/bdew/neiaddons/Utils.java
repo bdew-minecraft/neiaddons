@@ -124,7 +124,7 @@ public class Utils {
         outer:
         for (Entry<ItemStack, Integer> stack : stacks.entrySet()) {
             for (Entry<ItemStack, Integer> mergedStack : merged.entrySet()) {
-                if (isSameItem(stack.getKey(), mergedStack.getKey()) && (stack.getValue() == mergedStack.getValue())) {
+                if (isSameItem(stack.getKey(), mergedStack.getKey()) && (stack.getValue().equals(mergedStack.getValue()))) {
                     mergedStack.getKey().stackSize += 1;
                     continue outer;
                 }
@@ -138,7 +138,7 @@ public class Utils {
         Collections.sort(list, new Comparator<ItemStackWithChance>() {
             @Override
             public int compare(ItemStackWithChance o1, ItemStackWithChance o2) {
-                return Float.compare(o1.chance, o2.chance);
+                return Float.compare(o2.chance, o1.chance);
             }
         });
     }

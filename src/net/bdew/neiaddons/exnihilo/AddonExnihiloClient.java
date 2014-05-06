@@ -13,6 +13,8 @@ import codechicken.nei.api.API;
 import com.google.common.base.Throwables;
 import cpw.mods.fml.common.event.FMLInterModComms;
 import net.bdew.neiaddons.exnihilo.proxies.HammerRegistryProxy;
+import net.bdew.neiaddons.exnihilo.proxies.SieveRegistryProxy;
+import net.bdew.neiaddons.exnihilo.proxies.SiftRewardProxy;
 import net.bdew.neiaddons.exnihilo.proxies.SmashableProxy;
 
 class AddonExnihiloClient {
@@ -26,9 +28,12 @@ class AddonExnihiloClient {
         try {
             SmashableProxy.init();
             HammerRegistryProxy.init();
+            SiftRewardProxy.init();
+            SieveRegistryProxy.init();
         } catch (Throwable t) {
             Throwables.propagate(t);
         }
         registerRecipeHandler(new HammerRecipeHandler());
+        registerRecipeHandler(new SieveRecipeHandler());
     }
 }
