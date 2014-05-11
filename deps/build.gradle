@@ -37,6 +37,7 @@ addGitDep("ccl","https://github.com/Chicken-Bones/CodeChickenLib.git","a315c0059
 addHgDep("ccc","https://bitbucket.org/ChickenBones/codechickencore","4bad417f4db168b24662b684d349048b6003ad0a")
 addHgDep("nei","https://bitbucket.org/ChickenBones/notenoughitems","3d7c952ca8f5c669d719e553cf873ebf57da605a")
 addZipDep("forestry","http://bit.ly/IYjfWc","2.3.1.0")
+addHgDep("waila","https://bitbucket.org/ProfMobius/waila","db53ba213fdbb5ed87ab8db70c9bfdaa2f569f33")
 
 task patchDeps(type: Sync) {
     dependsOn getDeps
@@ -70,6 +71,9 @@ sourceSets {
 
             srcDir 'deps/forestry'
             include 'forestry/**'
+
+            srcDir 'deps/waila'
+            include 'mcp/mobius/waila/api/*.java'
         }
     }
 }

@@ -12,7 +12,6 @@ package net.bdew.neiaddons.exnihilo.proxies;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.TypedField;
 import net.minecraft.block.Block;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;

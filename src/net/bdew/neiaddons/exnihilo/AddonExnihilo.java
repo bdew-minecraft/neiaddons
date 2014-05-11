@@ -11,13 +11,12 @@ package net.bdew.neiaddons.exnihilo;
 
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
+import cpw.mods.fml.common.event.FMLInterModComms;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
 import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.exnihilo.proxies.HammerRegistryProxy;
-import net.bdew.neiaddons.exnihilo.proxies.SmashableProxy;
 
 @Mod(modid = NEIAddons.modid + "|ExNihilo", name = "NEI Addons: Ex Nihilo", version = "NEIADDONS_VER", dependencies = "after:crowley.skyblock")
 public class AddonExnihilo extends BaseAddon {
@@ -47,6 +46,7 @@ public class AddonExnihilo extends BaseAddon {
     @Override
     public void init(Side side) throws Exception {
         active = true;
+        FMLInterModComms.sendMessage("Waila", "register", "net.bdew.neiaddons.exnihilo.WailaHandler.loadCallback");
     }
 
     @Override
