@@ -22,7 +22,7 @@
   "name": "NEI Addons: Forestry",
   "description": "",
   "version": "@NEIADDONS_VER@",
-  "url": "bdew.net/mods/neiaddons",
+  "url": "http://bdew.net/neiaddons/",
   "updateUrl": "",
   "authorList": [
     "bdew"
@@ -41,7 +41,7 @@
   "name": "NEI Addons: Crafting Tables",
   "description": "",
   "version": "@NEIADDONS_VER@",
-  "url": "bdew.net/mods/neiaddons",
+  "url": "http://bdew.net/neiaddons/",
   "updateUrl": "",
   "authorList": [
     "bdew"
@@ -60,7 +60,7 @@
   "name": "NEI Addons: Applied Energistics",
   "description": "",
   "version": "@NEIADDONS_VER@",
-  "url": "bdew.net/mods/neiaddons",
+  "url": "http://bdew.net/neiaddons/",
   "updateUrl": "",
   "authorList": [
     "bdew"
@@ -79,7 +79,7 @@
   "name": "NEI Addons: Extra Bees",
   "description": "",
   "version": "@NEIADDONS_VER@",
-  "url": "bdew.net/mods/neiaddons",
+  "url": "http://bdew.net/neiaddons/",
   "updateUrl": "",
   "authorList": [
     "bdew"
@@ -98,7 +98,26 @@
   "name": "NEI Addons: Misc Peripherals",
   "description": "",
   "version": "@NEIADDONS_VER@",
-  "url": "bdew.net/mods/neiaddons",
+  "url": "http://bdew.net/neiaddons/",
+  "updateUrl": "",
+  "authorList": [
+    "bdew"
+  ],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [
+  ],
+  "parent":"NEIAddons",
+  "dependencies": [
+  	"NEIAddons"
+  ]
+},
+{
+  "modid": "NEIAddons|ExNihilo",
+  "name": "NEI Addons: Ex Nihilo",
+  "description": "",
+  "version": "@NEIADDONS_VER@",
+  "url": "http://bdew.net/neiaddons/",
   "updateUrl": "",
   "authorList": [
     "bdew"
