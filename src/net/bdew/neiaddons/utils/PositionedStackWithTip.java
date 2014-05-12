@@ -11,12 +11,13 @@ package net.bdew.neiaddons.utils;
 
 import codechicken.nei.PositionedStack;
 
-public class PositionedStackWithChance extends PositionedStack {
-    public float chance;
+import java.util.List;
 
-    public PositionedStackWithChance(ItemStackWithChance stack, int x, int y) {
+public class PositionedStackWithTip extends PositionedStack {
+    public List<String> tip;
+
+    public PositionedStackWithTip(ItemStackWithTip stack, int x, int y) {
         super(stack.itemStack, x, y);
-
-        this.chance = stack.chance;
+        this.tip = stack.tip;
     }
 }

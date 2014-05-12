@@ -12,8 +12,8 @@ package net.bdew.neiaddons.exnihilo;
 import codechicken.nei.PositionedStack;
 import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
-import net.bdew.neiaddons.utils.ItemStackWithChance;
-import net.bdew.neiaddons.utils.PositionedStackWithChance;
+import net.bdew.neiaddons.utils.ItemStackWithTip;
+import net.bdew.neiaddons.utils.PositionedStackWithTip;
 import net.minecraft.item.ItemStack;
 
 import java.awt.*;
@@ -33,7 +33,7 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
 
     public abstract boolean isPossibleOutput(ItemStack tool);
 
-    public abstract List<ItemStackWithChance> getProcessingResults(ItemStack from);
+    public abstract List<ItemStackWithTip> getProcessingResults(ItemStack from);
 
     public abstract List<ItemStack> getInputsFor(ItemStack result);
 
@@ -42,16 +42,16 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
     public class CachedExnihiloRecipe extends CachedRecipe {
         PositionedStack tool;
         PositionedStack input;
-        List<PositionedStackWithChance> output;
+        List<PositionedStackWithTip> output;
 
-        public CachedExnihiloRecipe(ItemStack source, List<ItemStackWithChance> drops) {
+        public CachedExnihiloRecipe(ItemStack source, List<ItemStackWithTip> drops) {
             tool = new PositionedStack(getTools(), 35 - 5, 24 - 11);
             input = new PositionedStack(source, 8 - 5, 35 - 11);
-            output = new ArrayList<PositionedStackWithChance>();
+            output = new ArrayList<PositionedStackWithTip>();
 
             int pos = 0;
-            for (ItemStackWithChance x : drops) {
-                output.add(new PositionedStackWithChance(x, 62 - 5 + (pos % 6) * 18, 17 - 11 + (pos / 6) * 18));
+            for (ItemStackWithTip x : drops) {
+                output.add(new PositionedStackWithTip(x, 62 - 5 + (pos % 6) * 18, 17 - 11 + (pos / 6) * 18));
                 pos++;
             }
         }
@@ -107,7 +107,7 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
     public void loadUsageRecipes(ItemStack ingredient) {
         if (isValidTool(ingredient)) addAllRecipes();
         if (!isPossibleInput(ingredient)) return;
-        List<ItemStackWithChance> drops = getProcessingResults(ingredient);
+        List<ItemStackWithTip> drops = getProcessingResults(ingredient);
         if (drops.size() > 0)
             arecipes.add(new CachedExnihiloRecipe(ingredient, drops));
     }
@@ -120,9 +120,9 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
     @Override
     public List<String> handleItemTooltip(GuiRecipe gui, ItemStack stack, List<String> currenttip, int recipe) {
         if (stack != null)
-            for (PositionedStackWithChance x : ((CachedExnihiloRecipe) arecipes.get(recipe)).output)
+            for (PositionedStackWithTip x : ((CachedExnihiloRecipe) arecipes.get(recipe)).output)
                 if (gui.isMouseOver(x, recipe))
-                    currenttip.add(String.format("Drop chance: %.0f%%", x.chance * 100));
+                    currenttip.addAll(x.tip);
         return super.handleTooltip(gui, currenttip, recipe);
     }
 

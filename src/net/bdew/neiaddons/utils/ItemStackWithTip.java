@@ -11,12 +11,19 @@ package net.bdew.neiaddons.utils;
 
 import net.minecraft.item.ItemStack;
 
-public class ItemStackWithChance {
-    public ItemStack itemStack;
-    public float chance;
+import java.util.ArrayList;
+import java.util.List;
 
-    public ItemStackWithChance(ItemStack itemStack, float chance) {
+public class ItemStackWithTip {
+    public ItemStack itemStack;
+    public List<String> tip;
+
+    public ItemStackWithTip(ItemStack itemStack) {
+        this(itemStack, new ArrayList<String>());
+    }
+
+    public ItemStackWithTip(ItemStack itemStack, List<String> tip) {
         this.itemStack = itemStack;
-        this.chance = chance;
+        this.tip = tip;
     }
 }

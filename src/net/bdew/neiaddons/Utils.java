@@ -12,7 +12,6 @@ package net.bdew.neiaddons;
 import codechicken.nei.ItemRange;
 import codechicken.nei.MultiItemRange;
 import codechicken.nei.api.API;
-import net.bdew.neiaddons.utils.ItemStackWithChance;
 import net.minecraft.block.Block;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
@@ -20,7 +19,8 @@ import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
 import java.lang.reflect.Field;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Map.Entry;
 
 public class Utils {
@@ -132,14 +132,5 @@ public class Utils {
             merged.put(stack.getKey().copy(), stack.getValue());
         }
         return merged;
-    }
-
-    public static void sortDropListByChance(List<ItemStackWithChance> list) {
-        Collections.sort(list, new Comparator<ItemStackWithChance>() {
-            @Override
-            public int compare(ItemStackWithChance o1, ItemStackWithChance o2) {
-                return Float.compare(o2.chance, o1.chance);
-            }
-        });
     }
 }
