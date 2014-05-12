@@ -17,7 +17,7 @@ import net.minecraft.util.EnumChatFormatting
 
 class SieveRecipeHandler extends BaseRecipeHandler {
   override val getRecipeName = "ExNihilo Sieve"
-  override val getRecipeId = "bdew.exnihilo.sieve"
+  override def getRecipeId = "bdew.exnihilo.sieve"
   override val getTools = SieveRegistryProxy.sieves
 
   override def isPossibleInput(stack: ItemStack) = SieveRegistryProxy.sourceIds.contains(stack.itemID)

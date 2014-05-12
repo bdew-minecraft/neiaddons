@@ -17,7 +17,7 @@ import net.minecraft.util.EnumChatFormatting
 
 class HammerRecipeHandler extends BaseRecipeHandler {
   override val getRecipeName = "ExNihilo Hammer"
-  override val getRecipeId = "bdew.exnihilo.hammer"
+  override def getRecipeId = "bdew.exnihilo.hammer"
   override val getTools = HammerRegistryProxy.hammers
 
   override def isPossibleInput(stack: ItemStack) = HammerRegistryProxy.sourceIds.contains(stack.itemID)
