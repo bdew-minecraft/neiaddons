@@ -32,9 +32,9 @@ class SieveRecipeHandler extends BaseRecipeHandler {
 
     // Count how many times every drop variant shows up
     val drops = collection.mutable.Map.empty[SieveResult, List[Float]].withDefaultValue(List.empty)
-    for (x <- SieveRegistryProxy.getRegistry if x.sourceID() == from.itemID && x.sourceMeta() == from.getItemDamage) {
-      val drop = SieveResult(x.id(), x.meta())
-      drops(drop) :+= 1F / x.rarity()
+    for (x <- SieveRegistryProxy.getRegistry if x.sourceID == from.itemID && x.sourceMeta == from.getItemDamage) {
+      val drop = SieveResult(x.id, x.meta)
+      drops(drop) :+= 1F / x.rarity
     }
 
     drops.toList sortBy { case (drop, chances) => -chances.sum } map { case (drop, chances) =>

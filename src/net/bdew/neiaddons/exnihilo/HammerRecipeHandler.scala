@@ -32,8 +32,8 @@ class HammerRecipeHandler extends BaseRecipeHandler {
 
     // Count how many times every drop variant shows up
     val drops = collection.mutable.Map.empty[HammerResult, Int].withDefaultValue(0)
-    for (x <- HammerRegistryProxy.getRegistry if x.sourceID() == from.itemID && x.sourceMeta() == from.getItemDamage) {
-      val drop = HammerResult(x.id(), x.meta(), x.chance(), x.luckMultiplier())
+    for (x <- HammerRegistryProxy.getRegistry if x.sourceID == from.itemID && x.sourceMeta == from.getItemDamage) {
+      val drop = HammerResult(x.id, x.meta, x.chance, x.luckMultiplier)
       drops(drop) += 1
     }
 
