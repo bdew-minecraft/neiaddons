@@ -12,8 +12,6 @@ package net.bdew.neiaddons.exnihilo.waila;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
-import net.bdew.neiaddons.exnihilo.AddonExnihilo;
-import net.bdew.neiaddons.exnihilo.WailaHandler;
 import net.minecraft.block.Block;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -55,13 +53,6 @@ public class CrucibleHandler implements IWailaDataProvider {
         if (!content.isEmpty() && solidVolume > 0) {
             ItemStack stack = new ItemStack((Block) Block.blockRegistry.getObject(content), 1, contentMeta);
             currenttip.add(String.format("Solid: %s %s", stack.getDisplayName(), dec.format(solidVolume)));
-        }
-
-        try {
-            currenttip.add(String.format("Speed: %s mB/t", WailaHandler.mCrucibleGetMeltSpeed.invoke(accessor.getTileEntity())));
-        } catch (Throwable t) {
-            AddonExnihilo.instance.logWarning("Failed to call getMeltSpeed: %s", t.toString());
-            t.printStackTrace();
         }
 
         return currenttip;
