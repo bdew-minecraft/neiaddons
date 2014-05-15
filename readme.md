@@ -24,6 +24,9 @@ NEI Addons
 * [Misc Peripherals](http://www.computercraft.info/forums2/index.php?/topic/4587-)
  * [?] button support for the Computer Controlled Crafter
  * Can set the recipe even if you don't have the items on you
+* [Ex Nihilo](http://www.minecraftforum.net/topic/1981778-) 
+ * Shows sieve and hammer drops
+ * If [WAILA](http://www.minecraftforum.net/topic/1846244-) is installed, adds detailed overlay for most blocks
 * Various crafting tables - adds [?] button support for alternate crafting tables from many mods
  * [BuildCraft](http://www.mod-buildcraft.com/) Autocrafting Table
  * [Equivalent Exchange 3](http://www.minecraftforum.net/topic/1540010-) Minium Stone
@@ -33,6 +36,9 @@ NEI Addons
 ***
 Changelog
 =========
+
+###v1.10.5 - Released 14/05/2014
+* Added Ex Nihilo addon
 
 ###v1.10.4 - Released 19/02/2014
 * Workaround crashes caused by Metallurgy Bees
