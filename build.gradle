@@ -22,8 +22,8 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "1.11.0"
-ext.versuffix = "mc172"
+version = "1.12.0"
+ext.versuffix = "mc1710"
 
 if (project.hasProperty('buildnum')) {
     project.version = project.version + '.' + project.buildnum
@@ -36,7 +36,7 @@ group = "net.bdew"
 archivesBaseName = "neiaddons"
 
 minecraft {
-    version = "1.7.2-10.12.1.1060"
+    version = "1.7.10-10.13.0.1180"
     replace("NEIADDONS_VER", project.version)
 }
 
@@ -61,11 +61,10 @@ repositories {
 }
 
 dependencies {
-    compile "codechicken:NotEnoughItems:1.7.2-1.0.1:dev"
-    compile "codechicken:CodeChickenLib:1.7.2-1.1.0.76:dev"
-    compile "net.bdew.thirdparty:forestryapi:2.4.0.0.711.1"
+    compile "codechicken:NotEnoughItems:1.7.10-1.0.2.15:dev"
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.88:dev"
     compile "mcp.mobius.waila:Waila:1.5.2a"
-    compile "net.sengir.forestry:forestry_1.7.2:2.4.1.22:api"
+    compile "net.sengir.forestry:forestry_1.7.10:2.4.2.30:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
