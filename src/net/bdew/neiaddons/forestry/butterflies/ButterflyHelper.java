@@ -10,12 +10,14 @@
 package net.bdew.neiaddons.forestry.butterflies;
 
 import codechicken.nei.api.API;
+import forestry.api.apiculture.EnumBeeType;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.lepidopterology.EnumFlutterType;
 import forestry.api.lepidopterology.IAlleleButterflySpecies;
 import forestry.api.lepidopterology.IButterflyRoot;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.GeneticItemFilter;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 
 import java.util.Collection;
@@ -50,7 +52,14 @@ public class ButterflyHelper {
         for (IAlleleButterflySpecies species : allSpecies) {
             if (AddonForestry.addBees) {
                 Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.BUTTERFLY.ordinal()));
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.CATERPILLAR.ordinal()));
+                Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.SERUM.ordinal()));
             }
         }
+
+        API.addSubset("Forestry.Butterflies.Butterflies", new GeneticItemFilter(root, EnumFlutterType.BUTTERFLY.ordinal(), true));
+        API.addSubset("Forestry.Butterflies.Caterpillars", new GeneticItemFilter(root, EnumFlutterType.CATERPILLAR.ordinal(), true));
+        API.addSubset("Forestry.Butterflies.Serums", new GeneticItemFilter(root, EnumFlutterType.SERUM.ordinal(), true));
+
     }
 }

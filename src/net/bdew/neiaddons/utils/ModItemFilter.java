@@ -1,0 +1,33 @@
+/*
+ * Copyright (c) bdew, 2013 - 2014
+ * https://github.com/bdew/neiaddons
+ *
+ * This mod is distributed under the terms of the Minecraft Mod Public
+ * License 1.0, or MMPL. Please check the contents of the license located in
+ * https://raw.github.com/bdew/neiaddons/master/MMPL-1.0.txt
+ */
+
+package net.bdew.neiaddons.utils;
+
+import codechicken.nei.api.ItemFilter;
+import net.minecraft.item.Item;
+import net.minecraft.item.ItemBlock;
+import net.minecraft.item.ItemStack;
+
+public class ModItemFilter implements ItemFilter {
+    private String modId;
+    private Boolean items;
+
+    public ModItemFilter(String modId, Boolean items) {
+        this.modId = modId;
+        this.items = items;
+    }
+
+    @Override
+    public boolean matches(ItemStack item) {
+        if (item.getItem() instanceof ItemBlock && items) return false;
+        if (!(item.getItem() instanceof ItemBlock) && !items) return false;
+        String[] s = Item.itemRegistry.getNameForObject(item.getItem()).split(":");
+        return (s.length > 1) && s[0].equals(modId);
+    }
+}

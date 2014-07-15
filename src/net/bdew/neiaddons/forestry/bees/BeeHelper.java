@@ -9,7 +9,9 @@
 
 package net.bdew.neiaddons.forestry.bees;
 
+import codechicken.nei.ItemStackSet;
 import codechicken.nei.api.API;
+import codechicken.nei.api.ItemFilter;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestry.api.apiculture.EnumBeeType;
@@ -19,9 +21,13 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.ForestryOtherFilter;
+import net.bdew.neiaddons.forestry.GeneticItemFilter;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.bdew.neiaddons.utils.ModItemFilter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 
@@ -56,9 +62,6 @@ public class BeeHelper {
     }
 
     public static void setup() {
-        // TODO: Check if needed after NEI re-adds ranges
-        //API.getRangeTag("Forestry").saveTag = false;
-
         root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
         allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
 
@@ -70,9 +73,6 @@ public class BeeHelper {
         for (Item combItem : modCombs) {
             seencombs.put(combItem, new HashSet<Integer>());
         }
-
-        // TODO: fix after NEI re-adds ranges
-        //MultiItemRange fakeRange = new MultiItemRange();
 
         for (IAlleleBeeSpecies species : allSpecies) {
             if (AddonForestry.addBees) {
@@ -109,30 +109,13 @@ public class BeeHelper {
             }
         }
 
-        // TODO: fix after NEI re-adds ranges
-        /*
-        API.addToRange("Forestry.Bees.Princesses", fakeRange);
+        API.addSubset("Forestry.Bees.Princesses", new GeneticItemFilter(root, EnumBeeType.PRINCESS.ordinal(), true));
+        API.addSubset("Forestry.Bees.Drones", new GeneticItemFilter(root, EnumBeeType.DRONE.ordinal(), true));
+        API.addSubset("Forestry.Bees.Queens", new GeneticItemFilter(root, EnumBeeType.QUEEN.ordinal(), true));
 
-        if (!Loader.isModLoaded("NEIPlugins")) {
-            MultiItemRange queenRange = new MultiItemRange();
-            queenRange.add(ItemInterface.getItem("beeQueenGE"));
-            API.addToRange("Forestry.Bees.Queens", queenRange);
-
-            MultiItemRange princessRange = new MultiItemRange();
-            princessRange.add(ItemInterface.getItem("beePrincessGE"));
-            API.addToRange("Forestry.Bees.Princesses", princessRange);
-
-            MultiItemRange droneRange = new MultiItemRange();
-            droneRange.add(ItemInterface.getItem("beeDroneGE"));
-            API.addToRange("Forestry.Bees.Drones", droneRange);
-
-            MultiItemRange combRange = new MultiItemRange();
-            for (Item i : modCombs) {
-                combRange.add(i.getItem());
-            }
-            API.addToRange("Forestry.Bees.Combs", combRange);
-        }
-        */
+        API.addSubset("Forestry.Bees.Combs", OreDictionary.getOres("beeComb"));
+        API.addSubset("Forestry.Blocks", new ForestryOtherFilter(false));
+        API.addSubset("Forestry.Items", new ForestryOtherFilter(true));
     }
 
     private static List<Item> getMobCombs() {

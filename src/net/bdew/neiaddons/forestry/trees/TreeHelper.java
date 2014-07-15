@@ -10,6 +10,7 @@
 package net.bdew.neiaddons.forestry.trees;
 
 import codechicken.nei.api.API;
+import forestry.api.apiculture.EnumBeeType;
 import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;
@@ -17,6 +18,7 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.GeneticItemFilter;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
@@ -57,9 +59,6 @@ public class TreeHelper {
             AddonForestry.instance.registerWithNEIPlugins(produceRecipeHandler.getRecipeName(), produceRecipeHandler.getRecipeIdent());
         }
 
-        // TODO: fix after NEI re-adds ranges
-        // MultiItemRange fakeRange = new MultiItemRange();
-
         for (IAlleleTreeSpecies species : allSpecies) {
             if (AddonForestry.addSaplings) {
                 Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumGermlingType.SAPLING.ordinal()));
@@ -75,19 +74,7 @@ public class TreeHelper {
             }
         }
 
-        // TODO: fix after NEI re-adds ranges
-        /*
-        API.addToRange("Forestry.Trees.Pollen", fakeRange);
-
-        if (!Loader.isModLoaded("NEIPlugins")) {
-            MultiItemRange saplingRange = new MultiItemRange();
-            saplingRange.add(ItemInterface.getItem("sapling"));
-            API.addToRange("Forestry.Trees.Saplings", saplingRange);
-        }
-
-        MultiItemRange pollenRange = new MultiItemRange();
-        pollenRange.add(ItemInterface.getItem("pollenFertile"));
-        API.addToRange("Forestry.Trees.Pollen", pollenRange);
-        */
+        API.addSubset("Forestry.Trees.Pollen", new GeneticItemFilter(root, EnumGermlingType.POLLEN.ordinal(), true));
+        API.addSubset("Forestry.Trees.Saplings", new GeneticItemFilter(root, EnumGermlingType.SAPLING.ordinal(), true));
     }
 }
