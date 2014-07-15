@@ -17,6 +17,7 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
+import net.minecraftforge.fluids.FluidStack;
 
 import java.text.DecimalFormat;
 import java.util.List;
@@ -48,7 +49,7 @@ public class CrucibleHandler implements IWailaDataProvider {
         Fluid fluid = FluidRegistry.getFluid(tag.getShort("fluid"));
 
         if (fluid != null && fluidVolume > 0)
-            currenttip.add(String.format("Fluid: %s %s mB", fluid.getLocalizedName(), dec.format(fluidVolume)));
+            currenttip.add(String.format("Fluid: %s %s mB", fluid.getLocalizedName(new FluidStack(fluid,1)), dec.format(fluidVolume)));
 
         if (!content.isEmpty() && solidVolume > 0) {
             ItemStack stack = new ItemStack((Block) Block.blockRegistry.getObject(content), 1, contentMeta);
