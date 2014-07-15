@@ -10,7 +10,6 @@
 package net.bdew.neiaddons.forestry.butterflies;
 
 import codechicken.nei.api.API;
-import forestry.api.apiculture.EnumBeeType;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.lepidopterology.EnumFlutterType;
 import forestry.api.lepidopterology.IAlleleButterflySpecies;
@@ -60,6 +59,5 @@ public class ButterflyHelper {
         API.addSubset("Forestry.Butterflies.Butterflies", new GeneticItemFilter(root, EnumFlutterType.BUTTERFLY.ordinal(), true));
         API.addSubset("Forestry.Butterflies.Caterpillars", new GeneticItemFilter(root, EnumFlutterType.CATERPILLAR.ordinal(), true));
         API.addSubset("Forestry.Butterflies.Serums", new GeneticItemFilter(root, EnumFlutterType.SERUM.ordinal(), true));
-
     }
 }

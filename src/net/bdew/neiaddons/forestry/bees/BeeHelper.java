@@ -9,9 +9,7 @@
 
 package net.bdew.neiaddons.forestry.bees;
 
-import codechicken.nei.ItemStackSet;
 import codechicken.nei.api.API;
-import codechicken.nei.api.ItemFilter;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestry.api.apiculture.EnumBeeType;
@@ -24,7 +22,6 @@ import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.ForestryOtherFilter;
 import net.bdew.neiaddons.forestry.GeneticItemFilter;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
-import net.bdew.neiaddons.utils.ModItemFilter;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraftforge.oredict.OreDictionary;

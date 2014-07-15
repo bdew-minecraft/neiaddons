@@ -9,10 +9,11 @@
 
 package net.bdew.neiaddons.exnihilo
 
-import net.bdew.neiaddons.exnihilo.proxies.SieveRegistryProxy
-import net.minecraft.item.{Item, ItemStack}
 import java.util.{List => jList}
+
+import net.bdew.neiaddons.exnihilo.proxies.SieveRegistryProxy
 import net.bdew.neiaddons.utils.ItemStackWithTip
+import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.EnumChatFormatting
 
 class SieveRecipeHandler extends BaseRecipeHandler {

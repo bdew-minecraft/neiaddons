@@ -10,7 +10,6 @@
 package net.bdew.neiaddons.forestry.trees;
 
 import codechicken.nei.api.API;
-import forestry.api.apiculture.EnumBeeType;
 import forestry.api.arboriculture.EnumGermlingType;
 import forestry.api.arboriculture.IAlleleTreeSpecies;
 import forestry.api.arboriculture.ITreeRoot;

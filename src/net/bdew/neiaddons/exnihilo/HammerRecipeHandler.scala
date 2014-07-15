@@ -9,10 +9,11 @@
 
 package net.bdew.neiaddons.exnihilo
 
+import java.util.{List => jList}
+
 import net.bdew.neiaddons.exnihilo.proxies.HammerRegistryProxy
 import net.bdew.neiaddons.utils.ItemStackWithTip
 import net.minecraft.item.{Item, ItemStack}
-import java.util.{List => jList}
 import net.minecraft.util.EnumChatFormatting
 
 class HammerRecipeHandler extends BaseRecipeHandler {
