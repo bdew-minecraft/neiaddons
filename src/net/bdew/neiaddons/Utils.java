@@ -120,6 +120,10 @@ public class Utils {
         Map<ItemStack, Integer> merged = new HashMap<ItemStack, Integer>();
         outer:
         for (Entry<ItemStack, Integer> stack : stacks.entrySet()) {
+            if (stack.getKey() == null) {
+                NEIAddons.logSevere("Null ItemStack in mergeStacks!");
+                continue;
+            }
             for (Entry<ItemStack, Integer> mergedStack : merged.entrySet()) {
                 if (isSameItem(stack.getKey(), mergedStack.getKey()) && (stack.getValue().equals(mergedStack.getValue()))) {
                     mergedStack.getKey().stackSize += 1;
