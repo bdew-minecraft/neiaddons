@@ -22,7 +22,7 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "1.12.0"
+version = "1.12.1"
 ext.versuffix = "mc1710"
 
 if (project.hasProperty('buildnum')) {
