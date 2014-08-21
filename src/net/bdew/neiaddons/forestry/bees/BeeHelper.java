@@ -131,7 +131,7 @@ public class BeeHelper {
                 Class<?> ebItems = Class.forName("binnie.extrabees.ExtraBees");
                 Object ebComb = ebItems.getField("comb").get(null);
                 if (ebComb instanceof Item) {
-                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%d)", ebComb.toString(), ebComb);
+                    AddonForestry.instance.logInfo("Loaded Extra Bees comb item: %s (%s)", ebComb.toString(), ebComb);
                     res.add((Item) ebComb);
                 } else {
                     AddonForestry.instance.logWarning("Extra Bees comb is not Item subclass!");
@@ -147,7 +147,7 @@ public class BeeHelper {
                 Object mbComb = mbConfig.getField("combs").get(null);
                 AddonForestry.instance.logInfo("Loaded TB comb item: %s", mbComb.toString());
                 if (mbComb instanceof Item) {
-                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%d)", mbComb.toString(), mbComb);
+                    AddonForestry.instance.logInfo("Loaded Magic Bees comb item: %s (%s)", mbComb.toString(), mbComb);
                     res.add((Item) mbComb);
                 } else {
                     AddonForestry.instance.logWarning("Magic Bees comb is not Item subclass!");

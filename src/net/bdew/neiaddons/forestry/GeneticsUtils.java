@@ -75,13 +75,7 @@ public class GeneticsUtils {
         return stack;
     }
 
-    @Deprecated
-    public static ItemStack stackFromAllele(IAllele allele, EnumBeeType type) {
-        assert allele instanceof IAlleleSpecies;
-        return stackFromSpecies((IAlleleSpecies) allele, type.ordinal());
-    }
-
-    public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
+     public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
         return getAllTypedSpecies(IAlleleBeeSpecies.class, includeBlacklisted);
     }
 
