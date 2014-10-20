@@ -42,6 +42,12 @@ public class TreeHelper {
 
     public static void setup() {
         root = (ITreeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootTrees");
+
+        if (root == null) {
+            AddonForestry.instance.logWarning("Tree Species Root not found, some functionality will be unavailable");
+            return;
+        }
+
         allSpecies = GeneticsUtils.getAllTreeSpecies(AddonForestry.loadBlacklisted);
 
         if (AddonForestry.showTreeMutations) {

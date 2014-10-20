@@ -37,6 +37,12 @@ public class ButterflyHelper {
 
     public static void setup() {
         root = (IButterflyRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootButterflies");
+
+        if (root == null) {
+            AddonForestry.instance.logWarning("Butterfly Species Root not found, some functionality will be unavailable");
+            return;
+        }
+
         allSpecies = GeneticsUtils.getAllButterflySpecies(AddonForestry.loadBlacklisted);
 
         if (AddonForestry.showButterflyMutations) {

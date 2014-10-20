@@ -60,6 +60,12 @@ public class BeeHelper {
 
     public static void setup() {
         root = (IBeeRoot) AlleleManager.alleleRegistry.getSpeciesRoot("rootBees");
+
+        if (root == null) {
+            AddonForestry.instance.logWarning("Bee Species Root not found, some functionality will be unavailable");
+            return;
+        }
+
         allSpecies = GeneticsUtils.getAllBeeSpecies(AddonForestry.loadBlacklisted);
 
         addHandlers();

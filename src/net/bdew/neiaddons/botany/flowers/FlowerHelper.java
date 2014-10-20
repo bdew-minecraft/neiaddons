@@ -28,15 +28,19 @@ public class FlowerHelper {
 
     public static void setup() {
         root = AlleleManager.alleleRegistry.getSpeciesRoot("rootFlowers");
+
         if (root == null) {
             AddonBotany.instance.logWarning("Failed to load Flower root, Botany support disabled");
+            return;
         }
+
         try {
             flowerSpeciesClass = Utils.getAndCheckClass("binnie.botany.api.IAlleleFlowerSpecies", IAlleleSpecies.class);
         } catch (Throwable e) {
             AddonBotany.instance.logWarningExc(e, "Failed to load Flower species interface, Botany support disabled");
             return;
         }
+
         AddonBotany.instance.logInfo("Root=%s Species=%s", root, flowerSpeciesClass);
 
         allSpecies = GeneticsUtils.getAllTypedSpecies(flowerSpeciesClass, AddonBotany.loadBlacklisted);
