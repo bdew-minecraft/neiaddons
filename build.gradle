@@ -78,6 +78,7 @@ sourceSets {
         resources {
             srcDir 'resources'
         }
+        output.resourcesDir = output.classesDir // Hack for IDEA
     }
 }
 
@@ -99,7 +100,7 @@ task sourceJar(type: Jar) {
 }
 
 task deobfJar(type: Jar) {
-    from sourceSets.main.output
+    from sourceSets.main.output.classesDir
     exclude "**/*.psd"
 }
 
