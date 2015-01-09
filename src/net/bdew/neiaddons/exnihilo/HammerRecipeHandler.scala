@@ -33,7 +33,7 @@ class HammerRecipeHandler extends BaseRecipeHandler {
 
     // Count how many times every drop variant shows up
     val drops = collection.mutable.Map.empty[HammerResult, Int].withDefaultValue(0)
-    for (x <- HammerRegistryProxy.getRegistry if Item.getItemFromBlock(x.source) == from.getItem && x.sourceMeta == from.getItemDamage) {
+    for (x <- HammerRegistryProxy.getRegistry if x != null && Item.getItemFromBlock(x.source) == from.getItem && x.sourceMeta == from.getItemDamage) {
       val drop = HammerResult(x.item, x.meta, x.chance, x.luckMultiplier)
       drops(drop) += 1
     }
@@ -57,6 +57,7 @@ class HammerRecipeHandler extends BaseRecipeHandler {
 
   override def getInputsFor(result: ItemStack): jList[ItemStack] =
     HammerRegistryProxy.getRegistry
+      .filterNot(_ == null)
       .filter(x => x.item == result.getItem && x.meta == result.getItemDamage)
       .map(x => (x.source, x.sourceMeta))
       .distinct
@@ -64,6 +65,7 @@ class HammerRecipeHandler extends BaseRecipeHandler {
 
   override def getAllValidInputs: jList[ItemStack] =
     HammerRegistryProxy.getRegistry
+      .filterNot(_ == null)
       .filter(x => x.item != null)
       .map(x => (x.source, x.sourceMeta))
       .distinct

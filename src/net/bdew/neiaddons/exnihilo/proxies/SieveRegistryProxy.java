@@ -30,7 +30,7 @@ public class SieveRegistryProxy {
 
     @SuppressWarnings("unchecked")
     public static List<SiftRewardProxy> getRegistry() {
-        return new SieveListView(f_rewards.get(null));
+        return new ProxyListView<SiftRewardProxy>(f_rewards.get(null), SiftRewardProxy.class);
     }
 
     public static void init() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
@@ -45,8 +45,10 @@ public class SieveRegistryProxy {
         sourceIds = new HashSet<Item>();
 
         for (SiftRewardProxy siftreward : getRegistry()) {
-            sourceIds.add(Item.getItemFromBlock(siftreward.source()));
-            dropIds.add(siftreward.item());
+            if (siftreward != null) {
+                sourceIds.add(Item.getItemFromBlock(siftreward.source()));
+                dropIds.add(siftreward.item());
+            }
         }
     }
 }

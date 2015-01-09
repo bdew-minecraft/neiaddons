@@ -28,7 +28,7 @@ public class HammerRegistryProxy {
 
     @SuppressWarnings("unchecked")
     public static List<SmashableProxy> getRegistry() {
-        return new HammerListView(f_rewards.get(null));
+        return new ProxyListView<SmashableProxy>(f_rewards.get(null), SmashableProxy.class);
     }
 
     @SuppressWarnings("unchecked")
@@ -48,8 +48,10 @@ public class HammerRegistryProxy {
         sourceIds = new HashSet<Item>();
 
         for (SmashableProxy smashable : getRegistry()) {
-            sourceIds.add(Item.getItemFromBlock(smashable.source()));
-            dropIds.add(smashable.item());
+            if (smashable != null) {
+                sourceIds.add(Item.getItemFromBlock(smashable.source()));
+                dropIds.add(smashable.item());
+            }
         }
     }
 }

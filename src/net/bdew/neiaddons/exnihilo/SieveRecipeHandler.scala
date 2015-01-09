@@ -33,7 +33,7 @@ class SieveRecipeHandler extends BaseRecipeHandler {
 
     // Count how many times every drop variant shows up
     val drops = collection.mutable.Map.empty[SieveResult, List[Float]].withDefaultValue(List.empty)
-    for (x <- SieveRegistryProxy.getRegistry if Item.getItemFromBlock(x.source) == from.getItem && x.sourceMeta == from.getItemDamage) {
+    for (x <- SieveRegistryProxy.getRegistry if x != null && Item.getItemFromBlock(x.source) == from.getItem && x.sourceMeta == from.getItemDamage) {
       val drop = SieveResult(x.item, x.meta)
       drops(drop) :+= 1F / x.rarity
     }
@@ -54,6 +54,7 @@ class SieveRecipeHandler extends BaseRecipeHandler {
 
   override def getInputsFor(result: ItemStack): jList[ItemStack] =
     SieveRegistryProxy.getRegistry
+      .filterNot(_ == null)
       .filter(x => x.item == result.getItem && x.meta == result.getItemDamage)
       .map(x => (x.source, x.sourceMeta))
       .distinct
@@ -61,6 +62,7 @@ class SieveRecipeHandler extends BaseRecipeHandler {
 
   override def getAllValidInputs: jList[ItemStack] =
     SieveRegistryProxy.getRegistry
+      .filterNot(_ == null)
       .filter(x => x.item != null)
       .map(x => (x.source, x.sourceMeta))
       .distinct

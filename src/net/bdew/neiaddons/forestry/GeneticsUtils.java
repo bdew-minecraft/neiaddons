@@ -75,7 +75,7 @@ public class GeneticsUtils {
         return stack;
     }
 
-     public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
+    public static Collection<IAlleleBeeSpecies> getAllBeeSpecies(boolean includeBlacklisted) {
         return getAllTypedSpecies(IAlleleBeeSpecies.class, includeBlacklisted);
     }
 
