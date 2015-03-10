@@ -98,7 +98,13 @@ public class AddonForestry extends BaseAddon {
                     GuiWorktable = Utils.getAndCheckClass("forestry.factory.gui.GuiWorktable", GuiContainer.class);
                 }
                 ContainerWorktable = Utils.getAndCheckClass("forestry.factory.gui.ContainerWorktable", Container.class);
-                SlotCraftMatrix = Utils.getAndCheckClass("forestry.factory.gui.SlotCraftMatrix", Slot.class);
+
+                if (this.verifyModVersion("Forestry@[3.5.0.0,)")) {
+                    SlotCraftMatrix = Utils.getAndCheckClass("forestry.core.gui.slots.SlotCraftMatrix", Slot.class);
+                } else {
+                    SlotCraftMatrix = Utils.getAndCheckClass("forestry.factory.gui.SlotCraftMatrix", Slot.class);
+                }
+
                 ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerWorktable, SlotCraftMatrix));
                 craftingActive = true;
             } catch (Throwable e) {
