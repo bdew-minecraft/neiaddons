@@ -134,4 +134,24 @@ public class Utils {
         }
         return merged;
     }
+
+    public static Map<ItemStack, Integer> sanitizeDrops(Map<ItemStack, Integer> drops, String origin) {
+        Map<ItemStack, Integer> res = new HashMap<ItemStack, Integer>();
+        boolean complained = false;
+        if (drops == null) {
+            NEIAddons.logWarning("%s returned null", origin);
+            return res;
+        }
+        for (Entry<ItemStack, Integer> ent : drops.entrySet()) {
+            if (ent.getKey() == null || ent.getKey().getItem() == null) {
+                if (!complained) {
+                    NEIAddons.logWarning("%s contains nulls and/or corrupt item stacks", origin);
+                    complained = true;
+                }
+                continue;
+            }
+            res.put(ent.getKey(), ent.getValue());
+        }
+        return res;
+    }
 }

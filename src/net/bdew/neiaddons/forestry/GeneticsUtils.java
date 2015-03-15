@@ -18,6 +18,7 @@ import forestry.api.arboriculture.ITree;
 import forestry.api.arboriculture.ITreeRoot;
 import forestry.api.genetics.*;
 import forestry.api.lepidopterology.IAlleleButterflySpecies;
+import net.bdew.neiaddons.Utils;
 import net.minecraft.item.ItemStack;
 
 import java.util.ArrayList;
@@ -102,12 +103,7 @@ public class GeneticsUtils {
 
     static public Map<ItemStack, Integer> getProduceFromSpecies(IAlleleSpecies species) {
         if (species instanceof IAlleleBeeSpecies) {
-            Map<ItemStack, Integer> result = ((IAlleleBeeSpecies) species).getProducts();
-            if (result == null) {
-                AddonForestry.instance.logWarning("%s returned null from getProducts()", species.getUID());
-                result = new HashMap<ItemStack, Integer>();
-            }
-            return result;
+            return Utils.sanitizeDrops(((IAlleleBeeSpecies) species).getProducts(), species.getUID() + " drops");
         } else if (species instanceof IAlleleTreeSpecies) {
             Map<ItemStack, Integer> result = new HashMap<ItemStack, Integer>();
             ITreeRoot root = (ITreeRoot) species.getRoot();
@@ -118,7 +114,7 @@ public class GeneticsUtils {
             }
             ITree tree = (ITree) root.templateAsIndividual(template);
             for (ItemStack stack : tree.getProduceList()) {
-                if (stack == null) {
+                if (stack == null || stack.getItem() == null) {
                     AddonForestry.instance.logWarning("%s returned null in produce list", species.getUID());
                     continue;
                 }
@@ -131,12 +127,7 @@ public class GeneticsUtils {
 
     static public Map<ItemStack, Integer> getSpecialtyFromSpecies(IAlleleSpecies species) {
         if (species instanceof IAlleleBeeSpecies) {
-            Map<ItemStack, Integer> result = ((IAlleleBeeSpecies) species).getSpecialty();
-            if (result == null) {
-                AddonForestry.instance.logWarning("%s returned null from getSpecialty", species.getUID());
-                result = new HashMap<ItemStack, Integer>();
-            }
-            return result;
+            return Utils.sanitizeDrops(((IAlleleBeeSpecies) species).getSpecialty(), species.getUID() + " specialty");
         } else if (species instanceof IAlleleTreeSpecies) {
             Map<ItemStack, Integer> result = new HashMap<ItemStack, Integer>();
             ITreeRoot root = (ITreeRoot) species.getRoot();
@@ -147,7 +138,7 @@ public class GeneticsUtils {
             }
             ITree tree = (ITree) root.templateAsIndividual(template);
             for (ItemStack stack : tree.getSpecialtyList()) {
-                if (stack == null) {
+                if (stack == null || stack.getItem() == null) {
                     AddonForestry.instance.logWarning("%s returned null in specialty list", species.getUID());
                     continue;
                 }
