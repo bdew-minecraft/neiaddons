@@ -15,6 +15,6 @@ bdew.exnihilo.hammer.label=ExNihilo Hammer
 bdew.exnihilo.sieve.label=ExNihilo Sieve
 
 bdew.exnihilo.barrel.burn=Will burn in %s seconds!!!
-bdew.exnihilo.beetrap.spawn=Spawning: %s
-bdew.exnihilo.crucible.fluid=Fluid: %s %s mB"
+bdew.exnihilo.beetrap.spawn=Spawning: %s%%
+bdew.exnihilo.crucible.fluid=Fluid: %s %s mB
 bdew.exnihilo.crucible.solid=Solid: %s %s
