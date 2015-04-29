@@ -61,11 +61,11 @@ repositories {
 }
 
 dependencies {
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.56:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.104:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.3.26:dev"
+    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev"
+    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
+    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
     compile "mcp.mobius.waila:Waila:1.5.5_1.7.10"
-    compile "net.sengir.forestry:forestry_1.7.10:3.1.1.4:api"
+    compile "net.sengir.forestry:forestry_1.7.10:3.5.4.13:api"
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
