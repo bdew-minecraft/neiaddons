@@ -120,32 +120,35 @@ public class CustomOverlayHandler implements IOverlayHandler {
             }
             NEIAddons.logInfo("Don't have server support, moving recipe manually");
             GuiContainerManager manager = GuiContainerManager.getManager(cont);
-            for (Object slotob : cont.inventorySlots.inventorySlots) {
-                if (craftingSlot.isInstance(slotob)) {
-                    Slot slot = (Slot) slotob;
-                    // Left click once to clear
-                    manager.handleSlotClick(slot.slotNumber, 0, 0);
+            //noinspection ConstantConditions
+            if (manager != null) {
+                for (Object slotob : cont.inventorySlots.inventorySlots) {
+                    if (craftingSlot.isInstance(slotob)) {
+                        Slot slot = (Slot) slotob;
+                        // Left click once to clear
+                        manager.handleSlotClick(slot.slotNumber, 0, 0);
+                    }
                 }
-            }
-            for (PositionedStack pstack : ingr) {
-                if (pstack != null) {
+                for (PositionedStack pstack : ingr) {
+                    if (pstack != null) {
 
-                    Slot slotTo = findMatchingSlot(cont, pstack);
-                    if (slotTo == null)
-                        continue;
+                        Slot slotTo = findMatchingSlot(cont, pstack);
+                        if (slotTo == null)
+                            continue;
 
-                    Slot slotFrom = findItem(cont, pstack);
-                    if (slotFrom == null)
-                        continue;
+                        Slot slotFrom = findItem(cont, pstack);
+                        if (slotFrom == null)
+                            continue;
 
-                    NEIAddons.logInfo("Moving from slot %s[%d] to %s[%d]", slotFrom.toString(), slotFrom.slotNumber, slotTo.toString(), slotTo.slotNumber);
+                        NEIAddons.logInfo("Moving from slot %s[%d] to %s[%d]", slotFrom.toString(), slotFrom.slotNumber, slotTo.toString(), slotTo.slotNumber);
 
-                    // pick up item
-                    manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
-                    // right click to add 1
-                    manager.handleSlotClick(slotTo.slotNumber, 1, 0);
-                    // put item back
-                    manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
+                        // pick up item
+                        manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
+                        // right click to add 1
+                        manager.handleSlotClick(slotTo.slotNumber, 1, 0);
+                        // put item back
+                        manager.handleSlotClick(slotFrom.slotNumber, 0, 0);
+                    }
                 }
             }
         }

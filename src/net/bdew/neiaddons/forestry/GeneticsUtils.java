@@ -122,7 +122,7 @@ public class GeneticsUtils {
             }
             return result;
         }
-        return null;
+        return new HashMap<ItemStack, Integer>();
     }
 
     static public Map<ItemStack, Integer> getSpecialtyFromSpecies(IAlleleSpecies species) {
@@ -146,6 +146,6 @@ public class GeneticsUtils {
             }
             return result;
         }
-        return null;
+        return new HashMap<ItemStack, Integer>();
     }
 }
