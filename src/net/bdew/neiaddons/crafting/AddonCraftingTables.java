@@ -63,6 +63,9 @@ public class AddonCraftingTables extends BaseAddon {
         tryLoadTableClass("BuildCraft|Factory", "buildcraft.factory.gui.GuiAutoCrafting", "BC Autorcrafting Table");
         tryLoadTableClass("powersuitaddons", "com.qmxtech.powersuitaddons.client.PortableCraftingGui", "MPSA In-Place Assembler");
         tryLoadTableClass("ProjectE", "moze_intel.projecte.gameObjs.gui.GUIPhilosStone", "ProjectE Philosopher Stone");
+        tryLoadTableClass("BiblioCraft", "jds.bibliocraft.gui.GuiFancyWorkbench", "BiblioCraft Fancy Workbench");
+        tryLoadTableClass("RIO", "remoteio.client.gui.GuiIntelligentWorkbench", "RemoteIO Intelligent Workbench");
+
 
         if (craftingTables.size() > 0) {
             logInfo("%d crafting tables registered", craftingTables.size());
