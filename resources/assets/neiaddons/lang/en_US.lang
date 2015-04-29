@@ -18,3 +18,5 @@ bdew.exnihilo.barrel.burn=Will burn in %s seconds!!!
 bdew.exnihilo.beetrap.spawn=Spawning: %s%%
 bdew.exnihilo.crucible.fluid=Fluid: %s %s mB
 bdew.exnihilo.crucible.solid=Solid: %s %s
+
+bdew.neiaddons.noserver=This function requires NEI Addons to be installed on the server
