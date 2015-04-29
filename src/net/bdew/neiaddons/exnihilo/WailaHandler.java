@@ -21,7 +21,7 @@ public class WailaHandler {
     static public Class<? extends TileEntity> clsTeCrucible;
     static public Class<? extends TileEntity> clsTeBeeTrap;
 
-    static private void loadClasses() throws ClassNotFoundException, NoSuchMethodException {
+    static private void loadClasses() throws ClassNotFoundException {
         clsTeBarrel = Utils.getAndCheckClass("exnihilo.blocks.tileentities.TileEntityBarrel", TileEntity.class);
         clsTeCrucible = Utils.getAndCheckClass("exnihilo.blocks.tileentities.TileEntityCrucible", TileEntity.class);
         clsTeBeeTrap = Utils.getAndCheckClass("exnihilo.blocks.tileentities.TileEntityBeeTrap", TileEntity.class);

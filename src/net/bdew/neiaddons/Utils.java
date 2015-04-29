@@ -62,43 +62,6 @@ public class Utils {
         API.addItemListEntry(item);
     }
 
-    public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName, int shift) {
-        /* TODO: Disabled for now, no ranges in new NEI
-        MultiItemRange multi = new MultiItemRange();
-        for (String field : fields) {
-            try {
-                Object item = cls.getField(field).get(null);
-                ItemRange range;
-                if (item instanceof Item) {
-                    range = new ItemRange(((Item) item).itemID);
-                } else if (item instanceof Block) {
-                    range = new ItemRange(((Block) item).blockID);
-                } else if (item instanceof Integer) {
-                    range = new ItemRange((Integer) item + shift);
-                } else {
-                    NEIAddons.logWarning("%s.%s (%s) type unknown - %s", cls.getName(), field, item.toString(), item.getClass().getName());
-                    continue;
-                }
-                multi.add(range);
-                NEIAddons.logInfo("Registered subset %s: %s", rangeName, range.toString());
-            } catch (Throwable e) {
-                NEIAddons.logWarningExc(e, "Failed to get %s.%s", cls.getName(), field);
-            }
-        }
-        if (multi.ranges.size() > 0) {
-            API.addToRange(rangeName, multi);
-        }
-        */
-    }
-
-    public static void addSubsetForItem(Class<?> cls, String field, String rangeName) {
-        addSubsetForItems(cls, new String[]{field}, rangeName, 0);
-    }
-
-    public static void addSubsetForItems(Class<?> cls, String[] fields, String rangeName) {
-        addSubsetForItems(cls, fields, rangeName, 0);
-    }
-
     /**
      * Like ItemStack.isItemStackEqual but ignores stack size
      */

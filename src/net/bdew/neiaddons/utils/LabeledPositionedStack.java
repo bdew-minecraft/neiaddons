@@ -17,13 +17,6 @@ public class LabeledPositionedStack extends PositionedStack {
     private final String label;
     private final int yoffs;
 
-    /**
-     * @param stack
-     * @param x
-     * @param y
-     * @param label
-     * @param yoffs
-     */
     public LabeledPositionedStack(Object stack, int x, int y, String label, int yoffs) {
         super(stack, x, y);
         this.label = label;

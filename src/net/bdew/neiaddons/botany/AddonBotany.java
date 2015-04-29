@@ -23,10 +23,8 @@ import net.minecraft.client.resources.I18n;
 
 @Mod(modid = NEIAddons.modId + "|Botany", name = "NEI Addons: Botany", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Botany")
 public class AddonBotany extends BaseAddon {
-    public static boolean showSecret;
     public static boolean showFlowerMutations;
     public static boolean loadBlacklisted;
-    public static boolean showReqs;
 
     @Instance(NEIAddons.modId + "|Botany")
     public static AddonBotany instance;
@@ -55,8 +53,6 @@ public class AddonBotany extends BaseAddon {
     @Override
     public void init(Side side) throws Exception {
         showFlowerMutations = NEIAddons.config.get(getName(), "Show Flower Mutations", true, "Set to false to disable flower mutations browsing").getBoolean(false);
-        showSecret = NEIAddons.config.get(getName(), "Show Secret Mutations", false, "Set to true to show secret mutations").getBoolean(false);
-        showReqs = NEIAddons.config.get(getName(), "Show Mutation Requirements", true, "Set to false disable display of mutation requirements").getBoolean(false);
 
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
 

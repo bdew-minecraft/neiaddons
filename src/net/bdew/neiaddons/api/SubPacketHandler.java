@@ -13,5 +13,5 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 
 public interface SubPacketHandler {
-    public void handle(NBTTagCompound data, EntityPlayerMP player);
+    void handle(NBTTagCompound data, EntityPlayerMP player);
 }

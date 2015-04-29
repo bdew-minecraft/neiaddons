@@ -42,7 +42,6 @@ public class AddonForestry extends BaseAddon {
     public static boolean showTreeMutations;
     public static boolean showTreeProducts;
     public static boolean showButterflyMutations;
-    public static boolean showButterflyProducts;
     public static boolean showReqs;
 
     public static Class<? extends GuiContainer> GuiWorktable;

@@ -33,7 +33,7 @@ public class SieveRegistryProxy {
         return new ProxyListView<SiftRewardProxy>(f_rewards.get(null), SiftRewardProxy.class);
     }
 
-    public static void init() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+    public static void init() throws ClassNotFoundException, NoSuchFieldException {
         Class<?> c_SieveRegistry = Utils.getAndCheckClass("exnihilo.registries.SieveRegistry", Object.class);
         f_rewards = TypedField.from(c_SieveRegistry, "rewards", List.class);
 

@@ -15,13 +15,9 @@ import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.ISpeciesRoot;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.botany.AddonBotany;
-import net.bdew.neiaddons.forestry.GeneticsUtils;
-
-import java.util.Collection;
 
 public class FlowerHelper {
 
-    public static Collection<IAlleleSpecies> allSpecies;
     public static Class<? extends IAlleleSpecies> flowerSpeciesClass;
 
     public static ISpeciesRoot root;
@@ -42,8 +38,6 @@ public class FlowerHelper {
         }
 
         AddonBotany.instance.logInfo("Root=%s Species=%s", root, flowerSpeciesClass);
-
-        allSpecies = GeneticsUtils.getAllTypedSpecies(flowerSpeciesClass, AddonBotany.loadBlacklisted);
 
         if (AddonBotany.showFlowerMutations) {
             FlowerBreedingHandler breedingRecipeHandler = new FlowerBreedingHandler();

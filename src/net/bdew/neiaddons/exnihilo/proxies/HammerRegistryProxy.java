@@ -32,7 +32,7 @@ public class HammerRegistryProxy {
     }
 
     @SuppressWarnings("unchecked")
-    public static void init() throws ClassNotFoundException, NoSuchFieldException, IllegalAccessException {
+    public static void init() throws ClassNotFoundException, NoSuchFieldException {
         Class<?> c_HammerRegistry = Utils.getAndCheckClass("exnihilo.registries.HammerRegistry", Object.class);
         f_rewards = TypedField.from(c_HammerRegistry, "rewards", List.class);
 
