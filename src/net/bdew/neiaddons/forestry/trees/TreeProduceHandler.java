@@ -24,11 +24,6 @@ public class TreeProduceHandler extends BaseProduceRecipeHandler {
     }
 
     @Override
-    public String getRecipeName() {
-        return "Tree Produce";
-    }
-
-    @Override
     public String getRecipeIdent() {
         return "treeproduce";
     }

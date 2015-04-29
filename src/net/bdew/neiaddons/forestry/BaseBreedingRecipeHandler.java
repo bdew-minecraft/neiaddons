@@ -20,6 +20,7 @@ import forestry.api.genetics.IMutation;
 import forestry.api.genetics.ISpeciesRoot;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 import java.awt.*;
@@ -188,5 +189,10 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             }
         }
         return super.handleTooltip(gui, currenttip, recipe);
+    }
+
+    @Override
+    public final String getRecipeName() {
+        return I18n.format("bdew.neiaddons.breeding." + getRecipeIdent());
     }
 }

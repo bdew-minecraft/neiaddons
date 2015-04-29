@@ -18,11 +18,6 @@ public class FlowerBreedingHandler extends BaseBreedingRecipeHandler {
     }
 
     @Override
-    public String getRecipeName() {
-        return "Flower Breeding";
-    }
-
-    @Override
     public String getRecipeIdent() {
         return "flowerbreeding";
     }

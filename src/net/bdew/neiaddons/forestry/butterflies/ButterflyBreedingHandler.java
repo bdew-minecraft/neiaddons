@@ -18,11 +18,6 @@ public class ButterflyBreedingHandler extends BaseBreedingRecipeHandler {
     }
 
     @Override
-    public String getRecipeName() {
-        return "Butterfly Breeding";
-    }
-
-    @Override
     public String getRecipeIdent() {
         return "butterflybreeding";
     }

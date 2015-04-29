@@ -16,12 +16,14 @@ import net.bdew.neiaddons.exnihilo.proxies.HammerRegistryProxy;
 import net.bdew.neiaddons.exnihilo.proxies.SieveRegistryProxy;
 import net.bdew.neiaddons.exnihilo.proxies.SiftRewardProxy;
 import net.bdew.neiaddons.exnihilo.proxies.SmashableProxy;
+import net.minecraft.client.resources.I18n;
 
 class AddonExnihiloClient {
     private static void registerRecipeHandler(BaseRecipeHandler handler) {
         API.registerRecipeHandler(handler);
         API.registerUsageHandler(handler);
-        FMLInterModComms.sendRuntimeMessage(AddonExnihilo.instance, "NEIPlugins", "register-crafting-handler", String.format("Ex Nihilo@%s@%s", handler.getRecipeName(), handler.getRecipeId()));
+        FMLInterModComms.sendRuntimeMessage(AddonExnihilo.instance, "NEIPlugins", "register-crafting-handler",
+                String.format("%s@%s@%s", I18n.format("bdew.neiaddons.exnihilo"), handler.getRecipeName(), handler.getRecipeId()));
     }
 
     public static void load() {

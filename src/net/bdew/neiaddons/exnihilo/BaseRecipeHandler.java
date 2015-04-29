@@ -14,6 +14,7 @@ import codechicken.nei.recipe.GuiRecipe;
 import codechicken.nei.recipe.TemplateRecipeHandler;
 import net.bdew.neiaddons.utils.ItemStackWithTip;
 import net.bdew.neiaddons.utils.PositionedStackWithTip;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 
 import java.awt.*;
@@ -21,8 +22,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
-    public abstract String getRecipeName();
-
     public abstract String getRecipeId();
 
     public abstract List<ItemStack> getTools();
@@ -129,5 +128,10 @@ public abstract class BaseRecipeHandler extends TemplateRecipeHandler {
     @Override
     public String getGuiTexture() {
         return "neiaddons:textures/gui/exnihilo.png";
+    }
+
+    @Override
+    public final String getRecipeName() {
+        return I18n.format(getRecipeId() + ".label");
     }
 }

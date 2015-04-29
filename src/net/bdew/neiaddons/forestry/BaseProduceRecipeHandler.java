@@ -19,6 +19,7 @@ import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.FontRenderer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 
@@ -176,5 +177,10 @@ public abstract class BaseProduceRecipeHandler extends TemplateRecipeHandler {
     @Override
     public String getGuiTexture() {
         return "neiaddons:textures/gui/products.png";
+    }
+
+    @Override
+    public final String getRecipeName() {
+        return I18n.format("bdew.neiaddons.produce." + getRecipeIdent());
     }
 }

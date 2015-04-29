@@ -12,13 +12,16 @@ package net.bdew.neiaddons.exnihilo.waila;
 import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
+import java.text.DecimalFormat;
 import java.util.List;
 
 public class BeeTrapHandler implements IWailaDataProvider {
     private static int TIMER_MAX = 6000;
+    private DecimalFormat decFormat = new DecimalFormat("0.0");
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -38,7 +41,7 @@ public class BeeTrapHandler implements IWailaDataProvider {
         int timer = tag.getInteger("timer");
 
         if (timer > 0) {
-            currenttip.add(String.format("Spawning: %.0f%%", 100F * timer / TIMER_MAX));
+            currenttip.add(I18n.format("bdew.exnihilo.beetrap.spawn", decFormat.format(100F * timer / TIMER_MAX)));
         }
 
         return currenttip;

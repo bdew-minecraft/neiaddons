@@ -19,6 +19,7 @@ import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
 import net.bdew.neiaddons.botany.flowers.FlowerHelper;
+import net.minecraft.client.resources.I18n;
 
 @Mod(modid = NEIAddons.modId + "|Botany", name = "NEI Addons: Botany", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Botany")
 public class AddonBotany extends BaseAddon {
@@ -63,7 +64,7 @@ public class AddonBotany extends BaseAddon {
     }
 
     public void registerWithNEIPlugins(String name, String id) {
-        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", String.format("Forestry Genetics@%s@%s", name, id));
+        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", String.format("%s@%s@%s", I18n.format("bdew.neiaddons.genetics"), name, id));
     }
 
     @Override

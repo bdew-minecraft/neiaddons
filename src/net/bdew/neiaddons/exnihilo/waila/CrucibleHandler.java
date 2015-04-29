@@ -13,6 +13,7 @@ import mcp.mobius.waila.api.IWailaConfigHandler;
 import mcp.mobius.waila.api.IWailaDataAccessor;
 import mcp.mobius.waila.api.IWailaDataProvider;
 import net.minecraft.block.Block;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraftforge.fluids.Fluid;
@@ -23,11 +24,7 @@ import java.text.DecimalFormat;
 import java.util.List;
 
 public class CrucibleHandler implements IWailaDataProvider {
-    private final DecimalFormat dec;
-
-    public CrucibleHandler() {
-        dec = new DecimalFormat("#,##0");
-    }
+    private final DecimalFormat dec = new DecimalFormat("#,##0");
 
     @Override
     public ItemStack getWailaStack(IWailaDataAccessor accessor, IWailaConfigHandler config) {
@@ -49,11 +46,11 @@ public class CrucibleHandler implements IWailaDataProvider {
         Fluid fluid = FluidRegistry.getFluid(tag.getShort("fluid"));
 
         if (fluid != null && fluidVolume > 0)
-            currenttip.add(String.format("Fluid: %s %s mB", fluid.getLocalizedName(new FluidStack(fluid, 1)), dec.format(fluidVolume)));
+            currenttip.add(I18n.format("bdew.exnihilo.crucible.fluid", fluid.getLocalizedName(new FluidStack(fluid, 1)), dec.format(fluidVolume)));
 
         if (!content.isEmpty() && solidVolume > 0) {
             ItemStack stack = new ItemStack((Block) Block.blockRegistry.getObject(content), 1, contentMeta);
-            currenttip.add(String.format("Solid: %s %s", stack.getDisplayName(), dec.format(solidVolume)));
+            currenttip.add(I18n.format("bdew.exnihilo.crucible.solid", stack.getDisplayName(), dec.format(solidVolume)));
         }
 
         return currenttip;

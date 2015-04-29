@@ -18,11 +18,6 @@ public class TreeBreedingHandler extends BaseBreedingRecipeHandler {
     }
 
     @Override
-    public String getRecipeName() {
-        return "Tree Breeding";
-    }
-
-    @Override
     public String getRecipeIdent() {
         return "treebreeding";
     }

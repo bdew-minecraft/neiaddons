@@ -24,11 +24,6 @@ public class BeeProduceHandler extends BaseProduceRecipeHandler {
     }
 
     @Override
-    public String getRecipeName() {
-        return "Bee Produce";
-    }
-
-    @Override
     public String getRecipeIdent() {
         return "beeproduce";
     }

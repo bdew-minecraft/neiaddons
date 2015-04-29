@@ -18,11 +18,6 @@ public class BeeBreedingHandler extends BaseBreedingRecipeHandler {
     }
 
     @Override
-    public String getRecipeName() {
-        return "Bee Breeding";
-    }
-
-    @Override
     public String getRecipeIdent() {
         return "beebreeding";
     }

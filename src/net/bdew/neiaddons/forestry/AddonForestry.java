@@ -25,6 +25,7 @@ import net.bdew.neiaddons.forestry.trees.TreeHelper;
 import net.bdew.neiaddons.network.ServerHandler;
 import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
 import net.minecraft.client.gui.inventory.GuiContainer;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
@@ -118,7 +119,7 @@ public class AddonForestry extends BaseAddon {
     }
 
     public void registerWithNEIPlugins(String name, String id) {
-        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", String.format("Forestry Genetics@%s@%s", name, id));
+        FMLInterModComms.sendRuntimeMessage(this, "NEIPlugins", "register-crafting-handler", String.format("%s@%s@%s", I18n.format("bdew.neiaddons.genetics"), name, id));
     }
 
     @Override

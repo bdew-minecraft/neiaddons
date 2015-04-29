@@ -17,7 +17,6 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.EnumChatFormatting
 
 class SieveRecipeHandler extends BaseRecipeHandler {
-  override val getRecipeName = "ExNihilo Sieve"
   override def getRecipeId = "bdew.exnihilo.sieve"
   override val getTools = SieveRegistryProxy.sieves
 
@@ -46,7 +45,7 @@ class SieveRecipeHandler extends BaseRecipeHandler {
           chances.sortBy(-_).map(x => "* %.0f%%".format(x * 100))
       else
         List(
-          "%sDrop chance: %.0f%%%s".format(EnumChatFormatting.WHITE, chances(0) * 100, EnumChatFormatting.RESET)
+          "%sDrop chance: %.0f%%%s".format(EnumChatFormatting.WHITE, chances.head * 100, EnumChatFormatting.RESET)
         )
       new ItemStackWithTip(stack, tip)
     }

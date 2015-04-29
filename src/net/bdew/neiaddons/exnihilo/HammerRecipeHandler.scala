@@ -17,7 +17,6 @@ import net.minecraft.item.{Item, ItemStack}
 import net.minecraft.util.EnumChatFormatting
 
 class HammerRecipeHandler extends BaseRecipeHandler {
-  override val getRecipeName = "ExNihilo Hammer"
   override def getRecipeId = "bdew.exnihilo.hammer"
   override val getTools = HammerRegistryProxy.hammers
 
