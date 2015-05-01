@@ -20,3 +20,19 @@ bdew.exnihilo.crucible.fluid=Fluid: %s %s mB
 bdew.exnihilo.crucible.solid=Solid: %s %s
 
 bdew.neiaddons.noserver=This function requires NEI Addons to be installed on the server
+
+nei.subsets.Forestry=Forestry
+nei.subsets.Forestry.Bees=Bees
+nei.subsets.Forestry.Bees.Combs=Combs
+nei.subsets.Forestry.Bees.Drones=Drones
+nei.subsets.Forestry.Bees.Princesses=Princesses
+nei.subsets.Forestry.Bees.Queens=Queens
+nei.subsets.Forestry.Blocks=Blocks
+nei.subsets.Forestry.Butterflies=Butterflies
+nei.subsets.Forestry.Butterflies.Butterflies=Butterflies
+nei.subsets.Forestry.Butterflies.Caterpillars=Caterpillars
+nei.subsets.Forestry.Butterflies.Serums=Serums
+nei.subsets.Forestry.Items=Items
+nei.subsets.Forestry.Trees=Trees
+nei.subsets.Forestry.Trees.Pollen=Pollen
+nei.subsets.Forestry.Trees.Saplings=Saplings
