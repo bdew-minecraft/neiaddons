@@ -1,0 +1,25 @@
+bdew.neiaddons.genetics=Forestry genetica
+bdew.neiaddons.exnihilo=Ex Nihilo
+
+bdew.neiaddons.breeding.beebreeding=Incrocio di api
+bdew.neiaddons.produce.beeproduce=Produz. di api
+
+bdew.neiaddons.breeding.treebreeding=Incrocio di alberi
+bdew.neiaddons.produce.treeproduce=Produz. di alberi
+
+bdew.neiaddons.breeding.flowerbreeding=Incrocio di fiori
+
+bdew.neiaddons.breeding.butterflybreeding=Incroc. di farfalle
+
+bdew.exnihilo.hammer.label=ExNihilo Martello
+bdew.exnihilo.sieve.label=ExNihilo Setaccio
+
+bdew.exnihilo.barrel.burn=Brucierà per %s secondi!!!
+bdew.exnihilo.beetrap.spawn=Generazione: %s%%
+bdew.exnihilo.crucible.fluid=Fluidi: %s %s mB
+bdew.exnihilo.crucible.solid=Solidi: %s %s
+
+bdew.neiaddons.noserver=Questa funzione richiede che NEI Addons sia insallato sul server
+
+nei.subsets.Blocks.Fluids=Fluidi
+nei.subsets.Items.Fluid Containers=Contenitori di fluidi
