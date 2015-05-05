@@ -10,6 +10,7 @@
 package net.bdew.neiaddons.forestry.bees;
 
 import codechicken.nei.api.API;
+import codechicken.nei.config.ArrayDumper;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.registry.GameRegistry;
 import forestry.api.apiculture.EnumBeeType;
@@ -17,6 +18,7 @@ import forestry.api.apiculture.IAlleleBeeSpecies;
 import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
+import forestry.api.genetics.IMutation;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
 import net.bdew.neiaddons.forestry.ForestryOtherFilter;
@@ -48,6 +50,38 @@ public class BeeHelper {
             API.registerRecipeHandler(breedingRecipeHandler);
             API.registerUsageHandler(breedingRecipeHandler);
             AddonForestry.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
+            
+            // Add possibility to dump bee mutations
+            API.addOption(new ArrayDumper<IMutation>("bdew.neiaddons.forestry.bee_mutations") {
+				@Override
+				public String[] header() {
+					return new String[]{"UID", "Name", "Allele0", "Allele1", "isSecret", "baseChance", "conditions"};
+				}
+				
+				@Override
+				public String[] dump(IMutation obj, int id) {
+					StringBuilder specialConditions = new StringBuilder();
+					for (String specialCondition : obj.getSpecialConditions()) {
+						if(specialConditions.length() > 0)
+							specialConditions.append("|");
+						specialConditions.append(specialCondition);
+					}
+					return new String[]{
+							obj.getTemplate()[0].getUID(),
+							obj.getTemplate()[0].getName(),
+							obj.getAllele0().getUID(),
+							obj.getAllele1().getUID(),
+							Boolean.toString(obj.isSecret()),
+							Float.toString(obj.getBaseChance()),
+							specialConditions.toString()
+					};
+				}
+				
+				@Override
+				public IMutation[] array() {
+					return root.getMutations(false).toArray(new IMutation[0]);
+				}
+			});
         }
 
         if (AddonForestry.showBeeProducts) {
