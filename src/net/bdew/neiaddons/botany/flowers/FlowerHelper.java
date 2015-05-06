@@ -15,6 +15,7 @@ import forestry.api.genetics.IAlleleSpecies;
 import forestry.api.genetics.ISpeciesRoot;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.botany.AddonBotany;
+import net.bdew.neiaddons.forestry.MutationDumper;
 
 public class FlowerHelper {
 
@@ -45,5 +46,7 @@ public class FlowerHelper {
             API.registerUsageHandler(breedingRecipeHandler);
             AddonBotany.instance.registerWithNEIPlugins(breedingRecipeHandler.getRecipeName(), breedingRecipeHandler.getRecipeIdent());
         }
+
+        API.addOption(new MutationDumper(root, "flower_mutation"));
     }
 }

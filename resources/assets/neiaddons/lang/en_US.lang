@@ -36,3 +36,9 @@ nei.subsets.Forestry.Items=Items
 nei.subsets.Forestry.Trees=Trees
 nei.subsets.Forestry.Trees.Pollen=Pollen
 nei.subsets.Forestry.Trees.Saplings=Saplings
+
+nei.options.tools.dump.neiaddons=NEI Addons
+nei.options.tools.dump.neiaddons.dumped=%s dumped to %s
+nei.options.tools.dump.neiaddons.bee_mutations=Bee Mutations
+nei.options.tools.dump.neiaddons.tree_mutations=Tree Mutations
+nei.options.tools.dump.neiaddons.flower_mutations=Flower Mutations
