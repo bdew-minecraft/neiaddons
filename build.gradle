@@ -33,7 +33,7 @@ if (project.hasProperty('buildnum')) {
 }
 
 group = "net.bdew"
-archivesBaseName = "neiaddons"
+archivesBaseName = project.name
 
 minecraft {
     version = "1.7.10-10.13.2.1291"

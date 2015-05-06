@@ -35,7 +35,7 @@ public class AddonExnihilo extends BaseAddon {
 
     @Override
     public String[] getDependencies() {
-        return new String[]{"exnihilo"};
+        return new String[]{"exnihilo", "Waila"};
     }
 
     @EventHandler
@@ -52,6 +52,6 @@ public class AddonExnihilo extends BaseAddon {
     @Override
     @SideOnly(Side.CLIENT)
     public void loadClient() {
-        AddonExnihiloClient.load();
+        // Currently this addon includes only some WAILA handlers
     }
 }
