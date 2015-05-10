@@ -22,22 +22,30 @@ buildscript {
 apply plugin: 'scala'
 apply plugin: 'forge'
 
-version = "1.12.8"
-ext.versuffix = "mc1710"
+file "build.properties" withReader {
+    def prop = new Properties()
+    prop.load(it)
+    ext.config = new ConfigSlurper().parse prop
+}
+
+if (project.hasProperty('forgeOverride')) {
+    config.forge.version = forgeOverride
+}
 
 if (project.hasProperty('buildnum')) {
-    project.version = project.version + '.' + project.buildnum
+    ext.simpleVersion = "${config.neiaddons.version}.${project.buildnum}"
 } else {
-    project.version = "0-SNAPSHOT"
-    repositories.mavenLocal()
+    ext.simpleVersion = "${config.neiaddons.version}-DEV"
 }
+
+version = simpleVersion + '-mc' + config.minecraft.version
 
 group = "net.bdew"
 archivesBaseName = project.name
 
 minecraft {
     version = "1.7.10-10.13.2.1291"
-    replace("NEIADDONS_VER", project.version)
+    replace("NEIADDONS_VER", simpleVersion.toString())
 }
 
 repositories {
@@ -61,11 +69,15 @@ repositories {
 }
 
 dependencies {
-    compile "codechicken:NotEnoughItems:1.7.10-1.0.3.74:dev"
-    compile "codechicken:CodeChickenLib:1.7.10-1.1.1.110:dev"
-    compile "codechicken:CodeChickenCore:1.7.10-1.0.4.29:dev"
-    compile "mcp.mobius.waila:Waila:1.5.5_1.7.10"
-    compile "net.sengir.forestry:forestry_1.7.10:3.5.4.13:api"
+    compile "codechicken:NotEnoughItems:${config.minecraft.version}-${config.nei.version}:dev"
+    compile "codechicken:CodeChickenLib:${config.minecraft.version}-${config.ccl.version}:dev"
+    compile "codechicken:CodeChickenCore:${config.minecraft.version}-${config.ccc.version}:dev"
+
+    compile "net.sengir.forestry:forestry_${config.minecraft.version}:${config.forestry.version}:api"
+
+    compile module("mcp.mobius.waila:Waila:${config.waila.version}_${config.minecraft.version}") {
+        transitive = false // WAILA is depending on an invalid combination of CCC/NEI that doesn't run...
+    }
 }
 
 import org.apache.tools.ant.filters.ReplaceTokens
@@ -97,16 +109,18 @@ processResources {
 
 task sourceJar(type: Jar) {
     from sourceSets.main.allSource
+    classifier "sources"
 }
 
 task deobfJar(type: Jar) {
-    from sourceSets.main.output.classesDir
+    from sourceSets.main.output
     exclude "**/*.psd"
+    classifier "dev"
+    duplicatesStrategy "exclude"
 }
 
 jar {
     exclude "**/*.psd"
-    appendix = project.versuffix
 }
 
 artifacts {
@@ -120,10 +134,7 @@ publishing {
     publications {
         maven(MavenPublication) {
             artifact deobfJar
-
-            artifact sourceJar {
-                classifier "sources"
-            }
+            artifact sourceJar
         }
     }
     repositories {
@@ -131,4 +142,21 @@ publishing {
             url "file://var/www/maven"
         }
     }
+}
+
+apply plugin: 'curseforge'
+
+curse {
+    projectId = config.curseforge.id
+    apiKey = project.hasProperty("curseForgeApiKey") ? project.curseForgeApiKey : ""
+    releaseType = 'alpha'
+
+    artifact = jar
+    changelog = project.hasProperty("changelog") ? project.changelog : "No changelog available"
+
+    additionalArtifact deobfJar
+    additionalArtifact sourceJar
+
+    relatedProject 'notenoughitems': 'optionalLibrary'
+    relatedProject 'waila': 'optionalLibrary'
 }
