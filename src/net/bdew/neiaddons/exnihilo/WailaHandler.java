@@ -30,10 +30,6 @@ public class WailaHandler {
     static public void loadCallback(IWailaRegistrar reg) {
         try {
             loadClasses();
-            reg.registerSyncedNBTKey("*", clsTeBarrel);
-            reg.registerSyncedNBTKey("*", clsTeCrucible);
-            reg.registerSyncedNBTKey("*", clsTeBeeTrap);
-
             reg.registerBodyProvider(new CrucibleHandler(), clsTeCrucible);
             reg.registerBodyProvider(new BarrelHandler(), clsTeBarrel);
             reg.registerBodyProvider(new BeeTrapHandler(), clsTeBeeTrap);
