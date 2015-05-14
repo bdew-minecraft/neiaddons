@@ -1,0 +1,44 @@
+bdew.neiaddons.genetics=林业基因
+bdew.neiaddons.exnihilo=无中生有
+
+bdew.neiaddons.breeding.beebreeding=蜜蜂杂交
+bdew.neiaddons.produce.beeproduce=蜜蜂产物
+
+bdew.neiaddons.breeding.treebreeding=树木杂交
+bdew.neiaddons.produce.treeproduce=树木产物
+
+bdew.neiaddons.breeding.flowerbreeding=花卉杂交
+
+bdew.neiaddons.breeding.butterflybreeding=蝴蝶杂交
+
+bdew.exnihilo.hammer.label=无中生有-锤
+bdew.exnihilo.sieve.label=无中生有-筛子
+
+bdew.exnihilo.barrel.burn=将在 %s 后燃烧!!!
+bdew.exnihilo.beetrap.spawn=生成: %s%%
+bdew.exnihilo.crucible.fluid=流体: %s %s mB
+bdew.exnihilo.crucible.solid=固体: %s %s
+
+bdew.neiaddons.noserver=本功能需要在NEI Addons被安装到服务器端后才被支持
+
+nei.subsets.Forestry=林业
+nei.subsets.Forestry.Bees=蜜蜂
+nei.subsets.Forestry.Bees.Combs=蜂巢
+nei.subsets.Forestry.Bees.Drones=雄蜂
+nei.subsets.Forestry.Bees.Princesses=公主蜂
+nei.subsets.Forestry.Bees.Queens=蜂后
+nei.subsets.Forestry.Blocks=方块
+nei.subsets.Forestry.Butterflies=蝴蝶
+nei.subsets.Forestry.Butterflies.Butterflies=蝴蝶
+nei.subsets.Forestry.Butterflies.Caterpillars=毛虫
+nei.subsets.Forestry.Butterflies.Serums=血清
+nei.subsets.Forestry.Items=物品
+nei.subsets.Forestry.Trees=树木
+nei.subsets.Forestry.Trees.Pollen=花粉
+nei.subsets.Forestry.Trees.Saplings=树苗
+
+nei.options.tools.dump.neiaddons=NEI Addons
+nei.options.tools.dump.neiaddons.dumped=%s 已导出至 %s
+nei.options.tools.dump.neiaddons.bee_mutations=蜜蜂变异
+nei.options.tools.dump.neiaddons.tree_mutations=树木变异
+nei.options.tools.dump.neiaddons.flower_mutations=花卉变异
