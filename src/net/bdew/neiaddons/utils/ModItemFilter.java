@@ -25,9 +25,12 @@ public class ModItemFilter implements ItemFilter {
 
     @Override
     public boolean matches(ItemStack item) {
+        if (item == null || item.getItem() == null) return false;
         if (item.getItem() instanceof ItemBlock && items) return false;
         if (!(item.getItem() instanceof ItemBlock) && !items) return false;
-        String[] s = Item.itemRegistry.getNameForObject(item.getItem()).split(":");
+        String itemName = Item.itemRegistry.getNameForObject(item.getItem());
+        if (itemName == null) return false;
+        String[] s = itemName.split(":");
         return (s.length > 1) && s[0].equals(modId);
     }
 }
