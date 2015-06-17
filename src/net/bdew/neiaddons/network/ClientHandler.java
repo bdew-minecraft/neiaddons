@@ -11,12 +11,10 @@ package net.bdew.neiaddons.network;
 
 import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.eventhandler.SubscribeEvent;
-import cpw.mods.fml.common.gameevent.TickEvent;
+import cpw.mods.fml.common.network.FMLNetworkEvent;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import net.bdew.neiaddons.NEIAddons;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.nbt.NBTTagCompound;
 import org.apache.commons.lang3.StringUtils;
 
@@ -26,25 +24,14 @@ import java.util.Set;
 
 public class ClientHandler extends SimpleChannelInboundHandler<NBTTagCompound> {
     public static Set<String> enabledCommands = new HashSet<String>();
-    private WorldClient oldworld;
 
     public ClientHandler() {
         FMLCommonHandler.instance().bus().register(this);
     }
 
     @SubscribeEvent
-    public void handleTickEvent(TickEvent ev) {
-        if (ev.phase == TickEvent.Phase.START && ev.type == TickEvent.Type.WORLD) {
-            WorldClient world = Minecraft.getMinecraft().theWorld;
-            if ((world != null) && (world != oldworld)) {
-                reset();
-            }
-        }
-    }
-
-    private void reset() {
-        NEIAddons.logInfo("World changed, resetting");
-        oldworld = Minecraft.getMinecraft().theWorld;
+    public void handleConnectEvent(FMLNetworkEvent.ClientConnectedToServerEvent ev) {
+        NEIAddons.logInfo("Connected to new server, resetting commands");
         enabledCommands.clear();
     }
 
@@ -54,7 +41,8 @@ public class ClientHandler extends SimpleChannelInboundHandler<NBTTagCompound> {
         NBTTagCompound data = msg.getCompoundTag("data");
         try {
             if (cmd.equals("hello")) {
-                reset();
+                NEIAddons.logInfo("Received handshake from server");
+                enabledCommands.clear();
                 if (data.getInteger("version") != NEIAddons.netVersion) {
                     NEIAddons.logWarning("Client/Server version mismatch! client=%d server=%d", data.getInteger("version"), NEIAddons.netVersion);
                     return;
