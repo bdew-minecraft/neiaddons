@@ -83,7 +83,7 @@ public class NEIAddons {
     public void init(FMLInitializationEvent event) {
         logInfo("Loading NEI Addons");
         for (NEIAddon addon : addons) {
-            if (config.get("Addons", addon.getName(), true).getBoolean(false)) {
+            if (config.get("Addons", addon.getName(), addon.isEnabledByDefault()).getBoolean(false)) {
                 logInfo("Loading %s Addon...", addon.getName());
                 try {
                     addon.init(event.getSide());

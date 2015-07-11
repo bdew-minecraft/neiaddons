@@ -14,7 +14,9 @@ import cpw.mods.fml.relauncher.Side;
 public interface NEIAddon {
     String getName();
 
-    Boolean isActive();
+    boolean isActive();
+
+    boolean isEnabledByDefault();
 
     /**
      * Called from FMLPreInitializationEvent

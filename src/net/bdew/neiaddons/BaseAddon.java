@@ -23,11 +23,11 @@ import java.util.Map;
 
 public abstract class BaseAddon implements NEIAddon {
 
-    protected Boolean active = false;
+    protected boolean active = false;
     protected Logger log;
 
     @Override
-    public final Boolean isActive() {
+    public final boolean isActive() {
         return active;
     }
 
@@ -84,7 +84,7 @@ public abstract class BaseAddon implements NEIAddon {
         NEIAddons.register(this);
     }
 
-    protected Boolean verifyModVersion(String spec) {
+    protected boolean verifyModVersion(String spec) {
         ArtifactVersion req = VersionParser.parseVersionReference(spec);
         String modid = req.getLabel();
 
@@ -109,6 +109,10 @@ public abstract class BaseAddon implements NEIAddon {
 
         logInfo("Version check success: %s required / %s detected", req.toString(), found.getVersionString());
 
+        return true;
+    }
+
+    public boolean isEnabledByDefault() {
         return true;
     }
 }
