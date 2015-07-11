@@ -23,17 +23,20 @@ import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.inventory.Container;
 import net.minecraft.inventory.Slot;
 
+import java.lang.reflect.Method;
+
 @Mod(modid = NEIAddons.modId + "|AppEng", name = "NEI Addons: Applied Energistics 2", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:appliedenergistics2")
 public class AddonAppeng extends BaseAddon {
 
     @Instance(NEIAddons.modId + "|AppEng")
     public static AddonAppeng instance;
 
-    public static final String setWorkbenchCommand = "SetCellWorkbench";
+    public static final String setWorkbenchCommand = "SetAE2FakeSlot";
 
-    public static Class<? extends GuiContainer> clsGuiCellWorkbench;
-    public static Class<? extends Container> clsContainerCellWorkbench;
-    public static Class<? extends Slot> clsSlotFakeTypeOnly;
+    public static Class<? extends GuiContainer> clsBaseGui;
+    public static Class<? extends Container> clsBaseContainer;
+    public static Class<? extends Slot> clsSlotFake;
+    public static Method mSlotFakeIsEnabled;
 
     @Override
     public String getName() {
@@ -54,13 +57,14 @@ public class AddonAppeng extends BaseAddon {
     @Override
     public void init(Side side) throws Exception {
         try {
-            clsContainerCellWorkbench = Utils.getAndCheckClass("appeng.container.implementations.ContainerCellWorkbench", Container.class);
-            clsSlotFakeTypeOnly = Utils.getAndCheckClass("appeng.container.slot.SlotFakeTypeOnly", Slot.class);
+            clsBaseContainer = Utils.getAndCheckClass("appeng.container.AEBaseContainer", Container.class);
+            clsSlotFake = Utils.getAndCheckClass("appeng.container.slot.SlotFake", Slot.class);
+            mSlotFakeIsEnabled = clsSlotFake.getMethod("isEnabled");
             if (side == Side.CLIENT) {
-                clsGuiCellWorkbench = Utils.getAndCheckClass("appeng.client.gui.implementations.GuiCellWorkbench", GuiContainer.class);
+                clsBaseGui = Utils.getAndCheckClass("appeng.client.gui.AEBaseGui", GuiContainer.class);
             }
 
-            ServerHandler.registerHandler(setWorkbenchCommand, new SetCellWorkbenchCommandHandler());
+            ServerHandler.registerHandler(setWorkbenchCommand, new SetFakeSlotCommandHandler());
 
             active = true;
         } catch (Throwable t) {

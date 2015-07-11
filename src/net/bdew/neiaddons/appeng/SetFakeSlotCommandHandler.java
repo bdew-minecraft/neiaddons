@@ -16,15 +16,15 @@ import net.minecraft.inventory.Slot;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 
-public class SetCellWorkbenchCommandHandler implements SubPacketHandler {
+public class SetFakeSlotCommandHandler implements SubPacketHandler {
     @Override
     public void handle(NBTTagCompound data, EntityPlayerMP player) {
         ItemStack stack = ItemStack.loadItemStackFromNBT(data.getCompoundTag("item"));
         int slotNum = data.getInteger("slot");
         Container cont = player.openContainer;
-        if ((cont != null) && AddonAppeng.clsContainerCellWorkbench.isInstance(cont)) {
+        if ((cont != null) && AddonAppeng.clsBaseContainer.isInstance(cont)) {
             Slot slot = cont.getSlot(slotNum);
-            if ((slot != null) && AddonAppeng.clsSlotFakeTypeOnly.isInstance(slot)) {
+            if ((slot != null) && AddonAppeng.clsSlotFake.isInstance(slot) && SlotHelper.isSlotEnabled(slot)) {
                 slot.putStack(stack);
             }
         }

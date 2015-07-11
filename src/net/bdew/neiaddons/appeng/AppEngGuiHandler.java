@@ -24,7 +24,7 @@ import net.minecraft.util.EnumChatFormatting;
 public class AppEngGuiHandler extends INEIGuiAdapter {
     @Override
     public boolean handleDragNDrop(GuiContainer gui, int mousex, int mousey, ItemStack draggedStack, int button) {
-        if (AddonAppeng.clsGuiCellWorkbench.isInstance(gui)) {
+        if (AddonAppeng.clsBaseGui.isInstance(gui)) {
             int slotNum = -1;
             Slot slot = null;
             for (int k = 0; k < gui.inventorySlots.inventorySlots.size(); k++) {
@@ -34,7 +34,7 @@ public class AppEngGuiHandler extends INEIGuiAdapter {
                     break;
                 }
             }
-            if ((slotNum > 0) && (AddonAppeng.clsSlotFakeTypeOnly.isInstance(slot))) {
+            if ((slotNum > 0) && (AddonAppeng.clsSlotFake.isInstance(slot)) && SlotHelper.isSlotEnabled(slot)) {
                 if (ClientHandler.enabledCommands.contains(AddonAppeng.setWorkbenchCommand)) {
                     NBTTagCompound data = new NBTTagCompound();
                     data.setInteger("slot", slotNum);
