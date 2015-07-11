@@ -65,6 +65,7 @@ public class AddonCraftingTables extends BaseAddon {
         tryLoadTableClass("ProjectE", "moze_intel.projecte.gameObjs.gui.GUIPhilosStone", "ProjectE Philosopher Stone");
         tryLoadTableClass("BiblioCraft", "jds.bibliocraft.gui.GuiFancyWorkbench", "BiblioCraft Fancy Workbench");
         tryLoadTableClass("RIO", "remoteio.client.gui.GuiIntelligentWorkbench", "RemoteIO Intelligent Workbench");
+        tryLoadTableClass("Railcraft", "mods.railcraft.client.gui.GuiCartWork", "Railcraft Work Cart");
 
 
         if (craftingTables.size() > 0) {
