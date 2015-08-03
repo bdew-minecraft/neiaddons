@@ -25,6 +25,14 @@ class MutationDumper(root: ISpeciesRoot, suffix: String) extends ArrayDumper[IMu
 
   override def dump(mutation: IMutation, id: Int) = {
     val speciesKey = root.getKaryotypeKey.ordinal()
+    val conditions = try {
+      Option(mutation.getSpecialConditions) map (x => x.mkString("|")) getOrElse ""
+    } catch {
+      case t: Throwable =>
+        AddonForestry.instance.logSevereExc(t, "Error in mutation.getSpecialConditions for mutation %s + %s -> %s",
+          mutation.getAllele0.getUID, mutation.getAllele1.getUID, mutation.getTemplate()(0).getUID)
+        "[Error]"
+    }
     Array(
       mutation.getTemplate()(speciesKey).getUID,
       mutation.getTemplate()(speciesKey).getName,
@@ -32,7 +40,7 @@ class MutationDumper(root: ISpeciesRoot, suffix: String) extends ArrayDumper[IMu
       mutation.getAllele1.getUID,
       mutation.isSecret.toString,
       "%.1f".format(mutation.getBaseChance),
-      Option(mutation.getSpecialConditions) map (x => x.mkString("|")) getOrElse ""
+      conditions
     )
   }
 
