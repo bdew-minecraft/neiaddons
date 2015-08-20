@@ -22,10 +22,12 @@ import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.utils.LabeledPositionedStack;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
+import net.minecraft.util.EnumChatFormatting;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.List;
 
 public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
@@ -40,6 +42,7 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
         LabeledPositionedStack parrent1, parrent2, result;
         public float chance;
         public Collection<String> requirements;
+        public Boolean derp = false;
 
         public CachedBreedingRecipe(IMutation mutation) {
             ItemStack stackParent1 = GeneticsUtils.stackFromSpecies((IAlleleSpecies) mutation.getAllele0(), GeneticsUtils.RecipePosition.Parent1);
@@ -51,7 +54,15 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
             result = new LabeledPositionedStack(stackResult, 129, 19, mutation.getTemplate()[0].getName(), 13);
             chance = mutation.getBaseChance();
 
-            requirements = mutation.getSpecialConditions();
+            try {
+                requirements = mutation.getSpecialConditions();
+            } catch (Throwable t) {
+                AddonForestry.instance.logSevereExc(t, "Error in mutation.getSpecialConditions for mutation %s + %s -> %s",
+                        mutation.getAllele0().getUID(), mutation.getAllele1().getUID(), mutation.getTemplate()[0].getUID());
+                requirements = Collections.singletonList(EnumChatFormatting.RED + "Error! See log for details");
+                derp = true;
+            }
+
             if (requirements == null) {
                 AddonForestry.instance.logWarning("Mutation %s + %s -> %s is returning null from getSpecialConditions",
                         mutation.getAllele0().getUID(), mutation.getAllele1().getUID(), mutation.getTemplate()[0].getUID());
@@ -161,7 +172,9 @@ public abstract class BaseBreedingRecipeHandler extends TemplateRecipeHandler {
         rec.result.drawLabel();
         rec.parrent1.drawLabel();
         rec.parrent2.drawLabel();
-        if (rec.requirements.size() > 0 && AddonForestry.showReqs) {
+        if (rec.derp) {
+            Utils.drawCenteredString(EnumChatFormatting.OBFUSCATED + "DERP", 108, 15, 0xFF0000);
+        } else if (rec.requirements.size() > 0 && AddonForestry.showReqs) {
             Utils.drawCenteredString(String.format("[%.0f%%]", rec.chance), 108, 15, 0xFF0000);
         } else {
             Utils.drawCenteredString(String.format("%.0f%%", rec.chance), 108, 15, 0xFFFFFF);
