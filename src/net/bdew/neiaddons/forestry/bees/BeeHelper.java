@@ -18,10 +18,11 @@ import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.forestry.*;
+import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.bdew.neiaddons.forestry.MutationDumper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 

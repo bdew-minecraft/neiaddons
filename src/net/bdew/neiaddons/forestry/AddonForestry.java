@@ -18,16 +18,10 @@ import cpw.mods.fml.relauncher.Side;
 import cpw.mods.fml.relauncher.SideOnly;
 import net.bdew.neiaddons.BaseAddon;
 import net.bdew.neiaddons.NEIAddons;
-import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.bees.BeeHelper;
 import net.bdew.neiaddons.forestry.butterflies.ButterflyHelper;
 import net.bdew.neiaddons.forestry.trees.TreeHelper;
-import net.bdew.neiaddons.network.ServerHandler;
-import net.bdew.neiaddons.utils.SetRecipeCommandHandler;
-import net.minecraft.client.gui.inventory.GuiContainer;
 import net.minecraft.client.resources.I18n;
-import net.minecraft.inventory.Container;
-import net.minecraft.inventory.Slot;
 
 @Mod(modid = NEIAddons.modId + "|Forestry", name = "NEI Addons: Forestry", version = "NEIADDONS_VER", dependencies = "after:NEIAddons;after:Forestry")
 public class AddonForestry extends BaseAddon {
@@ -43,13 +37,6 @@ public class AddonForestry extends BaseAddon {
     public static boolean showTreeProducts;
     public static boolean showButterflyMutations;
     public static boolean showReqs;
-
-    public static Class<? extends GuiContainer> GuiWorktable;
-    public static Class<? extends Container> ContainerWorktable;
-    public static Class<? extends Slot> SlotCraftMatrix;
-    public static boolean craftingActive = false;
-
-    public static final String commandName = "SetForestryWorktableRecipe";
 
     @Instance(NEIAddons.modId + "|Forestry")
     public static AddonForestry instance;
