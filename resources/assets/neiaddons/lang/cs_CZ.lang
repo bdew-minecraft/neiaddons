@@ -21,22 +21,6 @@ bdew.exnihilo.crucible.solid=Pevné: %s %s
 
 bdew.neiaddons.noserver=Tato funkce vyžaduje instalaci NEI Addons na server
 
-nei.subsets.Forestry=Lesnictví
-nei.subsets.Forestry.Bees=Včely
-nei.subsets.Forestry.Bees.Combs=Plástve
-nei.subsets.Forestry.Bees.Drones=Trubci
-nei.subsets.Forestry.Bees.Princesses=Princezny
-nei.subsets.Forestry.Bees.Queens=Královny
-nei.subsets.Forestry.Blocks=Bloky
-nei.subsets.Forestry.Butterflies=Motýli
-nei.subsets.Forestry.Butterflies.Butterflies=Motýli
-nei.subsets.Forestry.Butterflies.Caterpillars=Housenky
-nei.subsets.Forestry.Butterflies.Serums=Séra
-nei.subsets.Forestry.Items=Předměty
-nei.subsets.Forestry.Trees=Stromy
-nei.subsets.Forestry.Trees.Pollen=Pyl
-nei.subsets.Forestry.Trees.Saplings=Sazenice
-
 nei.options.tools.dump.neiaddons=NEI Addons
 nei.options.tools.dump.neiaddons.dumped=%s vypsáno do %s
 nei.options.tools.dump.neiaddons.bee_mutations=Mutace včel
