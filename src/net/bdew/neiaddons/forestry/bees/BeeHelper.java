@@ -109,14 +109,6 @@ public class BeeHelper {
             }
         }
 
-        API.addSubset("Forestry.Bees.Princesses", new GeneticItemFilter(root, EnumBeeType.PRINCESS.ordinal(), true));
-        API.addSubset("Forestry.Bees.Drones", new GeneticItemFilter(root, EnumBeeType.DRONE.ordinal(), true));
-        API.addSubset("Forestry.Bees.Queens", new GeneticItemFilter(root, EnumBeeType.QUEEN.ordinal(), true));
-
-        API.addSubset("Forestry.Bees.Combs", OreDictionary.getOres("beeComb"));
-        API.addSubset("Forestry.Blocks", new ForestryOtherFilter(false));
-        API.addSubset("Forestry.Items", new ForestryOtherFilter(true));
-
         API.addOption(new MutationDumper(root, "bee_mutation"));
     }
 

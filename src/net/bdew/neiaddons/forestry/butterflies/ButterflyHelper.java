@@ -16,7 +16,6 @@ import forestry.api.lepidopterology.IAlleleButterflySpecies;
 import forestry.api.lepidopterology.IButterflyRoot;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
-import net.bdew.neiaddons.forestry.GeneticItemFilter;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 
 import java.util.Collection;
@@ -61,9 +60,5 @@ public class ButterflyHelper {
                 Utils.safeAddNBTItem(GeneticsUtils.stackFromSpecies(species, EnumFlutterType.SERUM.ordinal()));
             }
         }
-
-        API.addSubset("Forestry.Butterflies.Butterflies", new GeneticItemFilter(root, EnumFlutterType.BUTTERFLY.ordinal(), true));
-        API.addSubset("Forestry.Butterflies.Caterpillars", new GeneticItemFilter(root, EnumFlutterType.CATERPILLAR.ordinal(), true));
-        API.addSubset("Forestry.Butterflies.Serums", new GeneticItemFilter(root, EnumFlutterType.SERUM.ordinal(), true));
     }
 }

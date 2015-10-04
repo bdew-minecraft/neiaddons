@@ -12,8 +12,6 @@ NEI Addons
  * Tree breeding and products
  * Supports bees added by other mods (Thaumic Bees, Extra Bees, etc.)
  * Adds all bees, combs, saplings and pollen types to NEI search
- * Adds item subsets for NEI menu for bees, saplings, combs, pollen, etc. if NEIPlugins is not installed
- * [?] button support for the Worktable (requires 2.3.0.5 or newer)
 * [Extra Bees](http://www.minecraftforum.net/topic/1324321-)
  * Adds all serums to NEI search
  * Adds item subsets for NEI menu for all items

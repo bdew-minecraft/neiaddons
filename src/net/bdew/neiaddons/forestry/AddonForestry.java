@@ -92,28 +92,6 @@ public class AddonForestry extends BaseAddon {
 
         loadBlacklisted = NEIAddons.config.get(getName(), "Load blacklisted", false, "Set to true to load blacklisted species and alleles, it's dangerous and (mostly) useless").getBoolean(false);
 
-        if (this.verifyModVersion("Forestry@[2.3.0.5,)")) {
-            try {
-                if (side == Side.CLIENT) {
-                    GuiWorktable = Utils.getAndCheckClass("forestry.factory.gui.GuiWorktable", GuiContainer.class);
-                }
-                ContainerWorktable = Utils.getAndCheckClass("forestry.factory.gui.ContainerWorktable", Container.class);
-
-                if (this.verifyModVersion("Forestry@[3.5.0.0,)")) {
-                    SlotCraftMatrix = Utils.getAndCheckClass("forestry.core.gui.slots.SlotCraftMatrix", Slot.class);
-                } else {
-                    SlotCraftMatrix = Utils.getAndCheckClass("forestry.factory.gui.SlotCraftMatrix", Slot.class);
-                }
-
-                ServerHandler.registerHandler(commandName, new SetRecipeCommandHandler(ContainerWorktable, SlotCraftMatrix));
-                craftingActive = true;
-            } catch (Throwable e) {
-                AddonForestry.instance.logWarningExc(e, "Failed to setup Worktable crafting overlay");
-            }
-        } else {
-            this.logInfo("Forestry Worktable support not loaded");
-        }
-
         active = true;
     }
 
@@ -127,8 +105,5 @@ public class AddonForestry extends BaseAddon {
         BeeHelper.setup();
         TreeHelper.setup();
         ButterflyHelper.setup();
-        if (craftingActive) {
-            CraftingOverlayHelper.setup();
-        }
     }
 }
