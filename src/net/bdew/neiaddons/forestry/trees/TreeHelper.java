@@ -17,7 +17,6 @@ import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.Utils;
 import net.bdew.neiaddons.forestry.AddonForestry;
-import net.bdew.neiaddons.forestry.GeneticItemFilter;
 import net.bdew.neiaddons.forestry.GeneticsUtils;
 import net.bdew.neiaddons.forestry.MutationDumper;
 import net.minecraft.item.Item;
@@ -79,9 +78,6 @@ public class TreeHelper {
                 addProductToCache(prod.getItem(), species);
             }
         }
-
-        API.addSubset("Forestry.Trees.Pollen", new GeneticItemFilter(root, EnumGermlingType.POLLEN.ordinal(), true));
-        API.addSubset("Forestry.Trees.Saplings", new GeneticItemFilter(root, EnumGermlingType.SAPLING.ordinal(), true));
 
         API.addOption(new MutationDumper(root, "tree_mutation"));
     }

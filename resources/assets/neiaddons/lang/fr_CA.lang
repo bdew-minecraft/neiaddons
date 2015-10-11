@@ -21,22 +21,6 @@ bdew.exnihilo.crucible.solid=Solide: %s %s
 
 bdew.neiaddons.noserver=Cette fonction exige que NEI Addons soit installé sur le serveur
 
-nei.subsets.Forestry=Forestry
-nei.subsets.Forestry.Bees=Abeille
-nei.subsets.Forestry.Bees.Combs=Alvéoles
-nei.subsets.Forestry.Bees.Drones=Ourvrières
-nei.subsets.Forestry.Bees.Princesses=Princesses
-nei.subsets.Forestry.Bees.Queens=Reines
-nei.subsets.Forestry.Blocks=Blocs
-nei.subsets.Forestry.Butterflies=Papillons
-nei.subsets.Forestry.Butterflies.Butterflies=Papillons
-nei.subsets.Forestry.Butterflies.Caterpillars=Chenilles
-nei.subsets.Forestry.Butterflies.Serums=Sérums
-nei.subsets.Forestry.Items=Eléments
-nei.subsets.Forestry.Trees=Arbres
-nei.subsets.Forestry.Trees.Pollen=Pollen
-nei.subsets.Forestry.Trees.Saplings=Pousses
-
 nei.options.tools.dump.neiaddons=NEI Addons
 nei.options.tools.dump.neiaddons.dumped=%s a déposé à %s
 nei.options.tools.dump.neiaddons.bee_mutations=Mutations d'abeille

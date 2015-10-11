@@ -79,15 +79,15 @@ public class Utils {
         return s1.getTagCompound().equals(s2.getTagCompound());
     }
 
-    public static Map<ItemStack, Integer> mergeStacks(Map<ItemStack, Integer> stacks) {
-        Map<ItemStack, Integer> merged = new HashMap<ItemStack, Integer>();
+    public static Map<ItemStack, Float> mergeStacks(Map<ItemStack, Float> stacks) {
+        Map<ItemStack, Float> merged = new HashMap<ItemStack, Float>();
         outer:
-        for (Entry<ItemStack, Integer> stack : stacks.entrySet()) {
+        for (Entry<ItemStack, Float> stack : stacks.entrySet()) {
             if (stack.getKey() == null) {
                 NEIAddons.logSevere("Null ItemStack in mergeStacks!");
                 continue;
             }
-            for (Entry<ItemStack, Integer> mergedStack : merged.entrySet()) {
+            for (Entry<ItemStack, Float> mergedStack : merged.entrySet()) {
                 if (isSameItem(stack.getKey(), mergedStack.getKey()) && (stack.getValue().equals(mergedStack.getValue()))) {
                     mergedStack.getKey().stackSize += 1;
                     continue outer;
@@ -98,14 +98,14 @@ public class Utils {
         return merged;
     }
 
-    public static Map<ItemStack, Integer> sanitizeDrops(Map<ItemStack, Integer> drops, String origin) {
-        Map<ItemStack, Integer> res = new HashMap<ItemStack, Integer>();
+    public static Map<ItemStack, Float> sanitizeDrops(Map<ItemStack, Float> drops, String origin) {
+        Map<ItemStack, Float> res = new HashMap<ItemStack, Float>();
         boolean complained = false;
         if (drops == null) {
             NEIAddons.logWarning("%s returned null", origin);
             return res;
         }
-        for (Entry<ItemStack, Integer> ent : drops.entrySet()) {
+        for (Entry<ItemStack, Float> ent : drops.entrySet()) {
             if (ent.getKey() == null || ent.getKey().getItem() == null) {
                 if (!complained) {
                     NEIAddons.logWarning("%s contains nulls and/or corrupt item stacks", origin);

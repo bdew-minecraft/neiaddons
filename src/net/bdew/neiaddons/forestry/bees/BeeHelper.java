@@ -18,10 +18,11 @@ import forestry.api.apiculture.IBeeRoot;
 import forestry.api.genetics.AlleleManager;
 import forestry.api.genetics.IAlleleSpecies;
 import net.bdew.neiaddons.Utils;
-import net.bdew.neiaddons.forestry.*;
+import net.bdew.neiaddons.forestry.AddonForestry;
+import net.bdew.neiaddons.forestry.GeneticsUtils;
+import net.bdew.neiaddons.forestry.MutationDumper;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraftforge.oredict.OreDictionary;
 
 import java.util.*;
 
@@ -108,14 +109,6 @@ public class BeeHelper {
                 }
             }
         }
-
-        API.addSubset("Forestry.Bees.Princesses", new GeneticItemFilter(root, EnumBeeType.PRINCESS.ordinal(), true));
-        API.addSubset("Forestry.Bees.Drones", new GeneticItemFilter(root, EnumBeeType.DRONE.ordinal(), true));
-        API.addSubset("Forestry.Bees.Queens", new GeneticItemFilter(root, EnumBeeType.QUEEN.ordinal(), true));
-
-        API.addSubset("Forestry.Bees.Combs", OreDictionary.getOres("beeComb"));
-        API.addSubset("Forestry.Blocks", new ForestryOtherFilter(false));
-        API.addSubset("Forestry.Items", new ForestryOtherFilter(true));
 
         API.addOption(new MutationDumper(root, "bee_mutation"));
     }

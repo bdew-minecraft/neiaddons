@@ -21,22 +21,6 @@ bdew.exnihilo.crucible.solid=固体: %s %s
 
 bdew.neiaddons.noserver=本功能需要在NEI Addons被安装到服务器端后才被支持
 
-nei.subsets.Forestry=林业
-nei.subsets.Forestry.Bees=蜜蜂
-nei.subsets.Forestry.Bees.Combs=蜂巢
-nei.subsets.Forestry.Bees.Drones=雄蜂
-nei.subsets.Forestry.Bees.Princesses=公主蜂
-nei.subsets.Forestry.Bees.Queens=蜂后
-nei.subsets.Forestry.Blocks=方块
-nei.subsets.Forestry.Butterflies=蝴蝶
-nei.subsets.Forestry.Butterflies.Butterflies=蝴蝶
-nei.subsets.Forestry.Butterflies.Caterpillars=毛虫
-nei.subsets.Forestry.Butterflies.Serums=血清
-nei.subsets.Forestry.Items=物品
-nei.subsets.Forestry.Trees=树木
-nei.subsets.Forestry.Trees.Pollen=花粉
-nei.subsets.Forestry.Trees.Saplings=树苗
-
 nei.options.tools.dump.neiaddons=NEI Addons
 nei.options.tools.dump.neiaddons.dumped=%s 已导出至 %s
 nei.options.tools.dump.neiaddons.bee_mutations=蜜蜂变异
