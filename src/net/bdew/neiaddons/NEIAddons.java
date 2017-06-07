@@ -26,7 +26,7 @@ import org.apache.logging.log4j.Logger;
 import java.util.ArrayList;
 import java.util.List;
 
-@Mod(modid = NEIAddons.modId, name = "NEI Addons", version = "NEIADDONS_VER", dependencies = "after:NotEnoughItems")
+@Mod(modid = NEIAddons.modId, name = "NEI Addons", version = "NEIADDONS_VER", dependencies = "required-after:NotEnoughItems;after:Forestry@[4.0.8,);")
 public class NEIAddons {
 
     public static final String modId = "NEIAddons";
